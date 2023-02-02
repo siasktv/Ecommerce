@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import Footer from "../Footer/Footer";
 
 export default function Navbar() {
   return (
@@ -51,9 +52,6 @@ export default function Navbar() {
           ></img>
           My cart
         </div>
-      </div>
-      <div className="mt-[86px]">
-        <Outlet />
       </div>
     </div>
   );
