@@ -1,4 +1,5 @@
 import Productcard from "../../components/Productcard/Productcard";
+import Productcardreviewed from "../../components/Productcardreviewed/Productcardreviewed";
 
 export default function Home() {
   return (
@@ -196,10 +197,59 @@ export default function Home() {
         </div>
 
         <div className="bg-[#FFFFFF59]">
-          <div className="h-[300px] mb-[100px]">
-            <div className="bg-white h-[350px] w-[1180px]"></div>
+          <div className="h-[350px] mb-[100px] flex justify-center">
+            <div className="bg-white h-[350px] w-[1200px] mt-[25px] rounded-md">
+              <p className="font-semibold text-xl ml-[20px] mt-[20px]">
+                Most popular products
+              </p>
+              <div className="flex">
+                <Productcardreviewed
+                  img={
+                    "https://res.cloudinary.com/dok0di4qp/image/upload/v1675369342/DualTech/05_hbc7u0.png"
+                  }
+                  review={5}
+                  name={"Smartwatch silver color modern"}
+                />
+                <Productcardreviewed
+                  img={
+                    "https://res.cloudinary.com/dok0di4qp/image/upload/v1675369342/DualTech/05_hbc7u0.png"
+                  }
+                  review={5}
+                  name={"Smartwatch silver color modern"}
+                />
+                <Productcardreviewed
+                  img={
+                    "https://res.cloudinary.com/dok0di4qp/image/upload/v1675369342/DualTech/05_hbc7u0.png"
+                  }
+                  review={5}
+                  name={"Smartwatch silver color modern"}
+                />
+                <Productcardreviewed
+                  img={
+                    "https://res.cloudinary.com/dok0di4qp/image/upload/v1675369342/DualTech/05_hbc7u0.png"
+                  }
+                  review={5}
+                  name={"Smartwatch silver color modern"}
+                />
+                <Productcardreviewed
+                  img={
+                    "https://res.cloudinary.com/dok0di4qp/image/upload/v1675369342/DualTech/05_hbc7u0.png"
+                  }
+                  review={5}
+                  name={"Smartwatch silver color modern"}
+                />
+                <Productcardreviewed
+                  img={
+                    "https://res.cloudinary.com/dok0di4qp/image/upload/v1675369342/DualTech/05_hbc7u0.png"
+                  }
+                  review={5}
+                  name={"Smartwatch silver color modern"}
+                />
+              </div>
+            </div>
           </div>
-          <div className="bg-[#1C1C1C] h-[180px]">x</div>
+
+          <div className="bg-[#1C1C1C] h-[180px]"></div>
         </div>
       </div>
     </div>
