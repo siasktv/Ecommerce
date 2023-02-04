@@ -54,16 +54,6 @@ export default function Footer() {
               <li className="text-[#8B96A5]">About Us</li>{" "}
               <li className="text-[#8B96A5]">Find store</li>
               <li className="text-[#8B96A5]">Categories</li>{" "}
-              <li className="text-[#8B96A5]">Blogs</li>
-            </ul>
-          </div>
-          <div className="mr-[60px]">
-            <div className="mb-[10px] font-semibold">Information</div>
-            <ul>
-              <li className="text-[#8B96A5]">Help Center</li>{" "}
-              <li className="text-[#8B96A5]">Money Refund</li>{" "}
-              <li className="text-[#8B96A5]">Shipping</li>
-              <li className="text-[#8B96A5]">Contact us</li>
             </ul>
           </div>
           <div className="mr-[130px]">
@@ -71,20 +61,8 @@ export default function Footer() {
             <ul>
               <li className="text-[#8B96A5]">Login</li>{" "}
               <li className="text-[#8B96A5]">Register</li>{" "}
-              <li className="text-[#8B96A5]">Settings</li>{" "}
               <li className="text-[#8B96A5]">My Orders</li>
             </ul>
-          </div>
-          <div>
-            <div className="font-semibold">Get app</div>
-            <img
-              src="https://res.cloudinary.com/dok0di4qp/image/upload/v1675355799/DualTech/Group_o3nmhc.png"
-              className="h-[42px] w-[124px] mb-[10px] mt-[10px]"
-            ></img>
-            <img
-              src="https://res.cloudinary.com/dok0di4qp/image/upload/v1675355676/DualTech/Group_vvqy0o.png"
-              className="h-[42px] w-[124px]"
-            ></img>
           </div>
         </div>
       </div>
