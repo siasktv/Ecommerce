@@ -1,14 +1,19 @@
 import ReactDOM from "react-dom/client";
-import "./index.css";
+import "./main.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home/Home";
-import Navbar from "./components/Navbar/Navbar";
+import Errorelement from "./pages/Errorelement/Errorelement";
+import Search from "./pages/Search/Search";
+import Index from ".";
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <Navbar />,
-    children: [{ path: "/", element: <Home /> }],
+    element: <Index />,
+    errorElement: <Errorelement />,
+    children: [
+      { path: "/", element: <Home /> },
+      { path: "/search", element: <Search /> },
+    ],
   },
 ]);
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
