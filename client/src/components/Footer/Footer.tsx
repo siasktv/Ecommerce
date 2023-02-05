@@ -23,8 +23,8 @@ export default function Footer() {
           </button>
         </form>
       </div>
-      <div className="bg-white h-[324px] flex flex-row">
-        <div className="flex-row flex mt-[200px] ml-[130px]">
+      <div className="bg-white h-[324px] flex flex-row items-center justify-center">
+        <div className="flex flex-row">
           <img
             src="https://res.cloudinary.com/dok0di4qp/image/upload/v1675354524/DualTech/Combined_Shape_vjjqzr.png"
             className="h-[30px] w-[30px] mr-[10px]"
