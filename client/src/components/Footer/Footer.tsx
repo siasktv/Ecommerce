@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <div>
-      <div className="bg-[#494949] h-[190px] flex items-center justify-center flex-col">
+      <div className="bg-[#494949] h-[190px] flex items-center justify-center flex-col w-[100vw]">
         <div className="text-white font-semibold text-xl">
           Subscribe on our newsletter
         </div>

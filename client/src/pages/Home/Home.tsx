@@ -3,7 +3,7 @@ import Productcardreviewed from "../../components/Productcardreviewed/Productcar
 
 export default function Home() {
   return (
-    <div className="bg-[#1C1C1C]">
+    <div className="bg-[#1C1C1C] w-[100vw]">
       <div className="h-[2500px] ">
         <div className="flex flex-col items-center">
           <div className="bg-[#ffffff59] w-[1180px] h-[300px] mt-[120px] mb-[150px] flex rounded-md">

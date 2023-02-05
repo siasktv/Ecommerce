@@ -5,7 +5,7 @@ export default function Errorelement() {
   return (
     <div>
       <Navbar />
-      <div className="mt-[86px]">
+      <div className="mt-[86px] w-[100%]">
         <div>Errorelement</div>
         <div>Errorelement</div>
         <div>Errorelement</div>
@@ -57,7 +57,6 @@ export default function Errorelement() {
         <div>Errorelement</div>
         <div>Errorelement</div>
       </div>
-      <Footer />
     </div>
   );
 }
