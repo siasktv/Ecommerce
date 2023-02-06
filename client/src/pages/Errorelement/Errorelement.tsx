@@ -57,6 +57,7 @@ export default function Errorelement() {
         <div>Errorelement</div>
         <div>Errorelement</div>
       </div>
+      <Footer />
     </div>
   );
 }
