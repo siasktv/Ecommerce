@@ -5,56 +5,7 @@ export default function Errorelement() {
   return (
     <div>
       <Navbar />
-      <div className="mt-[86px] w-[100%]">
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
-        <div>Errorelement</div>
+      <div className="mt-[86px] w-full max-[990px]:mt-[160px]">
         <div>Errorelement</div>
       </div>
       <Footer />
