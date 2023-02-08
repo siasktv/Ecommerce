@@ -1,10 +1,14 @@
 import ReactDOM from "react-dom/client";
 import "./main.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Provider } from "react-redux";
+import { store } from "./app/store";
 import Home from "./pages/Home/Home";
 import Errorelement from "./pages/Errorelement/Errorelement";
 import Search from "./pages/Search/Search";
-import Index from ".";
+import Index from "./Index";
+//index es como el app 
+import MuiThemeProvider from "./theme";
 
 const router = createBrowserRouter([
   {
@@ -17,5 +21,9 @@ const router = createBrowserRouter([
   },
 ]);
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+  <Provider store={store}>
+  <MuiThemeProvider>
   <RouterProvider router={router} />
+  </MuiThemeProvider>
+  </Provider>
 );
