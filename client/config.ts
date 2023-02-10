@@ -1,13 +1,3 @@
-import path from "path";
-import dotenv from "dotenv";
-
-// Parsing the env file.
-dotenv.config({ path: path.resolve(__dirname, "./.env") });
-
-// Interface to load env variables
-// Note these variables can possibly be undefined
-// as someone could skip these varibales or not setup a .env file at all
-
 interface ENV {
   APIKEY: string | undefined;
   AUTHDOMAIN: string | undefined;
@@ -28,17 +18,15 @@ interface Config {
   MEASUREMENTID: string;
 }
 
-// Loading process.env as ENV interface
-
 const getConfig = (): ENV => {
   return {
-    APIKEY: process.env.APIKEY,
-    AUTHDOMAIN: process.env.AUTHDOMAIN,
-    PROJECTID: process.env.PROJECTID,
-    STORAGEBUCKET: process.env.STORAGEBUCKET,
-    MESSAGINGSENDERID: process.env.MESSAGINGSENDERID,
-    APPID: process.env.APPID,
-    MEASUREMENTID: process.env.MEASUREMENTID,
+    APIKEY: import.meta.env.VITE_APIKEY,
+    AUTHDOMAIN: import.meta.env.VITE_AUTHDOMAIN,
+    PROJECTID: import.meta.env.VITE_PROJECTID,
+    STORAGEBUCKET: import.meta.env.VITE_STORAGEBUCKET,
+    MESSAGINGSENDERID: import.meta.env.VITE_MESSAGINGSENDERID,
+    APPID: import.meta.env.VITE_APPID,
+    MEASUREMENTID: import.meta.env.VITE_MEASUREMENTID,
   };
 };
 

@@ -7,8 +7,9 @@ import Home from "./pages/Home/Home";
 import Errorelement from "./pages/Errorelement/Errorelement";
 import Search from "./pages/Search/Search";
 import Index from "./Index";
-//index es como el app 
+//index es como el app
 import MuiThemeProvider from "./theme";
+import Register from "./pages/Register/Register";
 
 const router = createBrowserRouter([
   {
@@ -17,13 +18,14 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <Home /> },
       { path: "/search", element: <Search /> },
+      { path: "/register", element: <Register /> },
     ],
   },
 ]);
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <Provider store={store}>
-  <MuiThemeProvider>
-  <RouterProvider router={router} />
-  </MuiThemeProvider>
+    <MuiThemeProvider>
+      <RouterProvider router={router} />
+    </MuiThemeProvider>
   </Provider>
 );

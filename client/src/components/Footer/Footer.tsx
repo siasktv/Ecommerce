@@ -1,19 +1,19 @@
 export default function Footer() {
   return (
     <div>
-      <div className="bg-[#494949] h-[190px] flex items-center justify-center flex-col w-[100%]">
+      <div className="bg-[#494949] h-[190px] flex items-center justify-center flex-col w-full">
         <div className="text-white font-semibold text-xl">
           Subscribe on our newsletter
         </div>
-        <div className="text-white min-[600px]:mb-[20px] text-base font-normal max-[599px]:text-center">
+        <div className="text-white text-base font-normal ">
           Get daily news on upcoming offers from many suppliers all over the
           world
         </div>
-        <form className="max-[599px]:justify-center max-[599px]:flex max-[599px]:flex-col max-[599px]:items-center">
+        <form className="">
           <input
             type="text"
             placeholder="Email"
-            className="bg-[url('https://res.cloudinary.com/dok0di4qp/image/upload/v1675350810/DualTech/VectorEmail_hs4ceq.png')] bg-no-repeat bg-center bg-left pl-[40px] w-[274px] h-[40px] rounded-[6px]"
+            className="bg-[url('https://res.cloudinary.com/dok0di4qp/image/upload/v1675350810/DualTech/VectorEmail_hs4ceq.png')] bg-no-repeat bg-center bg-left pl-[40px] w-[274px] h-[40px] rounded-[6px] placeholder:text-black"
           ></input>
           <button
             type="submit"
