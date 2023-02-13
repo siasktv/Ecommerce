@@ -18,9 +18,10 @@ import {
   filteredByBrand, 
   filteredByCategory, 
   filteredByRating,
-  selectBrand
+  selectBrand,
+  unselectBrand
 } from '../../features/products/productsSlice';
-import { useAppDispatch } from "../../app/hooks"; 
+import { useAppDispatch, useAppSelector } from "../../app/hooks"; 
 // components
 // import Iconify from '../../../components/iconify';
 // import Scrollbar from '../../../components/scrollbar';
@@ -53,8 +54,16 @@ export default function ShopFilterSidebar() {
 
   const dispatch = useAppDispatch();
 
-  const handleFilteredByBrand = (item:any) => {
-    dispatch(selectBrand(item))
+  const selectedBrands = useAppSelector(state => state.products.selectedBrands);
+
+  
+
+  const toggleBrand = (brand: string) => {
+    dispatch(
+      selectedBrands.includes(brand)
+        ? unselectBrand(brand)
+        : selectBrand(brand)
+    );
   }
 
   return (
@@ -89,7 +98,7 @@ export default function ShopFilterSidebar() {
               
               >
                 {FILTER_BRAND_OPTIONS.map((item) => (
-                  <FormControlLabel key={item} control={<Checkbox />} label={item} onChange={() => handleFilteredByBrand (item)} />
+                  <FormControlLabel key={item} control={<Checkbox />} label={item} onClick={() => toggleBrand(item)} />
                 ))}
               </FormGroup>
             </div>
@@ -118,20 +127,8 @@ export default function ShopFilterSidebar() {
           </Stack>
           <Divider />
         <Box sx={{ p: 3 }}>
-        <Button
-            fullWidth
-            size="medium"
-            type="submit"
-            color="inherit"
-            variant="outlined"
-          >
-            Apply Filters
-          </Button>
-       
 
-       
         <Button
-            style={{ marginTop: '15px' }}
             fullWidth
             size="medium"
             type="submit"
@@ -140,8 +137,6 @@ export default function ShopFilterSidebar() {
           >
             Clear All
           </Button>
-      
-          
         </Box>
       </Card>
     </>

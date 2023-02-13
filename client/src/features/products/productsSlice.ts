@@ -83,8 +83,14 @@ const productsSlice = createSlice({
           console.log(state.selectedBrands)
         },
 
+        unselectBrand: (state, action: PayloadAction<string>) => {
+          
+          state.selectedBrands = state.selectedBrands.filter(b => b !== action.payload);
+          console.log("1", state.selectedBrands)
+        },
+
         filteredByBrand(state, action: PayloadAction<string>) {
-        state.products = state.allProducts.filter(product => state.selectedBrands.includes(product.brand.toLowerCase()))
+          state.products = state.allProducts.filter(product => state.selectedBrands.includes(product.brand.toLowerCase()))
         },
 
         filteredByCategory(state, action: PayloadAction<string>) {
@@ -117,6 +123,7 @@ export const {
   filteredByCategory, 
   filteredByRating, 
   clearFilter,
-  selectBrand
+  selectBrand,
+  unselectBrand
 } = productsSlice.actions;
 export default productsSlice.reducer;
