@@ -9,28 +9,28 @@ export default function Productcardreviewed({
   name,
 }: ProductcardreviewedProps) {
   return (
-    <div className="bg-[#EEEEEE] ml-[10px] mr-[10px] w-[220px] h-[280px] rounded-md mt-[10px]">
-      <img src={img} className="w-[100px] h-[100px] mt-[40px] ml-[30px]"></img>
-      <div className="text-black ml-[30px]">{name}</div>
-      <div className="flex ml-[30px]">
+    <div className="w-[220px] h-[310px] bg-gray-600 mb-[20px] mr-[20px] flex justify-center flex-col rounded-md">
+      <img src={img} className="m-auto"></img>
+      <div className="">{name}</div>
+      <div className="flex">
         <img src="https://res.cloudinary.com/dok0di4qp/image/upload/v1675456452/DualTech/Star_1_rjadvp.png"></img>
         <img
           src="https://res.cloudinary.com/dok0di4qp/image/upload/v1675456452/DualTech/Star_1_rjadvp.png"
-          className="mr-[4px]"
+          className=""
         ></img>
         <img
           src="https://res.cloudinary.com/dok0di4qp/image/upload/v1675456452/DualTech/Star_1_rjadvp.png"
-          className="mr-[4px]"
+          className=""
         ></img>
         <img
           src="https://res.cloudinary.com/dok0di4qp/image/upload/v1675456452/DualTech/Star_1_rjadvp.png"
-          className="mr-[4px]"
+          className=""
         ></img>
         <img
           src="https://res.cloudinary.com/dok0di4qp/image/upload/v1675456452/DualTech/Star_1_rjadvp.png"
-          className="mr-[4px]"
+          className=""
         ></img>
-        <p className="text-[#414141] text-sm">(15)</p>
+        <p className="">(15)</p>
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ export default function Index() {
   return (
     <div>
       <Navbar />
-      <div className="mt-[86px]">
+      <div className="w-full mt-[86px] max-[990px]:mt-[160px]">
         <Outlet />
       </div>
       <Footer />
