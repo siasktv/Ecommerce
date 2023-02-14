@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../../context/AuthProvider";
-export default function Register() {
+export default function Login() {
   interface ObjUserType {
     email: string;
     password: string;
@@ -9,14 +9,14 @@ export default function Register() {
     email: "",
     password: "",
   });
-  const { signUp } = useAuth();
+  const { signIn } = useAuth();
   return (
     <div>
       <form
         onSubmit={async (e) => {
           //crearUsuario(user)
           e.preventDefault();
-          await signUp(user.email, user.password);
+          await signIn(user.email, user.password);
           //console.log(x);
         }}
       >
