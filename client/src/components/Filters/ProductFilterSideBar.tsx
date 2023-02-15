@@ -94,13 +94,13 @@ export default function ShopFilterSidebar() {
 
   return (
     <>
-      <Card
+      <Box
         sx={{
           width: drawerWidth,
           flexShrink: 0,
           '& .MuiDrawer-paper': {
             width: drawerWidth,
-            boxSizing: 'border-box',
+            boxSizing: 'none',
           },
         }}
         //   variant="permanent"
@@ -181,7 +181,7 @@ export default function ShopFilterSidebar() {
             Clear All
           </Button>
         </Box>
-      </Card>
+      </Box>
     </>
   )
 }

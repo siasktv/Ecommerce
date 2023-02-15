@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { productsFetch } from '../../features/products/productsSlice'
 import ProductCard from '../../components/Productcard/Productcard'
@@ -23,6 +23,16 @@ const Search: React.FC = () => {
     dispatch(productsFetch())
   }, [])
 
+  const [openCart, setOpenCart] = useState(false)
+
+  const handleOpenCart = () => {
+    setOpenCart(true)
+  }
+
+  const handleCloseCart = () => {
+    setOpenCart(false)
+  }
+
   return (
     <Box sx={{ display: 'flex' }}>
       <ShopFilterSidebar />
@@ -34,15 +44,18 @@ const Search: React.FC = () => {
           justifyContent="flex-end"
           sx={{ mb: 5 }}
         >
+          {/* <CartWidget
+            openCart={openCart}
+            onOpenCart={handleOpenCart}
+            onCloseCart={handleCloseCart}
+          /> */}
           <Stack
             direction="row"
             spacing={1}
             flexShrink={0}
             sx={{ my: 1 }}
             // justifyContent=""
-          >
-            <Pagination count={3} shape="rounded" size="large" />
-          </Stack>
+          ></Stack>
           <Stack
             direction="row"
             spacing={1}
@@ -60,22 +73,13 @@ const Search: React.FC = () => {
           </Stack>
         </Stack>
         <Grid container spacing={3}>
-          {
-            // filteredProducts.length > 0 ?
-
-            products.map((p) => (
-              <Grid key={p._id} item xs={12} sm={6} md={3}>
-                <ProductCard img={p.image} price={p.price} name={p.name} />
-              </Grid>
-            ))
-          }
+          {products.map((p) => (
+            <Grid key={p._id} item xs={12} sm={6} md={3}>
+              <ProductCard img={p.image} price={p.price} name={p.name} />
+            </Grid>
+          ))}
         </Grid>
-        {/* <ProductCartWidget /> */}
-        {/* <Stack
-          direction="row"
-          flexWrap="wrap-reverse"
-          alignItems="center"
-        ></Stack> */}
+        {/* <Pagination count={3} shape="rounded" size="large" /> */}
       </Container>
     </Box>
   )
