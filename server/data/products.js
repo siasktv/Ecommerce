@@ -8,7 +8,7 @@ const products = [
       category: 'Headphones',
       price: 89.99,
       countInStock: 3,
-      rating: 0,
+      rating: 1,
       numReviews: 0,
     },
     {
@@ -20,19 +20,19 @@ const products = [
       category: 'Phone',
       price: 599.99,
       countInStock: 10,
-      rating: 0,
+      rating: 2,
       numReviews: 0,
     },
     {
       name: 'Cannon EOS 80D DSLR Camera',
-      image: 'https://brain-images-ssl.cdn.dixons.com/9/3/10145339/u_10145339.jpg',
+      image: 'https://www.thephoblographer.com/wp-content/uploads/2016/01/HR_SX540HS_3QFLASH_CL.jpg',
       description:
         'Characterized by versatile imaging specs, the Canon EOS 80D further clarifies itself using a pair of robust focusing systems and an intuitive design',
-      brand: 'Cannon',
+      brand: 'Canon',
       category: 'Camera',
       price: 929.99,
       countInStock: 0,
-      rating: 0,
+      rating: 3,
       numReviews: 0,
     },
     {
@@ -44,7 +44,7 @@ const products = [
       category: 'Computer',
       price: 399.99,
       countInStock: 10,
-      rating: 0,
+      rating: 4,
       numReviews: 0,
     },
     {
@@ -56,7 +56,7 @@ const products = [
       category: 'Mouse',
       price: 49.99,
       countInStock: 7,
-      rating: 0,
+      rating: 5,
       numReviews: 0,
     },
   ]

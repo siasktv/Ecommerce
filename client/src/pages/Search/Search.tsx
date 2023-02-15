@@ -1,62 +1,84 @@
-import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks"; 
-import { productsFetch } from "../../features/products/productsSlice";
-import ProductCard from "../../components/Productcard/Productcard";
-import { Container, Stack, Typography, Grid } from '@mui/material';
-
+import { useEffect } from 'react'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import { productsFetch } from '../../features/products/productsSlice'
+import ProductCard from '../../components/Productcard/Productcard'
+import {
+  Container,
+  Stack,
+  Typography,
+  Grid,
+  Box,
+  Pagination,
+} from '@mui/material'
+import ProductSort from '../../components/Filters/ProductSort'
+import ShopFilterSidebar from '../../components/Filters/ProductFilterSideBar'
 
 const Search: React.FC = () => {
-  const products = useAppSelector<[]>((state) => state.products.products);
-  console.log(products);
-  const dispatch = useAppDispatch();
+  const products = useAppSelector((state) => state.products.products)
+  // console.log("producto 1", products);
 
-  useEffect (() => {
-  dispatch(productsFetch())
-  }, []);
-
-  interface ProductsProps {
-    _id: string,
-    image: string,
-    price: number,
-    name: string
-  }
+  // console.log("producto 2", products2)
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    dispatch(productsFetch())
+  }, [])
 
   return (
-  <>
-
-       <Container>
-        <Typography variant="h4" sx={{ mb: 5 }}>
-          Products
-        </Typography>
-
-        <Stack direction="row" flexWrap="wrap-reverse" alignItems="center" justifyContent="flex-end" sx={{ mb: 5 }}>
-          <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
+    <Box sx={{ display: 'flex' }}>
+      <ShopFilterSidebar />
+      <Container>
+        <Stack
+          direction="row"
+          flexWrap="wrap-reverse"
+          alignItems="space-between"
+          justifyContent="flex-end"
+          sx={{ mb: 5 }}
+        >
+          <Stack
+            direction="row"
+            spacing={1}
+            flexShrink={0}
+            sx={{ my: 1 }}
+            // justifyContent=""
+          >
+            <Pagination count={3} shape="rounded" size="large" />
+          </Stack>
+          <Stack
+            direction="row"
+            spacing={1}
+            flexShrink={0}
+            sx={{ my: 1 }}
+            justifyContent="flex-end"
+          >
             {/* <ProductFilterSidebar
               openFilter={openFilter}
               onOpenFilter={handleOpenFilter}
               onCloseFilter={handleCloseFilter}
             /> */}
+            <ProductSort />
+            {/* <ShopFilterSidebar/> */}
           </Stack>
         </Stack>
-        <Grid container spacing={3} >
-        {
-          products?.map((p: ProductsProps) => (
-            <Grid  key={p._id} item xs={12} sm={6} md={3}>
-            <ProductCard
-            img={p.image}
-            price={p.price}
-            name={p.name}
-            />
-          </Grid> 
-      ))
-    }
-    </Grid>
-       
+        <Grid container spacing={3}>
+          {
+            // filteredProducts.length > 0 ?
+
+            products.map((p) => (
+              <Grid key={p._id} item xs={12} sm={6} md={3}>
+                <ProductCard img={p.image} price={p.price} name={p.name} />
+              </Grid>
+            ))
+          }
+        </Grid>
         {/* <ProductCartWidget /> */}
+        {/* <Stack
+          direction="row"
+          flexWrap="wrap-reverse"
+          alignItems="center"
+        ></Stack> */}
       </Container>
-  </>
-  
-  );
+    </Box>
+  )
 }
 
-export default Search;
+export default Search
