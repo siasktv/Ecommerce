@@ -14,7 +14,6 @@ interface CartState {
   cartItems: CartItem[]
   cartTotalQuantity: number
   cartTotalAmount: number
-  isCartOpen: boolean
 }
 
 const cartItemsFromStorage = localStorage.getItem('cartItems')
@@ -23,7 +22,6 @@ const initialState: CartState = {
   cartItems: cartItemsFromStorage ? JSON.parse(cartItemsFromStorage) : [],
   cartTotalQuantity: 0,
   cartTotalAmount: 0,
-  isCartOpen: false,
 }
 
 const cartSlice = createSlice({
@@ -31,6 +29,7 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart(state, action: PayloadAction<CartItem>) {
+      console.log(action.payload)
       const existingIndex = state.cartItems.findIndex(
         (item) => item._id === action.payload._id
       )
@@ -38,7 +37,7 @@ const cartSlice = createSlice({
       if (existingIndex >= 0) {
         state.cartItems[existingIndex] = {
           ...state.cartItems[existingIndex],
-          cartQuantity: state.cartItems[existingIndex].cartQuantity + 1,
+          cartQuantity: (state.cartItems[existingIndex]?.cartQuantity ?? 0) + 1,
         }
         toast.info('Increased product quantity', {
           position: 'bottom-left',
@@ -115,19 +114,10 @@ const cartSlice = createSlice({
 
       localStorage.removeItem('cartItems')
     },
-    setIsCartOpen: (state) => {
-      state.isCartOpen = !state.isCartOpen
-    },
   },
 })
 
-export const {
-  addToCart,
-  decreaseCart,
-  removeFromCart,
-  getTotals,
-  clearCart,
-  setIsCartOpen,
-} = cartSlice.actions
+export const { addToCart, decreaseCart, removeFromCart, getTotals, clearCart } =
+  cartSlice.actions
 
 export default cartSlice.reducer

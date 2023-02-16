@@ -9,6 +9,9 @@ import {
   Divider,
 } from '@mui/material'
 
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import { addToCart } from '../../features/cart/cartSlice'
+
 const StyledProductImg = styled('img')({
   top: 0,
   width: '100%',
@@ -18,31 +21,56 @@ const StyledProductImg = styled('img')({
 })
 
 interface ProductCardProps {
-  img: string
-  price: number
-  name: string
+  product: {
+    _id: string
+    name: string
+    image: string
+    description: string
+    price: number
+    rating: number
+    cartQuantity?: number
+  }
 }
 
-export default function ProductCard({ img, price, name }: ProductCardProps) {
+export default function ProductCard(p: ProductCardProps) {
+  const dispatch = useAppDispatch()
+
+  const handleAddToCart = (p: ProductCardProps) => {
+    dispatch(
+      addToCart({
+        _id: p.product._id,
+        name: p.product.name,
+        price: p.product.price,
+        description: p.product.description,
+        image: p.product.image,
+        cartQuantity: 1,
+      })
+    )
+  }
+
+  console.log(p)
+
   return (
     <Card variant="outlined">
       <Box sx={{ pt: '100%', position: 'relative' }}>
-        <StyledProductImg alt={name} src={img} />
+        <StyledProductImg alt={p.product.name} src={p.product.image} />
       </Box>
       <Divider />
       <Stack spacing={2} sx={{ p: 4 }}>
         <Link color="inherit" underline="hover">
           <Typography variant="subtitle2" noWrap>
-            {name}
+            {p.product.name}
           </Typography>
         </Link>
 
         <Stack direction="row" justifyContent="space-between">
           <Typography component="span" variant="body1">
-            ${price}
+            ${p.product.price}
           </Typography>
         </Stack>
-        <Button variant="outlined">Add to cart</Button>
+        <Button variant="outlined" onClick={() => handleAddToCart(p)}>
+          Add to cart
+        </Button>
       </Stack>
     </Card>
   )

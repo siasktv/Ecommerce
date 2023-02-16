@@ -23,16 +23,6 @@ const Search: React.FC = () => {
     dispatch(productsFetch())
   }, [])
 
-  const [openCart, setOpenCart] = useState(false)
-
-  const handleOpenCart = () => {
-    setOpenCart(true)
-  }
-
-  const handleCloseCart = () => {
-    setOpenCart(false)
-  }
-
   return (
     <Box sx={{ display: 'flex' }}>
       <ShopFilterSidebar />
@@ -75,7 +65,7 @@ const Search: React.FC = () => {
         <Grid container spacing={3}>
           {products.map((p) => (
             <Grid key={p._id} item xs={12} sm={6} md={3}>
-              <ProductCard img={p.image} price={p.price} name={p.name} />
+              <ProductCard product={p} />
             </Grid>
           ))}
         </Grid>
