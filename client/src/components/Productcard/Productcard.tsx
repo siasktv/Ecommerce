@@ -11,6 +11,7 @@ import {
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { addToCart } from '../../features/cart/cartSlice'
+import { toast } from 'react-toastify'
 
 const StyledProductImg = styled('img')({
   top: 0,

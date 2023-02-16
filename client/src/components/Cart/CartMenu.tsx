@@ -24,6 +24,7 @@ import {
   clearCart,
 } from '../../features/cart/cartSlice'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 type CartMenuProps = {
   openCart?: boolean
