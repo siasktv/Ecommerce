@@ -17,7 +17,6 @@ import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import styled from '@emotion/styled'
 import {
-  addToCart,
   decreaseCart,
   removeFromCart,
   getTotals,
@@ -52,6 +51,17 @@ export default function CartMenu({
   const cartQuantity = useAppSelector((state) => state.cart.cartTotalQuantity)
 
   const cartItems = useAppSelector((state) => state.cart.cartItems)
+
+  const handleRemoveFromCart = (item: {
+    _id: string
+    name: string
+    price: number
+    description: string
+    image: string
+    cartQuantity: number
+  }) => {
+    dispatch(removeFromCart(item))
+  }
 
   console.log(cartItems)
   const dispatch = useAppDispatch()
@@ -88,7 +98,7 @@ export default function CartMenu({
         <Box padding="30px" overflow="auto" height="100%">
           {/* HEADER */}
           <FlexBox mb="15px">
-            <Typography>SHOPPING BAG ({cartQuantity})</Typography>
+            <Typography>SHOPPING BAG ({cartItems.length})</Typography>
           </FlexBox>
           <Divider variant="fullWidth" />
           {/* CART LIST */}
@@ -107,11 +117,7 @@ export default function CartMenu({
                   <Box flex="1 1 60%">
                     <FlexBox mb="5px">
                       <Typography fontWeight="bold">{item.name}</Typography>
-                      <IconButton
-                      // onClick={() =>
-                      //   dispatch(removeFromCart())
-                      // }
-                      >
+                      <IconButton onClick={() => handleRemoveFromCart(item)}>
                         <CloseIcon />
                       </IconButton>
                     </FlexBox>
