@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { productsFetch } from '../../features/products/productsSlice'
+import { getTotals } from '../../features/cart/cartSlice'
 import ProductCard from '../../components/Productcard/Productcard'
 import {
   Container,
@@ -21,6 +22,7 @@ const Search: React.FC = () => {
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(productsFetch())
+    dispatch(getTotals())
   }, [])
 
   return (

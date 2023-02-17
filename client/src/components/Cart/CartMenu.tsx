@@ -1,4 +1,5 @@
 // @mui
+import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import PropTypes from 'prop-types'
 import {
@@ -17,13 +18,13 @@ import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import styled from '@emotion/styled'
 import {
+  addToCart,
   decreaseCart,
   removeFromCart,
-  getTotals,
   clearCart,
+  getTotals,
 } from '../../features/cart/cartSlice'
 import { useNavigate } from 'react-router-dom'
-import { toast } from 'react-toastify'
 
 type CartMenuProps = {
   openCart?: boolean
@@ -48,9 +49,15 @@ export default function CartMenu({
   onOpenCart,
   onCloseCart,
 }: CartMenuProps) {
-  const cartQuantity = useAppSelector((state) => state.cart.cartTotalQuantity)
-
   const cartItems = useAppSelector((state) => state.cart.cartItems)
+
+  const cartTotalAmount = useAppSelector((state) => state.cart.cartTotalAmount)
+
+  const cartTotalQuantity = useAppSelector(
+    (state) => state.cart.cartTotalQuantity
+  )
+
+  const navigate = useNavigate()
 
   const handleRemoveFromCart = (item: {
     _id: string
@@ -61,15 +68,41 @@ export default function CartMenu({
     cartQuantity: number
   }) => {
     dispatch(removeFromCart(item))
+    dispatch(getTotals())
+  }
+
+  const handleDecreaseQuantity = (item: {
+    _id: string
+    name: string
+    price: number
+    description: string
+    image: string
+    cartQuantity: number
+  }) => {
+    dispatch(decreaseCart(item))
+    dispatch(getTotals())
+  }
+
+  const handleIncreaseQuantity = (item: {
+    _id: string
+    name: string
+    price: number
+    description: string
+    image: string
+    cartQuantity: number
+  }) => {
+    dispatch(addToCart(item))
+    dispatch(getTotals())
   }
 
   console.log(cartItems)
   const dispatch = useAppDispatch()
+
   return (
     <>
       <Badge
         showZero
-        badgeContent={cartQuantity}
+        badgeContent={cartItems.length}
         color="error"
         max={5}
         onClick={onOpenCart}
@@ -98,7 +131,7 @@ export default function CartMenu({
         <Box padding="30px" overflow="auto" height="100%">
           {/* HEADER */}
           <FlexBox mb="15px">
-            <Typography>SHOPPING BAG ({cartItems.length})</Typography>
+            <Typography>SHOPPING BAG ({cartTotalQuantity})</Typography>
           </FlexBox>
           <Divider variant="fullWidth" />
           {/* CART LIST */}
@@ -129,28 +162,47 @@ export default function CartMenu({
                         border={'1.5px solid black'}
                       >
                         <IconButton
-                        //   onClick={() =>
-                        //     dispatch(decreaseCount({ id: item.id }))
-                        //   }
+                          onClick={() => handleDecreaseQuantity(item)}
                         >
                           <RemoveIcon />
                         </IconButton>
                         <Typography>{item.cartQuantity}</Typography>
                         <IconButton
-                        //   onClick={() =>
-                        //     dispatch(increaseCount({ id: item.id }))
-                        //   }
+                          onClick={() => handleIncreaseQuantity(item)}
                         >
                           <AddIcon />
                         </IconButton>
                       </Box>
-                      <Typography fontWeight="bold">${item.price}</Typography>
+                      <Typography fontWeight="bold">
+                        ${(item.price * item.cartQuantity).toFixed(2)}
+                      </Typography>
                     </FlexBox>
                   </Box>
                 </FlexBox>
                 <Divider />
               </Box>
             ))}
+          </Box>
+          <Box m="20px 0">
+            <FlexBox m="20px 0">
+              <Typography fontWeight="bold">SUBTOTAL</Typography>
+              <Typography fontWeight="bold">${cartTotalAmount}</Typography>
+            </FlexBox>
+            <Button
+              sx={{
+                backgroundColor: 'black',
+                color: 'white',
+                borderRadius: 0,
+                minWidth: '100%',
+                padding: '20px 40px',
+                m: '20px 0',
+              }}
+              onClick={() => {
+                navigate('/checkout')
+              }}
+            >
+              CHECKOUT
+            </Button>
           </Box>
         </Box>
       </Drawer>

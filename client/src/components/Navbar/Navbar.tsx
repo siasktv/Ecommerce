@@ -11,7 +11,6 @@ import shades from '../../theme'
 function Navbar() {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const cartQuantity = useAppSelector((state) => state.cart.cartTotalQuantity)
 
   const [openCart, setOpenCart] = useState(false)
 

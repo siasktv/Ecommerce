@@ -10,7 +10,7 @@ import {
 } from '@mui/material'
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { addToCart } from '../../features/cart/cartSlice'
+import { addToCart, getTotals } from '../../features/cart/cartSlice'
 import { toast } from 'react-toastify'
 
 const StyledProductImg = styled('img')({
@@ -47,6 +47,7 @@ export default function ProductCard(p: ProductCardProps) {
         cartQuantity: 1,
       })
     )
+    dispatch(getTotals())
   }
 
   console.log(p)
