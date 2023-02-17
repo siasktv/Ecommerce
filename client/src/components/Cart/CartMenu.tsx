@@ -192,10 +192,15 @@ export default function CartMenu({
               sx={{
                 backgroundColor: 'black',
                 color: 'white',
-                borderRadius: 0,
+                borderRadius: 2,
                 minWidth: '100%',
                 padding: '20px 40px',
                 m: '20px 0',
+                '&:hover': {
+                  backgroundColor: 'white',
+                  color: 'black',
+                  border: '2px solid black',
+                },
               }}
               onClick={() => {
                 navigate('/checkout')
