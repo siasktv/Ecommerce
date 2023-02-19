@@ -164,7 +164,6 @@ const productsSlice = createSlice({
         // Add user to the state array
         state.products = action.payload
         state.allProducts = action.payload.slice()
-        // state.filteredProducts = state.products.filter(p => state.selectedBrands.includes(p.brand.toLowerCase()))
       }
     )
   },

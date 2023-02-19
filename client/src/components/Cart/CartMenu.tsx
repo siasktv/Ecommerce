@@ -106,7 +106,7 @@ export default function CartMenu({
         color="error"
         max={5}
         onClick={onOpenCart}
-        // invisible={cartQuantity === 0}
+        invisible={cartTotalQuantity === 0}
         sx={{
           '& .MuiBadge-badge': {
             right: 5,
@@ -115,7 +115,7 @@ export default function CartMenu({
           },
         }}
       >
-        <IconButton sx={{ color: '#127FFF' }}>
+        <IconButton sx={{ color: 'black' }}>
           <ShoppingCart />
         </IconButton>
       </Badge>

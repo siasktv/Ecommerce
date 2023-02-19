@@ -46,7 +46,7 @@ function Navbar() {
           onClick={() => navigate('/')}
           sx={{ '&:hover': { cursor: 'pointer' } }}
           // color={shades.secondary[500]}
-          color="#127FFF"
+          color="black"
         >
           <DiamondIcon />
         </Box>
@@ -56,7 +56,7 @@ function Navbar() {
           columnGap="10px"
           zIndex="2"
         >
-          <IconButton sx={{ color: '#127FFF' }}>
+          <IconButton sx={{ color: 'black' }}>
             <Person />
           </IconButton>
           <CartMenu
