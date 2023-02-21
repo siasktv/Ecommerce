@@ -24,7 +24,7 @@ import {
   clearCart,
   getTotals,
 } from '../../features/cart/cartSlice'
-import { useNavigate } from 'react-router-dom'
+import PayButton from '../Checkout/PayButton'
 
 type CartMenuProps = {
   openCart?: boolean
@@ -56,8 +56,6 @@ export default function CartMenu({
   const cartTotalQuantity = useAppSelector(
     (state) => state.cart.cartTotalQuantity
   )
-
-  const navigate = useNavigate()
 
   const handleRemoveFromCart = (item: {
     _id: string
@@ -95,7 +93,6 @@ export default function CartMenu({
     dispatch(getTotals())
   }
 
-  console.log(cartItems)
   const dispatch = useAppDispatch()
 
   return (
@@ -188,7 +185,7 @@ export default function CartMenu({
               <Typography fontWeight="bold">SUBTOTAL</Typography>
               <Typography fontWeight="bold">${cartTotalAmount}</Typography>
             </FlexBox>
-            <Button
+            {/* <Button
               sx={{
                 backgroundColor: 'black',
                 color: 'white',
@@ -202,12 +199,9 @@ export default function CartMenu({
                   border: '2px solid black',
                 },
               }}
-              onClick={() => {
-                navigate('/checkout')
-              }}
-            >
-              CHECKOUT
-            </Button>
+            > */}
+            <PayButton cartItems={cartItems} />
+            {/* </Button> */}
           </Box>
         </Box>
       </Drawer>
