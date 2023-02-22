@@ -24,12 +24,14 @@ const paths = {
   reviews: '/reviews',
   users: '/users',
   stripe: '/stripe',
+  usersLogin: '/users/login',
 }
 
 server.use(paths.products, require('./routes/productsRoutes'))
 server.use(paths.reviews, require('./routes/reviewsRoutes'))
 server.use(paths.users, require('./routes/usersRoutes'))
 server.use(paths.stripe, require('./routes/stripe'))
+server.use(paths.usersLogin, require('./routes/userAuthRoutes'))
 
 connectDB()
 server.listen('3001', () => {
