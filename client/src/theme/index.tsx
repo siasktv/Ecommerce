@@ -2,6 +2,7 @@ import React from 'react'
 import typography from './typography'
 import GlobalStyles from './globalStyles'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
+import shadows from './shadows'
 interface Props {
   children: React.ReactNode
 }
@@ -25,6 +26,7 @@ const MuiThemeProvider: React.FC<Props> = ({ children }) => {
       button: typography.button,
       // add more styles as needed
     },
+    shadows: shadows(),
   })
 
   return (

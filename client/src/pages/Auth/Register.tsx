@@ -19,6 +19,7 @@ import LoginForm from '../../components/Auth/LoginForm'
 import { alpha } from '@mui/material/styles'
 //
 import palette from '../../theme/palette'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
 
 // ----------------------------------------------------------------------
 
@@ -56,7 +57,7 @@ const StyledContent = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const mdUp = useResponsive('up', 'md')
 
   return (
@@ -73,7 +74,7 @@ export default function LoginPage() {
         {mdUp && (
           <StyledSection>
             <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-              Hi, Welcome Back
+              Welcome!
             </Typography>
             <img src={Logo} alt="login" />
           </StyledSection>
@@ -82,13 +83,21 @@ export default function LoginPage() {
         <Container maxWidth="sm">
           <StyledContent>
             <Typography variant="h4" gutterBottom>
-              Sign in to Minimal
+              Register
             </Typography>
 
             <Typography variant="body2" sx={{ mb: 5 }}>
-              Don’t have an account? {''}
-              <Link variant="subtitle2">Get started</Link>
+              Start buying and get great deals with us! {''}
+              {/* <Link variant="subtitle2">Get started</Link> */}
             </Typography>
+
+            <LoginForm />
+
+            <Divider sx={{ my: 3 }}>
+              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                OR
+              </Typography>
+            </Divider>
 
             <Stack direction="row" spacing={2}>
               <Button fullWidth size="large" color="inherit" variant="outlined">
@@ -108,24 +117,7 @@ export default function LoginPage() {
                   height={22}
                 />
               </Button>
-
-              <Button fullWidth size="large" color="inherit" variant="outlined">
-                <Iconify
-                  icon="eva:twitter-fill"
-                  color="#1C9CEA"
-                  width={22}
-                  height={22}
-                />
-              </Button>
             </Stack>
-
-            <Divider sx={{ my: 3 }}>
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                OR
-              </Typography>
-            </Divider>
-
-            <LoginForm />
           </StyledContent>
         </Container>
       </StyledRoot>

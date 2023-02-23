@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
 // @mui
 import {
   Link,
@@ -13,26 +14,52 @@ import {
 import { LoadingButton } from '@mui/lab'
 // components
 import Iconify from '../Iconify/Iconify'
+import { registerUser } from '../../features/users/authSlice'
 
 // ----------------------------------------------------------------------
 
 export default function LoginForm() {
   const navigate = useNavigate()
-
+  const dispatch = useAppDispatch()
   const [showPassword, setShowPassword] = useState(false)
 
-  const handleClick = () => {
-    navigate('/dashboard', { replace: true })
+  const auth = useAppSelector((state) => state.auth)
+  console.log(auth)
+
+  const [user, setUser] = useState({
+    name: '',
+    email: '',
+    password: '',
+  })
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value,
+    })
   }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    dispatch(registerUser(user))
+  }
+
+  console.log('user', user)
+
+  // const handleClick = () => {
+  //   navigate('/dashboard', { replace: true })
+  // }
 
   return (
     <>
       <Stack spacing={3}>
-        <TextField name="email" label="Email address" />
+        <TextField name="name" label="Name" onChange={handleChange} />
+        <TextField name="email" label="Email address" onChange={handleChange} />
 
         <TextField
           name="password"
           label="Password"
+          onChange={handleChange}
           type={showPassword ? 'text' : 'password'}
           InputProps={{
             endAdornment: (
@@ -57,13 +84,13 @@ export default function LoginForm() {
         justifyContent="space-between"
         sx={{ my: 2 }}
       >
-        <FormControlLabel
+        {/* <FormControlLabel
           control={<Checkbox name="remember" />}
           label="Remember me"
         />
         <Link variant="subtitle2" underline="hover">
           Forgot password?
-        </Link>
+        </Link> */}
       </Stack>
 
       <LoadingButton
@@ -71,9 +98,9 @@ export default function LoginForm() {
         size="large"
         type="submit"
         variant="contained"
-        onClick={handleClick}
+        onClick={handleSubmit}
       >
-        Login
+        Register
       </LoadingButton>
     </>
   )
