@@ -10,6 +10,7 @@ import {
   Grid,
   Box,
   Pagination,
+  Divider,
 } from '@mui/material'
 import ProductSort from '../../components/Filters/ProductSort'
 import ShopFilterSidebar from '../../components/Filters/ProductFilterSideBar'
@@ -29,7 +30,8 @@ const Search: React.FC = () => {
   return (
     <>
       <Navbar />
-      <Box sx={{ display: 'flex' }}>
+
+      <Box marginTop={10} sx={{ display: 'flex' }}>
         <ShopFilterSidebar />
         <Container>
           <Stack

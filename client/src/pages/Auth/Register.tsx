@@ -9,13 +9,13 @@ import {
   Button,
 } from '@mui/material'
 //svg
-import Logo from '/svg-1.svg'
+import Logo from '/svg-3.svg'
 // hooks
 import useResponsive from '../../hooks/useResponsive'
 // components
 import Iconify from '../../components/Iconify/Iconify'
 // loginForm
-import LoginForm from '../../components/Auth/LoginForm'
+import LoginForm from '../../components/Auth/RegisterForm'
 import { alpha } from '@mui/material/styles'
 //
 import palette from '../../theme/palette'
@@ -74,7 +74,7 @@ export default function RegisterPage() {
         {mdUp && (
           <StyledSection>
             <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-              Welcome!
+              Hi, welcome!👋
             </Typography>
             <img src={Logo} alt="login" />
           </StyledSection>

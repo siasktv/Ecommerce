@@ -14,6 +14,7 @@ import { CheckoutSuccess } from './pages/Checkout/CheckoutSuccess'
 import MuiThemeProvider from './theme'
 import { ToastContainer } from 'react-toastify'
 import Register from './pages/Auth/Register'
+import LoginPage from './pages/Auth/Login'
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
       { path: '/', element: <Home /> },
       { path: '/search', element: <Search /> },
       { path: '/checkout-success', element: <CheckoutSuccess /> },
+      { path: '/login', element: <LoginPage /> },
       { path: '/register', element: <Register /> },
     ],
   },

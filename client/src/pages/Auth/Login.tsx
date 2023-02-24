@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 // @mui
 import { styled } from '@mui/material/styles'
 import {
@@ -8,12 +9,18 @@ import {
   Stack,
   Button,
 } from '@mui/material'
+//svg
+import Logo from '/svg-1.svg'
 // hooks
 import useResponsive from '../../hooks/useResponsive'
 // components
-import Iconify from '../Iconify/Iconify'
+import Iconify from '../../components/Iconify/Iconify'
 // loginForm
-import LoginForm from './LoginForm'
+import LoginForm from '../../components/Auth/LoginForm'
+import { alpha } from '@mui/material/styles'
+//
+import palette from '../../theme/palette'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
 
 // ----------------------------------------------------------------------
 
@@ -23,13 +30,19 @@ const StyledRoot = styled('div')(({ theme }) => ({
   },
 }))
 
+const color = palette.grey[500]
+const transparent = alpha(color, 0.16)
+
 const StyledSection = styled('div')(({ theme }) => ({
   width: '100%',
   maxWidth: 480,
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
-  //   boxShadow: theme.customShadows.card,
+  boxShadow: `0 0 2px 0 ${alpha(color, 0.2)}, 0 12px 24px -4px ${alpha(
+    color,
+    0.12
+  )}`,
   backgroundColor: theme.palette.background.default,
 }))
 
@@ -46,7 +59,11 @@ const StyledContent = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function LoginPage() {
+  const navigate = useNavigate()
   const mdUp = useResponsive('up', 'md')
+  const handleNavigate = () => {
+    navigate('/register')
+  }
 
   return (
     <>
@@ -62,25 +79,35 @@ export default function LoginPage() {
         {mdUp && (
           <StyledSection>
             <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-              Hi, Welcome Back
+              Hi, welcome back!👋
             </Typography>
-            <img
-              src="/assets/illustrations/illustration_login.png"
-              alt="login"
-            />
+            <img src={Logo} alt="login" />
           </StyledSection>
         )}
 
         <Container maxWidth="sm">
           <StyledContent>
             <Typography variant="h4" gutterBottom>
-              Sign in to Minimal
+              Sign in
             </Typography>
 
             <Typography variant="body2" sx={{ mb: 5 }}>
               Don’t have an account? {''}
-              <Link variant="subtitle2">Get started</Link>
+              <Link
+                sx={{ cursor: 'pointer' }}
+                onClick={handleNavigate}
+                variant="subtitle2"
+              >
+                Get started
+              </Link>
             </Typography>
+            <LoginForm />
+
+            <Divider sx={{ my: 3 }}>
+              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                OR
+              </Typography>
+            </Divider>
 
             <Stack direction="row" spacing={2}>
               <Button fullWidth size="large" color="inherit" variant="outlined">
@@ -100,24 +127,7 @@ export default function LoginPage() {
                   height={22}
                 />
               </Button>
-
-              <Button fullWidth size="large" color="inherit" variant="outlined">
-                <Iconify
-                  icon="eva:twitter-fill"
-                  color="#1C9CEA"
-                  width={22}
-                  height={22}
-                />
-              </Button>
             </Stack>
-
-            <Divider sx={{ my: 3 }}>
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                OR
-              </Typography>
-            </Divider>
-
-            <LoginForm />
           </StyledContent>
         </Container>
       </StyledRoot>

@@ -1,6 +1,5 @@
 const { Schema, model } = require('mongoose')
 const { isEmail } = require('validator')
-const bcrypt = require('bcrypt')
 
 const UserSchema = new Schema(
   {
@@ -46,9 +45,5 @@ const UserSchema = new Schema(
     timestamps: true,
   }
 )
-
-// UserSchema.methods.matchPassword = async function (enteredPassword) {
-//   return await bcrypt.compare(enteredPassword, this.password)
-// }
 
 module.exports = model('User', UserSchema)

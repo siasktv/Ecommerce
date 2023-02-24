@@ -43,6 +43,7 @@ export default function LoginForm() {
   const handleSubmit = (e: any) => {
     e.preventDefault()
     dispatch(registerUser(user))
+    navigate('/search')
   }
 
   console.log('user', user)
@@ -54,6 +55,7 @@ export default function LoginForm() {
   return (
     <>
       <Stack spacing={3}>
+        <TextField name="name" label="Name" onChange={handleChange} />
         <TextField name="email" label="Email address" onChange={handleChange} />
 
         <TextField
@@ -83,15 +85,7 @@ export default function LoginForm() {
         alignItems="center"
         justifyContent="space-between"
         sx={{ my: 2 }}
-      >
-        {/* <FormControlLabel
-          control={<Checkbox name="remember" />}
-          label="Remember me"
-        />
-        <Link variant="subtitle2" underline="hover">
-          Forgot password?
-        </Link> */}
-      </Stack>
+      ></Stack>
 
       <LoadingButton
         fullWidth
@@ -100,7 +94,7 @@ export default function LoginForm() {
         variant="contained"
         onClick={handleSubmit}
       >
-        Login
+        Register
       </LoadingButton>
       {auth.registerError && (
         <Typography color="error" variant="subtitle1">

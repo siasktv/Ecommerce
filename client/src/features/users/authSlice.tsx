@@ -8,19 +8,25 @@ type AuthUser = {
   email: string
   _id: string
   registerStatus: string
-  registerError: string
+  registerError: string | null
   loginStatus: string
   loginError: string
   userLoaded: boolean
 }
 
+// type DecodedToken = {
+//   name: string
+//   email: string
+//   _id: string
+// }
+
 const initialState: AuthUser = {
-  token: localStorage.getItem('token'),
+  token: null,
   name: '',
   email: '',
   _id: '',
-  registerStatus: '',
-  registerError: '',
+  registerStatus: 'idle',
+  registerError: null,
   loginStatus: '',
   loginError: '',
   userLoaded: false,
@@ -36,7 +42,7 @@ export const registerUser = createAsyncThunk<string, RegisterUserRequest>(
   'auth/registerUser',
   async (values, { rejectWithValue }) => {
     try {
-      const token = await axios.post<string>(
+      const token = await axios.post(
         'http://localhost:3001/users/auth/register',
         {
           name: values.name,
@@ -56,7 +62,23 @@ export const registerUser = createAsyncThunk<string, RegisterUserRequest>(
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    logoutUser: (state: AuthUser) => {
+      localStorage.removeItem('token')
+      return {
+        ...state,
+        token: null,
+        name: '',
+        email: '',
+        _id: '',
+        registerStatus: 'idle',
+        registerError: null,
+        loginStatus: '',
+        loginError: '',
+        userLoaded: false,
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(registerUser.pending, (state: AuthUser) => {
       return {
@@ -68,18 +90,17 @@ const authSlice = createSlice({
       registerUser.fulfilled,
       (state: AuthUser, action: PayloadAction<string>) => {
         if (action.payload) {
-          const user = jwtDecode(action.payload) as {
-            name: string
-            email: string
-            id: string
-          }
+          const user = jwtDecode(action.payload) as AuthUser
+
           return {
             ...state,
             token: action.payload,
             name: user.name,
             email: user.email,
-            _id: user.id,
+            _id: user._id,
             registerStatus: 'success',
+            registerError: null,
+            userLoaded: true,
           }
         } else {
           return state
@@ -90,14 +111,58 @@ const authSlice = createSlice({
     builder.addCase(
       registerUser.rejected,
       (state: AuthUser, action: PayloadAction<unknown>) => {
-        const payload = (action.payload as string) || 'Unknown error'
+        const payload = (action.payload as any) || 'Unknown error'
         return {
           ...state,
           registerStatus: 'rejected',
-          registerError: payload,
+          registerError: payload.response.data,
         }
       }
     )
   },
 })
+
+export const { logoutUser } = authSlice.actions
 export default authSlice.reducer
+
+//The function should return the new state object instead of updating the state object directly
+// loadUser: (state) => {
+//   const token = state.token
+
+//   if (token) {
+//     const user = jwtDecode(token) as {
+//       name: string
+//       email: string
+//       _id: string
+//     }
+//     return {
+//       ...state,
+//       token,
+//       name: user.name,
+//       email: user.email,
+//       _id: user._id,
+//       userLoaded: true,
+//     }
+//   }
+
+//   return state
+// },
+// logoutUser: (state = initialState) => {
+//   localStorage.removeItem('token')
+//   state.token = null
+//   state.name = ''
+//   state.email = ''
+//   state._id = ''
+//   state.registerStatus = 'idle'
+//   state.registerError = null
+//   state.loginStatus = ''
+//   state.loginError = ''
+//   state.userLoaded = false
+//   return state
+// },
+
+// const token = localStorage.getItem('token')
+// let decodedToken = null
+// if (token) {
+//   decodedToken = jwtDecode(token) as DecodedToken
+// }
