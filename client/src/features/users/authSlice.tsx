@@ -59,6 +59,23 @@ export const registerUser = createAsyncThunk<string, RegisterUserRequest>(
   }
 )
 
+export const loginUser = createAsyncThunk<string, RegisterUserRequest>(
+  'auth/loginUser',
+  async (values, { rejectWithValue }) => {
+    try {
+      const token = await axios.post('http://localhost:3001/users/auth/login', {
+        email: values.email,
+        password: values.password,
+      })
+      localStorage.setItem('token', token.data)
+      return token.data
+    } catch (err) {
+      console.log(err)
+      return rejectWithValue(err)
+    }
+  }
+)
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -119,50 +136,48 @@ const authSlice = createSlice({
         }
       }
     )
+    builder.addCase(loginUser.pending, (state: AuthUser) => {
+      return {
+        ...state,
+        registerStatus: 'pending',
+      }
+    })
+    //LOGIN
+    builder.addCase(
+      loginUser.fulfilled,
+      (state: AuthUser, action: PayloadAction<string>) => {
+        if (action.payload) {
+          const user = jwtDecode(action.payload) as AuthUser
+
+          return {
+            ...state,
+            token: action.payload,
+            name: user.name,
+            email: user.email,
+            _id: user._id,
+            registerStatus: 'success',
+            registerError: null,
+            userLoaded: true,
+          }
+        } else {
+          return state
+        }
+      }
+    )
+
+    builder.addCase(
+      loginUser.rejected,
+      (state: AuthUser, action: PayloadAction<unknown>) => {
+        const payload = (action.payload as any) || 'Unknown error'
+        return {
+          ...state,
+          registerStatus: 'rejected',
+          registerError: payload.response.data,
+        }
+      }
+    )
   },
 })
 
 export const { logoutUser } = authSlice.actions
 export default authSlice.reducer
-
-//The function should return the new state object instead of updating the state object directly
-// loadUser: (state) => {
-//   const token = state.token
-
-//   if (token) {
-//     const user = jwtDecode(token) as {
-//       name: string
-//       email: string
-//       _id: string
-//     }
-//     return {
-//       ...state,
-//       token,
-//       name: user.name,
-//       email: user.email,
-//       _id: user._id,
-//       userLoaded: true,
-//     }
-//   }
-
-//   return state
-// },
-// logoutUser: (state = initialState) => {
-//   localStorage.removeItem('token')
-//   state.token = null
-//   state.name = ''
-//   state.email = ''
-//   state._id = ''
-//   state.registerStatus = 'idle'
-//   state.registerError = null
-//   state.loginStatus = ''
-//   state.loginError = ''
-//   state.userLoaded = false
-//   return state
-// },
-
-// const token = localStorage.getItem('token')
-// let decodedToken = null
-// if (token) {
-//   decodedToken = jwtDecode(token) as DecodedToken
-// }

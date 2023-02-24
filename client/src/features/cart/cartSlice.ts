@@ -1,5 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 import { toast } from 'react-toastify'
+import axios from 'axios'
 
 interface CartItem {
   _id: string
@@ -24,6 +25,26 @@ const initialState: CartState = {
   cartTotalAmount: 0,
 }
 
+export const handleCheckout = createAsyncThunk(
+  'cart/productsCart',
+  async (cartItems: CartItem[]) => {
+    try {
+      const response = await axios.post(
+        'http://localhost:3001/stripe/create-checkout-session',
+        cartItems
+      )
+      if (response.data.url) {
+        window.location.href = response.data.url
+      }
+      return response.data // You need to return the response from the async function
+    } catch (err) {
+      console.log(err)
+      throw err
+    }
+  }
+)
+
+//Create your Slice
 const cartSlice = createSlice({
   name: 'cart',
   initialState,

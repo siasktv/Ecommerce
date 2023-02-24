@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { Button } from '@mui/material'
 import { useSelector } from 'react-redux'
 import { useAppSelector } from '../../app/hooks'
 
@@ -28,7 +29,24 @@ const PayButton = ({ cartItems }: PayButtonProps) => {
   }
   return (
     <>
-      <button onClick={() => handleCheckout(cartItems)}>Check out</button>
+      <Button
+        sx={{
+          backgroundColor: 'black',
+          color: 'white',
+          borderRadius: 2,
+          minWidth: '100%',
+          padding: '20px 40px',
+          m: '20px 0',
+          '&:hover': {
+            backgroundColor: 'white',
+            color: 'black',
+            border: '2px solid black',
+          },
+        }}
+        onClick={() => handleCheckout(cartItems)}
+      >
+        Check out
+      </Button>
     </>
   )
 }

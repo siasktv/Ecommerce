@@ -1,5 +1,3 @@
-// @mui
-import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import PropTypes from 'prop-types'
 import {
@@ -25,6 +23,7 @@ import {
   getTotals,
 } from '../../features/cart/cartSlice'
 import PayButton from '../Checkout/PayButton'
+import { useNavigate } from 'react-router-dom'
 
 type CartMenuProps = {
   openCart?: boolean
@@ -49,6 +48,7 @@ export default function CartMenu({
   onOpenCart,
   onCloseCart,
 }: CartMenuProps) {
+  const navigate = useNavigate()
   const cartItems = useAppSelector((state) => state.cart.cartItems)
 
   const cartTotalAmount = useAppSelector((state) => state.cart.cartTotalAmount)
@@ -56,6 +56,8 @@ export default function CartMenu({
   const cartTotalQuantity = useAppSelector(
     (state) => state.cart.cartTotalQuantity
   )
+
+  const auth = useAppSelector((state) => state.auth)
 
   const handleRemoveFromCart = (item: {
     _id: string
@@ -200,7 +202,31 @@ export default function CartMenu({
                 },
               }}
             > */}
-            <PayButton cartItems={cartItems} />
+
+            {auth._id ? (
+              <PayButton cartItems={cartItems} />
+            ) : (
+              <Button
+                sx={{
+                  backgroundColor: 'black',
+                  color: 'white',
+                  borderRadius: 2,
+                  minWidth: '100%',
+                  padding: '20px 40px',
+                  m: '20px 0',
+                  '&:hover': {
+                    backgroundColor: 'white',
+                    color: 'black',
+                    border: '2px solid black',
+                  },
+                }}
+                onClick={() => navigate('/login')}
+              >
+                Login to checkout
+              </Button>
+            )}
+
+            {/* <PayButton cartItems={cartItems} /> */}
             {/* </Button> */}
           </Box>
         </Box>
