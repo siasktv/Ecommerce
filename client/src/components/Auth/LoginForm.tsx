@@ -15,7 +15,7 @@ import {
 import { LoadingButton } from '@mui/lab'
 // components
 import Iconify from '../Iconify/Iconify'
-import { registerUser } from '../../features/users/authSlice'
+import { loginUser } from '../../features/users/authSlice'
 
 // ----------------------------------------------------------------------
 
@@ -42,7 +42,8 @@ export default function LoginForm() {
 
   const handleSubmit = (e: any) => {
     e.preventDefault()
-    dispatch(registerUser(user))
+    dispatch(loginUser(user))
+    navigate('/search')
   }
 
   console.log('user', user)

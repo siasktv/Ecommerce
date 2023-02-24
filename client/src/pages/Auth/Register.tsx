@@ -15,7 +15,7 @@ import useResponsive from '../../hooks/useResponsive'
 // components
 import Iconify from '../../components/Iconify/Iconify'
 // loginForm
-import LoginForm from '../../components/Auth/RegisterForm'
+import RegisterForm from '../../components/Auth/RegisterForm'
 import { alpha } from '@mui/material/styles'
 //
 import palette from '../../theme/palette'
@@ -91,7 +91,7 @@ export default function RegisterPage() {
               {/* <Link variant="subtitle2">Get started</Link> */}
             </Typography>
 
-            <LoginForm />
+            <RegisterForm />
 
             <Divider sx={{ my: 3 }}>
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>

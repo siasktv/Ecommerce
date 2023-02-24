@@ -19,7 +19,7 @@ import { registerUser } from '../../features/users/authSlice'
 
 // ----------------------------------------------------------------------
 
-export default function LoginForm() {
+export default function RegisterForm() {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const [showPassword, setShowPassword] = useState(false)
