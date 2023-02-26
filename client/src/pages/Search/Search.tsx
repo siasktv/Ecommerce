@@ -81,8 +81,8 @@ const Search: React.FC = () => {
           {/* <Pagination count={3} shape="rounded" size="large" /> */}
         </Container>
       </Box>
-      <Divider />
-      <Subscribe />
+
+      {/* <Subscribe /> */}
       <Footer />
     </>
   )
