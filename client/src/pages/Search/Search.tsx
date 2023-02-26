@@ -17,6 +17,7 @@ import ShopFilterSidebar from '../../components/Filters/ProductFilterSideBar'
 import Navbar from '../../components/Navbar/Navbar'
 import Subscribe from '../../components/Footer/Subscribe'
 import Footer from '../../components/Footer/Footer'
+import MainCarousel from '../../components/MainCarusel/MainCarusel'
 
 const Search: React.FC = () => {
   const products = useAppSelector((state) => state.products.products)
@@ -32,6 +33,7 @@ const Search: React.FC = () => {
   return (
     <>
       <Navbar />
+      <MainCarousel />
 
       <Box marginTop={10} sx={{ display: 'flex' }}>
         <ShopFilterSidebar />
