@@ -15,6 +15,8 @@ import {
 import ProductSort from '../../components/Filters/ProductSort'
 import ShopFilterSidebar from '../../components/Filters/ProductFilterSideBar'
 import Navbar from '../../components/Navbar/Navbar'
+import Subscribe from '../../components/Footer/Subscribe'
+import Footer from '../../components/Footer/Footer'
 
 const Search: React.FC = () => {
   const products = useAppSelector((state) => state.products.products)
@@ -79,6 +81,9 @@ const Search: React.FC = () => {
           {/* <Pagination count={3} shape="rounded" size="large" /> */}
         </Container>
       </Box>
+      <Divider />
+      <Subscribe />
+      <Footer />
     </>
   )
 }
