@@ -4,31 +4,37 @@ import jwtDecode from 'jwt-decode'
 
 type AuthUser = {
   token: string | null
-  name: string
-  email: string
+  name: string | null
+  email: string | null
   _id: string
   registerStatus: string
   registerError: string | null
-  loginStatus: string
-  loginError: string
   userLoaded: boolean
+  loginStatus: string
+  loginError: string | null
 }
 
-// type DecodedToken = {
-//   name: string
-//   email: string
-//   _id: string
-// }
+interface DecodedUser {
+  token: string | null
+  name: string | null
+  email: string | null
+  _id: string
+}
+
+const userFromLocalStorage = localStorage.getItem('token')
+const decodedUser: DecodedUser | null = userFromLocalStorage
+  ? jwtDecode(userFromLocalStorage)
+  : null
 
 const initialState: AuthUser = {
-  token: null,
-  name: '',
-  email: '',
-  _id: '',
+  token: decodedUser?.token ?? null,
+  name: decodedUser?.name ?? null,
+  email: decodedUser?.email ?? null,
+  _id: decodedUser?._id ?? '',
   registerStatus: 'idle',
   registerError: null,
   loginStatus: '',
-  loginError: '',
+  loginError: null,
   userLoaded: false,
 }
 
@@ -38,7 +44,7 @@ type RegisterUserRequest = {
   password: string
 }
 
-export const registerUser = createAsyncThunk<string, RegisterUserRequest>(
+export const registerUser = createAsyncThunk<AuthUser, RegisterUserRequest>(
   'auth/registerUser',
   async (values, { rejectWithValue }) => {
     try {
@@ -50,8 +56,16 @@ export const registerUser = createAsyncThunk<string, RegisterUserRequest>(
           password: values.password,
         }
       )
-      localStorage.setItem('token', token.data)
-      return token.data
+      const decodedToken =
+        token.data && (jwtDecode(token.data) as AuthUser | null)
+      if (decodedToken) {
+        localStorage.setItem('token', token.data)
+        localStorage.setItem('name', decodedToken.name)
+        localStorage.setItem('email', decodedToken.email)
+        return decodedToken
+      } else {
+        throw new Error('Invalid token')
+      }
     } catch (err) {
       console.log(err)
       return rejectWithValue(err)
@@ -59,7 +73,7 @@ export const registerUser = createAsyncThunk<string, RegisterUserRequest>(
   }
 )
 
-export const loginUser = createAsyncThunk<string, RegisterUserRequest>(
+export const loginUser = createAsyncThunk<AuthUser, RegisterUserRequest>(
   'auth/loginUser',
   async (values, { rejectWithValue }) => {
     try {
@@ -67,8 +81,16 @@ export const loginUser = createAsyncThunk<string, RegisterUserRequest>(
         email: values.email,
         password: values.password,
       })
-      localStorage.setItem('token', token.data)
-      return token.data
+      const decodedToken =
+        token.data && (jwtDecode(token.data) as AuthUser | null)
+      if (decodedToken) {
+        localStorage.setItem('token', token.data)
+        localStorage.setItem('name', decodedToken.name)
+        localStorage.setItem('email', decodedToken.email)
+        return decodedToken
+      } else {
+        throw new Error('Invalid token')
+      }
     } catch (err) {
       console.log(err)
       return rejectWithValue(err)
@@ -82,6 +104,8 @@ const authSlice = createSlice({
   reducers: {
     logoutUser: (state: AuthUser) => {
       localStorage.removeItem('token')
+      localStorage.removeItem('name')
+      localStorage.removeItem('email')
       return {
         ...state,
         token: null,
@@ -105,22 +129,20 @@ const authSlice = createSlice({
     })
     builder.addCase(
       registerUser.fulfilled,
-      (state: AuthUser, action: PayloadAction<string>) => {
-        if (action.payload) {
-          const user = jwtDecode(action.payload) as AuthUser
+      (state: AuthUser, action: PayloadAction<AuthUser>) => {
+        const { token, name, email, _id } = action.payload
 
-          return {
-            ...state,
-            token: action.payload,
-            name: user.name,
-            email: user.email,
-            _id: user._id,
-            registerStatus: 'success',
-            registerError: null,
-            userLoaded: true,
-          }
-        } else {
-          return state
+        return {
+          ...state,
+          token: token,
+          name: name,
+          email: email,
+          _id: _id,
+          registerStatus: 'success',
+          registerError: null,
+          userLoaded: true,
+          loginStatus: 'success',
+          loginError: null,
         }
       }
     )
@@ -145,25 +167,19 @@ const authSlice = createSlice({
     //LOGIN
     builder.addCase(
       loginUser.fulfilled,
-      (state: AuthUser, action: PayloadAction<string>) => {
-        if (action.payload) {
-          debugger
-          const user = state.token
-            ? (jwtDecode(state.token) as AuthUser)
-            : (jwtDecode(action.payload) as AuthUser)
-
-          return {
-            ...state,
-            token: action.payload,
-            name: user.name,
-            email: user.email,
-            _id: user._id,
-            registerStatus: 'success',
-            registerError: null,
-            userLoaded: true,
-          }
-        } else {
-          return state
+      (state: AuthUser, action: PayloadAction<AuthUser>) => {
+        const { name, email, _id } = action.payload
+        return {
+          ...state,
+          token: localStorage.getItem('token') ?? null,
+          name,
+          email,
+          _id,
+          registerStatus: 'success',
+          registerError: null,
+          userLoaded: true,
+          loginStatus: 'success',
+          loginError: null,
         }
       }
     )

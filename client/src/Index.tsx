@@ -6,10 +6,9 @@ import Navbar from './components/Navbar/Navbar'
 export default function Index() {
   return (
     <>
-      <Navbar />
-      <div className="w-full mt-[86px] max-[990px]:mt-[160px]">
-        <Outlet />
-      </div>
+      {/* <div className="w-full mt-[86px] max-[990px]:mt-[160px]"> */}
+
+      <Outlet />
       <Footer />
     </>
   )

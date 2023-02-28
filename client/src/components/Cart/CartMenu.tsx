@@ -101,7 +101,7 @@ export default function CartMenu({
     <>
       <Badge
         showZero
-        badgeContent={cartItems.length}
+        badgeContent={cartTotalQuantity}
         color="error"
         max={5}
         onClick={onOpenCart}
