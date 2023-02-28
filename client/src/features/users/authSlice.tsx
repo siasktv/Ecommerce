@@ -147,7 +147,10 @@ const authSlice = createSlice({
       loginUser.fulfilled,
       (state: AuthUser, action: PayloadAction<string>) => {
         if (action.payload) {
-          const user = jwtDecode(action.payload) as AuthUser
+          debugger
+          const user = state.token
+            ? (jwtDecode(state.token) as AuthUser)
+            : (jwtDecode(action.payload) as AuthUser)
 
           return {
             ...state,

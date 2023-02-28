@@ -4,11 +4,11 @@ import 'react-toastify/dist/ReactToastify.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { store } from './app/store'
-import Home from './pages/Home/Home'
+// import Home from './pages/Home/Home'
 
 import Search from './pages/Search/Search'
 
-// import Index from './Index'
+import Index from './Index'
 import { CheckoutSuccess } from './pages/Checkout/CheckoutSuccess'
 //index es como el app
 import MuiThemeProvider from './theme'
@@ -18,9 +18,10 @@ import LoginPage from './pages/Auth/Login'
 
 const router = createBrowserRouter([
   {
-    // element: <Index />,
+    path: '/',
+    element: <Index />,
     children: [
-      { path: '/', element: <Home /> },
+      // { path: '/', element: <Home /> },
       { path: '/search', element: <Search /> },
       { path: '/checkout-success', element: <CheckoutSuccess /> },
       { path: '/login', element: <LoginPage /> },

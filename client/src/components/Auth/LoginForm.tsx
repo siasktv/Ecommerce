@@ -42,6 +42,7 @@ export default function LoginForm() {
 
   const handleSubmit = (e: any) => {
     e.preventDefault()
+    debugger
     dispatch(loginUser(user))
     navigate('/search')
   }

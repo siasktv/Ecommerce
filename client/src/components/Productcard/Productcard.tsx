@@ -50,7 +50,7 @@ export default function ProductCard(p: ProductCardProps) {
     dispatch(getTotals())
   }
 
-  console.log(p)
+  console.log('producto', p)
 
   return (
     <Card variant="outlined">
@@ -59,12 +59,12 @@ export default function ProductCard(p: ProductCardProps) {
       </Box>
       <Divider />
       <Stack spacing={2} sx={{ p: 4 }}>
+        image.png
         <Link color="inherit" underline="hover">
           <Typography variant="subtitle2" noWrap>
             {p.product.name}
           </Typography>
         </Link>
-
         <Stack direction="row" justifyContent="space-between">
           <Typography component="span" variant="body1">
             ${p.product.price}

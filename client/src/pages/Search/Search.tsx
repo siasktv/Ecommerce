@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import { useDispatch, useSelector } from 'react-redux'
 import { productsFetch } from '../../features/products/productsSlice'
 import { getTotals } from '../../features/cart/cartSlice'
 import ProductCard from '../../components/Productcard/Productcard'
@@ -21,7 +22,7 @@ import MainCarousel from '../../components/MainCarusel/MainCarusel'
 
 const Search: React.FC = () => {
   const products = useAppSelector((state) => state.products.products)
-  // console.log("producto 1", products);
+  console.log('producto 1', products)
 
   // console.log("producto 2", products2)
   const dispatch = useAppDispatch()
@@ -85,7 +86,6 @@ const Search: React.FC = () => {
       </Box>
 
       {/* <Subscribe /> */}
-      <Footer />
     </>
   )
 }

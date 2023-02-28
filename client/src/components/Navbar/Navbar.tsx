@@ -88,7 +88,7 @@ function Navbar() {
       display="flex"
       alignItems="center"
       width="100%"
-      height="60px"
+      height="85px"
       sx={{ backgroundColor: 'white', borderBottom: '1px solid #E0E0E0' }}
       color="black"
       position="fixed"

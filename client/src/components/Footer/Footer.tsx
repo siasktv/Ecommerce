@@ -10,7 +10,7 @@ function Footer() {
       marginTop="70px"
       padding="40px 0"
       sx={{
-        background: 'black',
+        backgroundColor: 'black',
       }}
     >
       <Box
