@@ -9,8 +9,30 @@ import Tooltip from '@mui/material/Tooltip'
 import IconButton from '@mui/material/IconButton'
 import SearchIcon from '@mui/icons-material/Search'
 import RefreshIcon from '@mui/icons-material/Refresh'
+import React from 'react'
+import CreateProduct from './ProductCreate'
+import { TransitionProps } from '@mui/material/transitions'
+import { Slide } from '@mui/material'
+
+const Transition = React.forwardRef(function Transition(
+  props: TransitionProps & {
+    children: React.ReactElement
+  },
+  ref: React.Ref<unknown>
+) {
+  return <Slide direction="up" ref={ref} {...props} />
+})
 
 export default function Products() {
+  const [open, setOpen] = React.useState(false)
+
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
   return (
     <Paper sx={{ maxWidth: 936, margin: 'auto', overflow: 'hidden' }}>
       <AppBar
@@ -35,10 +57,19 @@ export default function Products() {
                 variant="standard"
               />
             </Grid>
-            <Grid item>
-              <Button variant="contained" sx={{ mr: 1 }}>
+            <Grid item sx={{ display: 'flex', alignItems: 'center' }}>
+              <Button
+                variant="contained"
+                sx={{ mr: 1 }}
+                onClick={handleClickOpen}
+              >
                 Add product
               </Button>
+              <CreateProduct
+                open={open}
+                onClose={handleClose}
+                TransitionComponent={Transition}
+              />
               <Tooltip title="Reload">
                 <IconButton>
                   <RefreshIcon color="inherit" sx={{ display: 'block' }} />
