@@ -21,40 +21,30 @@ import {
 import palette from '../../theme/palette'
 import { LoadingButton } from '@mui/lab'
 import styled from '@emotion/styled'
-
-// const StyledRoot = styled('div')(({ theme }) => ({
-//   [theme.breakpoints.up('md')]: {
-//     display: 'flex',
-//   },
-// }))
-
-// const color = palette.grey[500]
-// const transparent = alpha(color, 0.16)
-
-// const StyledSection = styled('div')(({ theme }) => ({
-//   width: '100%',
-//   maxWidth: 480,
-//   display: 'flex',
-//   flexDirection: 'column',
-//   justifyContent: 'center',
-//   boxShadow: `0 0 2px 0 ${alpha(color, 0.2)}, 0 12px 24px -4px ${alpha(
-//     color,
-//     0.12
-//   )}`,
-//   backgroundColor: theme.palette.background.default,
-// }))
-
-// const StyledContent = styled('div')(({ theme }) => ({
-//   maxWidth: 480,
-//   margin: 'auto',
-//   minHeight: '100vh',
-//   display: 'flex',
-//   justifyContent: 'center',
-//   flexDirection: 'column',
-//   padding: theme.spacing(12, 0),
-// }))
+import { useState } from 'react'
 
 export default function CreateProduct({ open, onClose, TransitionComponent }) {
+  const [productImg, setProductImg] = useState('')
+
+  const handleProductImageUpload = (e) => {
+    const file = e.target.files[0]
+
+    TransformFileData(file)
+  }
+
+  const TransformFileData = (file) => {
+    const reader = new FileReader()
+
+    if (file) {
+      reader.readAsDataURL(file)
+      reader.onloadend = () => {
+        setProductImg(reader.result)
+      }
+    } else {
+      setProductImg('')
+    }
+  }
+
   return (
     <div>
       <Dialog
@@ -83,7 +73,13 @@ export default function CreateProduct({ open, onClose, TransitionComponent }) {
         </AppBar>
         <StyledCreateProduct>
           <StyledForm>
-            <input id="imgUpload" accept="image/*" type="file" required />
+            <input
+              id="imgUpload"
+              accept="image/*"
+              type="file"
+              onChange={handleProductImageUpload}
+              required
+            />
             <select>
               <option value="">Select Brand</option>
               <option value="iphone">iPhone</option>
@@ -97,7 +93,15 @@ export default function CreateProduct({ open, onClose, TransitionComponent }) {
 
             <Button type="submit"></Button>
           </StyledForm>
-          <ImagePreview></ImagePreview>
+          <ImagePreview>
+            {productImg ? (
+              <>
+                <img src={productImg} alt="error!" />
+              </>
+            ) : (
+              <p>Product image upload preview will appear here!</p>
+            )}
+          </ImagePreview>
         </StyledCreateProduct>
       </Dialog>
     </div>
