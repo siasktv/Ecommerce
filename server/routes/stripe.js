@@ -109,6 +109,7 @@ const createOrder = async (customer, data, lineItems) => {
   try {
     const savedOrder = await newOrder.save()
     console.log('Processed Order:', savedOrder)
+    //send email
   } catch (err) {
     console.log(err)
   }
