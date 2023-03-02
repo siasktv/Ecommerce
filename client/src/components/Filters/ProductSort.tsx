@@ -1,32 +1,29 @@
-import { useState } from "react";
-import { Menu, Button, MenuItem, Typography } from '@mui/material';
-import { sortedByPrice } from "../../features/products/productsSlice";
-import { useAppDispatch } from "../../app/hooks";
-
+import { useState } from 'react'
+import { Menu, Button, MenuItem, Typography } from '@mui/material'
+import { sortedByPrice } from '../../features/products/productsSlice'
+import { useAppDispatch } from '../../app/hooks'
 
 const SORT_BY_OPTIONS = [
-    // { value: 'newest', label: 'Newest' },
-    { value: 'priceDesc', label: 'Price: High-Low' },
-    { value: 'priceAsc', label: 'Price: Low-High' },
-  ];
-  
+  // { value: 'newest', label: 'Newest' },
+  { value: 'priceDesc', label: 'Price: High-Low' },
+  { value: 'priceAsc', label: 'Price: Low-High' },
+]
+
 const ProductSort = () => {
+  const [open, setOpen] = useState(null)
+  const dispatch = useAppDispatch()
 
-    const [open, setOpen] = useState(null);
-    const dispatch = useAppDispatch();
+  const handleOpen = (event: any) => {
+    setOpen(event.currentTarget)
+  }
 
-    const handleOpen = (event: any) => {
-        setOpen(event.currentTarget);
-      };
+  const handleClose = () => {
+    setOpen(null)
+  }
 
-    const handleClose = () => {
-        setOpen(null);
-      };
-
-      function handlePrice(e: any) {
-        dispatch(sortedByPrice(e.target.value));
-       
-      }
+  function handlePrice(e: any) {
+    dispatch(sortedByPrice(e.target.value))
+  }
 
   return (
     <>
@@ -66,5 +63,4 @@ const ProductSort = () => {
   )
 }
 
-export default ProductSort;
-
+export default ProductSort

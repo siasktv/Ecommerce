@@ -17,10 +17,16 @@ type PayButtonProps = {
 }
 
 const PayButton = ({ cartItems }: PayButtonProps) => {
-  const handleCheckout = (cartItems: CartItem[]) => {
+  const user = useAppSelector((state) => state.auth)
+
+  const handleCheckout = () => {
     axios
-      .post('http://localhost:3001/stripe/create-checkout-session', cartItems)
+      .post('http://localhost:3001/stripe/create-checkout-session', {
+        cartItems,
+        userId: user._id,
+      })
       .then((res) => {
+        console.log('respuesta', res)
         if (res.data.url) {
           window.location.href = res.data.url
         }
@@ -43,7 +49,7 @@ const PayButton = ({ cartItems }: PayButtonProps) => {
             border: '2px solid black',
           },
         }}
-        onClick={() => handleCheckout(cartItems)}
+        onClick={() => handleCheckout()}
       >
         Check out
       </Button>

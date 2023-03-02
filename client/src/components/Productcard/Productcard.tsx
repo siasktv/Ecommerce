@@ -7,11 +7,11 @@ import {
   Stack,
   Button,
   Divider,
+  Rating,
 } from '@mui/material'
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { addToCart, getTotals } from '../../features/cart/cartSlice'
-import { toast } from 'react-toastify'
 
 const StyledProductImg = styled('img')({
   top: 0,
@@ -50,8 +50,6 @@ export default function ProductCard(p: ProductCardProps) {
     dispatch(getTotals())
   }
 
-  console.log('producto', p)
-
   return (
     <Card variant="outlined">
       <Box sx={{ pt: '100%', position: 'relative' }}>
@@ -59,12 +57,14 @@ export default function ProductCard(p: ProductCardProps) {
       </Box>
       <Divider />
       <Stack spacing={2} sx={{ p: 4 }}>
-        image.png
         <Link color="inherit" underline="hover">
           <Typography variant="subtitle2" noWrap>
             {p.product.name}
           </Typography>
         </Link>
+        <Stack direction="row" justifyContent="space-between">
+          <Rating name="read-only" value={p.product.rating} readOnly />
+        </Stack>
         <Stack direction="row" justifyContent="space-between">
           <Typography component="span" variant="body1">
             ${p.product.price}
