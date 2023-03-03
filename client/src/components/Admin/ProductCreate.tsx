@@ -1,32 +1,18 @@
-import * as React from 'react'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
-import ListItemText from '@mui/material/ListItemText'
-import ListItem from '@mui/material/ListItem'
-import List from '@mui/material/List'
-import Divider from '@mui/material/Divider'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import CloseIcon from '@mui/icons-material/Close'
-import {
-  alpha,
-  Box,
-  Container,
-  InputAdornment,
-  Stack,
-  TextField,
-} from '@mui/material'
-import palette from '../../theme/palette'
-import { LoadingButton } from '@mui/lab'
 import styled from '@emotion/styled'
 import { useState } from 'react'
-import { useAppDispatch } from '../../app/hooks'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { productsCreate } from '../../features/products/productsSlice'
 
 export default function CreateProduct({ open, onClose, TransitionComponent }) {
   const dispatch = useAppDispatch()
+  const { createStatus } = useAppSelector((state) => state.products)
 
   const [productImg, setProductImg] = useState('')
   const [brand, setBrand] = useState('')
@@ -88,9 +74,6 @@ export default function CreateProduct({ open, onClose, TransitionComponent }) {
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
               Create Product
             </Typography>
-            <Button autoFocus color="inherit" onClick={onClose}>
-              save
-            </Button>
           </Toolbar>
         </AppBar>
         <StyledCreateProduct>
@@ -135,8 +118,14 @@ export default function CreateProduct({ open, onClose, TransitionComponent }) {
               onChange={(e) => setDescription(e.target.value)}
             />
 
-            <Button type="submit" onSubmit={handleSubmit}>
-              Submit
+            <Button
+              variant="contained"
+              type="submit"
+              onSubmit={handleSubmit}
+              size="large"
+              style={{ marginTop: '20px' }}
+            >
+              {createStatus === 'pending' ? 'Submitting' : 'Submit'}
             </Button>
           </StyledForm>
           <ImagePreview>
