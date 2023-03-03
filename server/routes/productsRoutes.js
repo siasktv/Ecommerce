@@ -5,7 +5,6 @@ const {
   getProductById,
   createProduct,
 } = require('../controllers/productsControllers.js')
-const isAdmin = require('../middleware/auth')
 
 router.get('/', getAllProducts)
 router.get('/:id', getProductById)

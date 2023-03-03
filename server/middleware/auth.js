@@ -26,7 +26,7 @@ const isUser = (req, res, next) => {
 }
 
 // For Admin
-const isAdmin = (req, res, next) => {
+const requireAdmin = (req, res, next) => {
   auth(req, res, () => {
     if (req.user.isAdmin) {
       next()
@@ -36,4 +36,4 @@ const isAdmin = (req, res, next) => {
   })
 }
 
-module.exports = { auth, isUser, isAdmin }
+module.exports = { auth, isUser, requireAdmin }
