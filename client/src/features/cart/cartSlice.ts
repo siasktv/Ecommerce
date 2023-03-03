@@ -7,7 +7,7 @@ interface CartItem {
   name: string
   price: number
   description: string
-  image: string
+  image: string | object
   cartQuantity: number
 }
 

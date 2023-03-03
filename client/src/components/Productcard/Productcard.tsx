@@ -25,7 +25,7 @@ interface ProductCardProps {
   product: {
     _id: string
     name: string
-    image: string
+    image: string | { url: string }
     description: string
     price: number
     rating: number
@@ -37,13 +37,17 @@ export default function ProductCard(p: ProductCardProps) {
   const dispatch = useAppDispatch()
 
   const handleAddToCart = (p: ProductCardProps) => {
+    const imageSrc =
+      typeof p.product.image === 'string'
+        ? p.product.image
+        : p.product.image?.url
     dispatch(
       addToCart({
         _id: p.product._id,
         name: p.product.name,
         price: p.product.price,
         description: p.product.description,
-        image: p.product.image,
+        image: imageSrc,
         cartQuantity: 1,
       })
     )
@@ -53,7 +57,14 @@ export default function ProductCard(p: ProductCardProps) {
   return (
     <Card variant="outlined">
       <Box sx={{ pt: '100%', position: 'relative' }}>
-        <StyledProductImg alt={p.product.name} src={p.product.image} />
+        <StyledProductImg
+          alt={p.product.name}
+          src={
+            typeof p.product.image === 'object'
+              ? p.product.image.url
+              : p.product.image
+          }
+        />
       </Box>
       <Divider />
       <Stack spacing={2} sx={{ p: 4 }}>
