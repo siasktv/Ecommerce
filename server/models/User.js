@@ -19,9 +19,8 @@ const UserSchema = new Schema(
       required: [true, 'Please enter a valid password'],
       minlength: [6, 'Minimum password length must be 6 characters'],
     },
-    admin: {
+    isAdmin: {
       type: Boolean,
-      required: true,
       default: false,
     },
     orders: [
