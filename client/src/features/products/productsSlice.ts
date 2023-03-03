@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { number, string } from 'prop-types'
+import { toast } from 'react-toastify'
 // import { createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 
 interface Product {
@@ -19,6 +20,7 @@ interface Products {
   allProducts: Product[]
   selectedBrands: string[]
   selectedRating: number[]
+  createStatus: null | string
 }
 
 //initialState
@@ -49,6 +51,7 @@ const initialState: Products = {
   ],
   selectedBrands: [],
   selectedRating: [],
+  createStatus: null,
 }
 
 //Create Thunk
@@ -60,6 +63,22 @@ export const productsFetch = createAsyncThunk(
       return response.data
     } catch (error) {
       console.log(error)
+    }
+  }
+)
+
+export const productsCreate = createAsyncThunk(
+  'products/productsCreate',
+  async (values) => {
+    try {
+      const response = await axios.post(
+        'http://localhost:3001/products/createProduct',
+        values
+      )
+      return response.data
+    } catch (error: any) {
+      console.log(error)
+      toast.error(error.response?.data)
     }
   }
 )
@@ -166,6 +185,27 @@ const productsSlice = createSlice({
         state.allProducts = action.payload.slice()
       }
     )
+    builder.addCase(productsCreate.pending, (state: Products) => {
+      return {
+        ...state,
+        createStatus: 'pending',
+      }
+    })
+    builder.addCase(
+      productsCreate.fulfilled,
+      (state: Products, action: PayloadAction<Product>) => {
+        state.products.push(action.payload)
+        state.createStatus = 'success'
+        toast.success('Product created!')
+      }
+    )
+
+    builder.addCase(productsCreate.rejected, (state: Products, action) => {
+      return {
+        ...state,
+        createStatus: 'rejected',
+      }
+    })
   },
 })
 

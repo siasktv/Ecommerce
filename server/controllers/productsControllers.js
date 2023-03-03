@@ -2,12 +2,17 @@ const Product = require('../models/Product.js')
 const cloudinary = require('../utils/cloudinary')
 
 const getAllProducts = async (req, res) => {
-  const products = await Product.find().populate({
-    path: 'reviews',
-    select: 'review rating',
-  })
-  //path(el campo en el modelo Product) select (campos del modelo)
-  res.status(200).json(products)
+  try {
+    const products = await Product.find().populate({
+      path: 'reviews',
+      select: 'review rating',
+    })
+    //path(el campo en el modelo Product) select (campos del modelo)
+    res.status(200).json(products)
+  } catch (err) {
+    console.log(err)
+    res.status(500).send(err)
+  }
 }
 
 const getProductById = async (req, res) => {
@@ -22,9 +27,32 @@ const getProductById = async (req, res) => {
 }
 
 const createProduct = async (req, res) => {
-  const { name, brand, description, price, image } = req.body
-  const product = new Product(data)
-  res.status(200).json(product)
+  const { name, brand, description, price, category, image } = req.body
+  try {
+    if (image) {
+      const uploadRes = await cloudinary.uploader.upload(image, {
+        upload_preset: 'onlineShop',
+      })
+
+      if (uploadRes) {
+        const product = new Product({
+          name,
+          brand,
+          description,
+          price,
+          category,
+          image: uploadRes,
+        })
+
+        const savedProduct = await product.save()
+
+        res.status(200).send(savedProduct)
+      }
+    }
+  } catch (err) {
+    console.log(err)
+    res.status(500).send(err)
+  }
 }
 
 module.exports = {

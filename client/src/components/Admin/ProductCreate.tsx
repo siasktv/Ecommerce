@@ -22,9 +22,18 @@ import palette from '../../theme/palette'
 import { LoadingButton } from '@mui/lab'
 import styled from '@emotion/styled'
 import { useState } from 'react'
+import { useAppDispatch } from '../../app/hooks'
+import { productsCreate } from '../../features/products/productsSlice'
 
 export default function CreateProduct({ open, onClose, TransitionComponent }) {
+  const dispatch = useAppDispatch()
+
   const [productImg, setProductImg] = useState('')
+  const [brand, setBrand] = useState('')
+  const [name, setName] = useState('')
+  const [price, setPrice] = useState('')
+  const [description, setDescription] = useState('')
+  const [category, setCategory] = useState('')
 
   const handleProductImageUpload = (e) => {
     const file = e.target.files[0]
@@ -43,6 +52,19 @@ export default function CreateProduct({ open, onClose, TransitionComponent }) {
     } else {
       setProductImg('')
     }
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    dispatch(
+      productsCreate({
+        name,
+        brand,
+        price,
+        description,
+        image: productImg,
+      })
+    )
   }
 
   return (
@@ -72,7 +94,7 @@ export default function CreateProduct({ open, onClose, TransitionComponent }) {
           </Toolbar>
         </AppBar>
         <StyledCreateProduct>
-          <StyledForm>
+          <StyledForm onSubmit={handleSubmit}>
             <input
               id="imgUpload"
               accept="image/*"
@@ -80,23 +102,47 @@ export default function CreateProduct({ open, onClose, TransitionComponent }) {
               onChange={handleProductImageUpload}
               required
             />
-            <select>
+            <select onChange={(e) => setBrand(e.target.value)} required>
               <option value="">Select Brand</option>
-              <option value="iphone">iPhone</option>
-              <option value="samsung">Samsung</option>
-              <option value="xiomi">Xiomi</option>
-              <option value="other">Other</option>
+              <option value="apple">Apple</option>
+              <option value="logitech">Logitech</option>
+              <option value="canon">Canon</option>
             </select>
-            <input type="text" placeholder="Name" required />
-            <input type="number" placeholder="Price" required />
-            <input type="text" placeholder="Short Description" required />
+            <select onChange={(e) => setCategory(e.target.value)} required>
+              <option value="">Select Category</option>
+              <option value="computer">Computer</option>
+              <option value="mouse">Mouse</option>
+              <option value="headphones">Headphones</option>
+              <option value="phone">Phone</option>
+              <option value="camera">Camera</option>
+            </select>
+            <input
+              type="text"
+              placeholder="Name"
+              required
+              onChange={(e) => setName(e.target.value)}
+            />
+            <input
+              type="number"
+              placeholder="Price"
+              required
+              onChange={(e) => setPrice(e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Short Description"
+              required
+              onChange={(e) => setDescription(e.target.value)}
+            />
 
-            <Button type="submit"></Button>
+            <Button type="submit" onSubmit={handleSubmit}>
+              Submit
+            </Button>
           </StyledForm>
           <ImagePreview>
             {productImg ? (
               <>
-                <img src={productImg} alt="error!" />
+                <img src={productImg} alt="product image!" />
               </>
             ) : (
               <p>Product image upload preview will appear here!</p>

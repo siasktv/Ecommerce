@@ -11,7 +11,7 @@ const ProductSchema = new Schema(
       required: true,
     },
     image: {
-      type: String,
+      type: Object,
       required: true,
     },
     brand: {
@@ -20,7 +20,7 @@ const ProductSchema = new Schema(
     },
     category: {
       type: String,
-      required: true,
+      // required: true,
     },
     price: {
       type: Number,
@@ -28,7 +28,6 @@ const ProductSchema = new Schema(
     },
     rating: {
       type: Number,
-      required: true,
       default: 0,
     },
     numReviews: {
