@@ -22,7 +22,7 @@ import MainCarousel from '../../components/MainCarusel/MainCarusel'
 
 const Search: React.FC = () => {
   const products = useAppSelector((state) => state.products.products)
-  console.log('producto 1', products)
+  console.log('producto pagina search', products)
 
   // console.log("producto 2", products2)
   const dispatch = useAppDispatch()

@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { number, string } from 'prop-types'
 import { toast } from 'react-toastify'
 // import { createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 

@@ -3,18 +3,26 @@ import { DataGrid } from '@mui/x-data-grid'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { productsFetch } from '../../features/products/productsSlice'
 
 export default function ProductsList() {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const products = useAppSelector((state) => state.products.products)
+  console.log(products)
+
+  useEffect(() => {
+    dispatch(productsFetch())
+  }, [])
 
   const rows =
     products &&
     products.map((item) => {
       return {
         id: item._id,
-        imageUrl: item.image.url,
+        // imageUrl: item.image.url,
         pName: item.name,
         pDesc: item.description,
         price: item.price.toLocaleString(),
