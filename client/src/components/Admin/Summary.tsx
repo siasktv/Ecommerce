@@ -3,6 +3,7 @@ import Widget from './summary-components/Widget'
 import { FaUsers, FaChartBar, FaClipboard } from 'react-icons/fa'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import Chart from './summary-components/Chart'
 
 const Summary = () => {
   const [users, setUsers] = useState([])
@@ -42,7 +43,7 @@ const Summary = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await axios.get('http://localhost:3001/orders')
+        const res = await axios.get('http://localhost:3001/orders/stats')
 
         res.data.sort(compare)
         setOrders(res.data)
@@ -117,6 +118,7 @@ const Summary = () => {
             ))}
           </WidgetWrapper>
         </Overview>
+        <Chart />
       </MainStats>
       <SideStats></SideStats>
     </StyledSummary>

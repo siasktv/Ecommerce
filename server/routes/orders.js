@@ -3,8 +3,9 @@ const { auth, isUser, isAdmin } = require('../middleware/auth')
 const moment = require('moment')
 
 const router = require('express').Router()
-//Orders
-router.get('/', async (req, res) => {
+
+//Orders Stats
+router.get('/stats', async (req, res) => {
   const previousMonth = moment()
     .month(moment().month() - 1)
     .set('date', 1)
