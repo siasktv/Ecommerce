@@ -150,7 +150,7 @@ export default function EditProduct({ prodId, products }) {
                 type="text"
                 placeholder="Short Description"
                 value={description}
-                onChange={(e) => setDesc(e.target.value)}
+                onChange={(e) => setDescription(e.target.value)}
                 required
               />
 
