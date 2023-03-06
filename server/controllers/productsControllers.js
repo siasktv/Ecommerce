@@ -79,9 +79,57 @@ const deleteProduct = async (req, res) => {
   }
 }
 
+// EDIT PRODUCT
+
+const editProduct = async (req, res) => {
+  if (req.body.productImg) {
+    const destroyResponse = await cloudinary.uploader.destroy(
+      req.body.product.image.public_id
+    )
+
+    if (destroyResponse) {
+      const uploadedResponse = await cloudinary.uploader.upload(
+        req.body.productImg,
+        {
+          upload_preset: 'onlineShop',
+        }
+      )
+
+      if (uploadedResponse) {
+        const updatedProduct = await Product.findByIdAndUpdate(
+          req.params.id,
+          {
+            $set: {
+              ...req.body.product,
+              image: uploadedResponse,
+            },
+          },
+          { new: true }
+        )
+
+        res.status(200).send(updatedProduct)
+      }
+    }
+  } else {
+    try {
+      const updatedProduct = await Product.findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: req.body.product,
+        },
+        { new: true }
+      )
+      res.status(200).send(updatedProduct)
+    } catch (err) {
+      res.status(500).send(err)
+    }
+  }
+}
+
 module.exports = {
   getAllProducts,
   createProduct,
   getProductById,
   deleteProduct,
+  editProduct,
 }
