@@ -21,8 +21,8 @@ export default function ProductsList() {
     products &&
     products.map((item) => {
       return {
-        id: item._id,
-        // imageUrl: item.image.url,
+        id: item._id.slice(-10),
+        imageUrl: typeof item.image === 'object' ? item.image.url : item.image,
         pName: item.name,
         pDesc: item.description,
         price: item.price.toLocaleString(),
@@ -30,13 +30,17 @@ export default function ProductsList() {
     })
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 220 },
+    { field: 'id', headerName: 'ID', width: 100 },
     {
       field: 'imageUrl',
       headerName: 'Image',
-      width: 80,
-      renderCell: () => {
-        return <ImageContainer></ImageContainer>
+      width: 100,
+      renderCell: (params) => {
+        return (
+          <ImageContainer>
+            <img src={params.row.imageUrl} />
+          </ImageContainer>
+        )
       },
     },
     { field: 'pName', headerName: 'Name', width: 130 },
