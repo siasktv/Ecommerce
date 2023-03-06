@@ -49,6 +49,7 @@ export default function CreateProduct({ open, onClose, TransitionComponent }) {
         price,
         description,
         image: productImg,
+        category,
       })
     )
   }

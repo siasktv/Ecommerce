@@ -14,7 +14,7 @@ export default function ProductsList() {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const products = useAppSelector((state) => state.products.products)
-  console.log(products)
+
   useEffect(() => {
     dispatch(productsFetch())
   }, [])
@@ -64,7 +64,7 @@ export default function ProductsList() {
         return (
           <Actions>
             <Delete onClick={() => handleDelete(params.row.id)}>Delete</Delete>
-            <EditProduct />
+            <EditProduct products={products} prodId={params.row.id} />
             <View onClick={() => navigate(`/admin/products/${params.row.id}`)}>
               View
             </View>

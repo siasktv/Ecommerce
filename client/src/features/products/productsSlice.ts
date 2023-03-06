@@ -21,6 +21,7 @@ interface Products {
   selectedRating: number[]
   createStatus: null | string
   deleteStatus: null | string
+  editStatus: null | string
 }
 
 //initialState
@@ -53,6 +54,7 @@ const initialState: Products = {
   selectedRating: [],
   createStatus: null,
   deleteStatus: null,
+  editStatus: null,
 }
 
 export const setHeaders = () => {
@@ -71,7 +73,7 @@ export const productsFetch = createAsyncThunk(
   async () => {
     try {
       const response = await axios.get('http://localhost:3001/products')
-      console.log(response.data)
+
       return response.data
     } catch (error) {
       console.log(error)
@@ -113,6 +115,22 @@ export const productsDelete = createAsyncThunk(
   }
 )
 
+export const productsEdit = createAsyncThunk(
+  'products/productsEdit',
+  async (values) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:3001/products/${values.product._id}`,
+        values
+        // setHeaders()
+      )
+      return response.data
+    } catch (error: any) {
+      console.log(error)
+      toast.error(error.response?.data)
+    }
+  }
+)
 //Create your Slice
 const productsSlice = createSlice({
   name: 'products',
@@ -259,6 +277,30 @@ const productsSlice = createSlice({
       return {
         ...state,
         deleteStatus: 'rejected',
+      }
+    })
+    builder.addCase(productsEdit.pending, (state: Products) => {
+      return {
+        ...state,
+        editStatus: 'pending',
+      }
+    })
+    builder.addCase(
+      productsEdit.fulfilled,
+      (state: Products, action: PayloadAction<Product>) => {
+        const updatedProducts = state.products.map((p) =>
+          p._id === action.payload._id ? action.payload : p
+        )
+        state.products = updatedProducts
+        state.deleteStatus = 'success'
+        toast.success('Product updted!')
+      }
+    )
+
+    builder.addCase(productsEdit.rejected, (state: Products, action) => {
+      return {
+        ...state,
+        editStatus: 'rejected',
       }
     })
   },

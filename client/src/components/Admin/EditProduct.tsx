@@ -5,14 +5,14 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
-// import { productsEdit } from '../../slices/productsSlice'
+import { useAppSelector, useAppDispatch } from '../../app/hooks'
+import { productsEdit } from '../../features/products/productsSlice'
 
-export default function EditProduct() {
+export default function EditProduct({ prodId, products }) {
   const [open, setOpen] = React.useState(false)
-  const { items } = useSelector((state) => state.products)
 
   const dispatch = useDispatch()
   const { editStatus } = useSelector((state) => state.products)
@@ -24,7 +24,8 @@ export default function EditProduct() {
   const [brand, setBrand] = useState('')
   const [name, setName] = useState('')
   const [price, setPrice] = useState('')
-  const [desc, setDesc] = useState('')
+  const [description, setDescription] = useState('')
+  const [category, setCategory] = useState('')
 
   const handleProductImageUpload = (e) => {
     const file = e.target.files[0]
@@ -56,8 +57,9 @@ export default function EditProduct() {
           ...currentProd,
           name: name,
           brand: brand,
+          category: category,
           price: price,
-          desc: desc,
+          description: description,
         },
       })
     )
@@ -66,17 +68,22 @@ export default function EditProduct() {
   const handleClickOpen = () => {
     setOpen(true)
 
-    let selectedProd = items.filter((item) => item._id === prodId)
+    let selectedProd = products.filter((item) => item._id === prodId)
 
+    console.log(selectedProd)
     selectedProd = selectedProd[0]
 
     setCurrentProd(selectedProd)
-    setPreviewImg(selectedProd.image.url)
+    setPreviewImg(
+      typeof selectedProd.image === 'object'
+        ? selectedProd.image.url
+        : selectedProd.image
+    )
     setProductImg('')
     setBrand(selectedProd.brand)
     setName(selectedProd.name)
     setPrice(selectedProd.price)
-    setDesc(selectedProd.desc)
+    setDescription(selectedProd.description)
   }
 
   const handleClose = () => {
@@ -109,10 +116,21 @@ export default function EditProduct() {
                 required
               >
                 <option value="">Select Brand</option>
-                <option value="iphone">iPhone</option>
-                <option value="samsung">Samsung</option>
-                <option value="xiomi">Xiomi</option>
-                <option value="other">Other</option>
+                <option value="apple">Apple</option>
+                <option value="logitech">Logitech</option>
+                <option value="canon">Canon</option>
+              </select>
+              <select
+                onChange={(e) => setCategory(e.target.value)}
+                required
+                value={category}
+              >
+                <option value="">Select Category</option>
+                <option value="computer">Computer</option>
+                <option value="mouse">Mouse</option>
+                <option value="headphones">Headphones</option>
+                <option value="phone">Phone</option>
+                <option value="camera">Camera</option>
               </select>
               <input
                 type="text"
@@ -131,7 +149,7 @@ export default function EditProduct() {
               <input
                 type="text"
                 placeholder="Short Description"
-                value={desc}
+                value={description}
                 onChange={(e) => setDesc(e.target.value)}
                 required
               />
