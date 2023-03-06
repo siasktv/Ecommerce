@@ -6,7 +6,9 @@ import axios from 'axios'
 
 const Summary = () => {
   const [users, setUsers] = useState([])
+  const [orders, setOrders] = useState([])
   const [usersPerc, setUsersPerc] = useState(0)
+  const [ordersPerc, setOrdersPerc] = useState(0)
 
   function compare(a, b) {
     if (a._id < b._id) {
@@ -35,6 +37,23 @@ const Summary = () => {
     fetchData()
   }, [])
 
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await axios.get('http://localhost:3001/orders')
+
+        res.data.sort(compare)
+        setOrders(res.data)
+        setOrdersPerc(
+          ((res.data[0].total - res.data[1].total) / res.data[1].total) * 100
+        )
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    fetchData()
+  }, [])
+
   const data = [
     {
       icon: <FaUsers />,
@@ -47,12 +66,12 @@ const Summary = () => {
     },
     {
       icon: <FaClipboard />,
-      digits: 50,
+      digits: orders[0]?.total,
       isMoney: false,
       title: 'Orders',
       color: 'rgb(38, 198, 249)',
       bgcolor: 'rgba(38, 198, 249, 0.12)',
-      percentage: 30,
+      percentage: ordersPerc,
     },
     {
       icon: <FaChartBar />,
