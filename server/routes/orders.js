@@ -3,7 +3,7 @@ const { auth, isUser, isAdmin } = require('../middleware/auth')
 const moment = require('moment')
 
 const router = require('express').Router()
-
+//Orders
 router.get('/', async (req, res) => {
   const previousMonth = moment()
     .month(moment().month() - 1)
@@ -31,5 +31,33 @@ router.get('/', async (req, res) => {
     res.status(500).send(err)
   }
 })
+//Income
+// GET MONTHLY INCOME
 
+router.get('/income', async (req, res) => {
+  const previousMonth = moment()
+    .month(moment().month() - 2)
+    .format()
+
+  try {
+    const income = await Order.aggregate([
+      { $match: { createdAt: { $gte: new Date(previousMonth) } } },
+      {
+        $project: {
+          month: { $month: '$createdAt' },
+          sales: '$total',
+        },
+      },
+      {
+        $group: {
+          _id: '$month',
+          total: { $sum: '$sales' },
+        },
+      },
+    ])
+    res.status(200).send(income)
+  } catch (err) {
+    res.status(500).send(err)
+  }
+})
 module.exports = router

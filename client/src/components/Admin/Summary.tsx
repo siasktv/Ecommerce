@@ -7,8 +7,10 @@ import axios from 'axios'
 const Summary = () => {
   const [users, setUsers] = useState([])
   const [orders, setOrders] = useState([])
+  const [earning, setEarnings] = useState([])
   const [usersPerc, setUsersPerc] = useState(0)
   const [ordersPerc, setOrdersPerc] = useState(0)
+  const [earningPerc, setEarningsPerc] = useState(0)
 
   function compare(a, b) {
     if (a._id < b._id) {
@@ -54,6 +56,23 @@ const Summary = () => {
     fetchData()
   }, [])
 
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await axios.get('http://localhost:3001/orders/income')
+
+        res.data.sort(compare)
+        setEarnings(res.data)
+        setEarningsPerc(
+          ((res.data[0].total - res.data[1].total) / res.data[1].total) * 100
+        )
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    fetchData()
+  }, [])
+
   const data = [
     {
       icon: <FaUsers />,
@@ -75,12 +94,12 @@ const Summary = () => {
     },
     {
       icon: <FaChartBar />,
-      digits: 50,
+      digits: earning[0]?.total ? earning[0]?.total / 100 : '',
       isMoney: true,
       title: 'Earnings',
       color: 'rgb(253, 181, 40)',
       bgcolor: 'rgba(253, 181, 40, 0.12)',
-      percentage: 30,
+      percentage: earningPerc,
     },
   ]
 
