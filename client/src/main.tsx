@@ -18,7 +18,7 @@ import Dashboard from './components/Admin/Dashboard'
 import Products from './components/Admin/Products'
 import Summary from './components/Admin/Summary'
 import Index from './Index'
-import ProductCreate from './components/Admin/ProductCreate'
+import Product from './components/Admin/details/ProductDetail'
 
 const router = createBrowserRouter([
   {
@@ -36,12 +36,9 @@ const router = createBrowserRouter([
     path: '/admin',
     element: <Dashboard />,
     children: [
-      {
-        path: 'products',
-        element: <Products />,
-        // children: [{ path: 'create', element: <ProductCreate /> }],
-      },
+      { path: 'products', element: <Products /> },
       { path: 'summary', element: <Summary /> },
+      { path: 'products/:id', element: <Product /> },
     ],
   },
 ])

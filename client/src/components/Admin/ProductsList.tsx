@@ -12,7 +12,6 @@ export default function ProductsList() {
   const dispatch = useAppDispatch()
   const products = useAppSelector((state) => state.products.products)
   console.log(products)
-
   useEffect(() => {
     dispatch(productsFetch())
   }, [])
@@ -21,7 +20,7 @@ export default function ProductsList() {
     products &&
     products.map((item) => {
       return {
-        id: item._id.slice(-10),
+        id: item._id,
         imageUrl: typeof item.image === 'object' ? item.image.url : item.image,
         pName: item.name,
         pDesc: item.description,
