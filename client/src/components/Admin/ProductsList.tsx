@@ -8,6 +8,7 @@ import {
   productsDelete,
   productsFetch,
 } from '../../features/products/productsSlice'
+import EditProduct from './EditProduct'
 
 export default function ProductsList() {
   const navigate = useNavigate()
@@ -63,6 +64,7 @@ export default function ProductsList() {
         return (
           <Actions>
             <Delete onClick={() => handleDelete(params.row.id)}>Delete</Delete>
+            <EditProduct />
             <View onClick={() => navigate(`/admin/products/${params.row.id}`)}>
               View
             </View>
