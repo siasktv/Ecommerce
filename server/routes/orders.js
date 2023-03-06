@@ -60,4 +60,33 @@ router.get('/income', async (req, res) => {
     res.status(500).send(err)
   }
 })
+
+// WEEK'S SALES
+
+router.get('/week-sales', async (req, res) => {
+  const last7Days = moment()
+    .day(moment().day() - 7)
+    .format('YYYY-MM-DD HH:mm:ss')
+
+  try {
+    const income = await Order.aggregate([
+      { $match: { createdAt: { $gte: new Date(last7Days) } } },
+      {
+        $project: {
+          day: { $dayOfWeek: '$createdAt' },
+          sales: '$total',
+        },
+      },
+      {
+        $group: {
+          _id: '$day',
+          total: { $sum: '$sales' },
+        },
+      },
+    ])
+    res.status(200).send(income)
+  } catch (err) {
+    res.status(500).send(err)
+  }
+})
 module.exports = router
