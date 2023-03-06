@@ -3,7 +3,6 @@ import { DataGrid } from '@mui/x-data-grid'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { productsFetch } from '../../features/products/productsSlice'
 
@@ -53,11 +52,13 @@ export default function ProductsList() {
       field: 'actions',
       headerName: 'Actions',
       width: 170,
-      renderCell: () => {
+      renderCell: (params) => {
         return (
           <Actions>
             <Delete>Delete</Delete>
-            <View>View</View>
+            <View onClick={() => navigate(`/admin/products/${params.row.id}`)}>
+              View
+            </View>
           </Actions>
         )
       },
