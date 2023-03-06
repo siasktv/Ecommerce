@@ -20,6 +20,7 @@ interface Products {
   selectedBrands: string[]
   selectedRating: number[]
   createStatus: null | string
+  deleteStatus: null | string
 }
 
 //initialState
@@ -51,6 +52,7 @@ const initialState: Products = {
   selectedBrands: [],
   selectedRating: [],
   createStatus: null,
+  deleteStatus: null,
 }
 
 export const setHeaders = () => {
@@ -84,6 +86,23 @@ export const productsCreate = createAsyncThunk(
       const response = await axios.post(
         'http://localhost:3001/products/createProduct',
         values
+        // setHeaders()
+      )
+      return response.data
+    } catch (error: any) {
+      console.log(error)
+      toast.error(error.response?.data)
+    }
+  }
+)
+
+export const productsDelete = createAsyncThunk(
+  'products/productsDelete',
+  async (id) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:3001/products/${id}`
+
         // setHeaders()
       )
       return response.data
@@ -215,6 +234,31 @@ const productsSlice = createSlice({
       return {
         ...state,
         createStatus: 'rejected',
+      }
+    })
+
+    builder.addCase(productsDelete.pending, (state: Products) => {
+      return {
+        ...state,
+        deleteStatus: 'pending',
+      }
+    })
+    builder.addCase(
+      productsDelete.fulfilled,
+      (state: Products, action: PayloadAction<Product>) => {
+        const newList = state.products.filter(
+          (p) => p._id !== action.payload._id
+        )
+        state.products = newList
+        state.deleteStatus = 'success'
+        toast.error('Product deleted!')
+      }
+    )
+
+    builder.addCase(productsDelete.rejected, (state: Products, action) => {
+      return {
+        ...state,
+        deleteStatus: 'rejected',
       }
     })
   },

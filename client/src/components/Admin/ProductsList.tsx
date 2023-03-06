@@ -4,7 +4,10 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
-import { productsFetch } from '../../features/products/productsSlice'
+import {
+  productsDelete,
+  productsFetch,
+} from '../../features/products/productsSlice'
 
 export default function ProductsList() {
   const navigate = useNavigate()
@@ -14,6 +17,10 @@ export default function ProductsList() {
   useEffect(() => {
     dispatch(productsFetch())
   }, [])
+
+  const handleDelete = (id) => {
+    dispatch(productsDelete(id))
+  }
 
   const rows =
     products &&
@@ -55,7 +62,7 @@ export default function ProductsList() {
       renderCell: (params) => {
         return (
           <Actions>
-            <Delete>Delete</Delete>
+            <Delete onClick={() => handleDelete(params.row.id)}>Delete</Delete>
             <View onClick={() => navigate(`/admin/products/${params.row.id}`)}>
               View
             </View>
