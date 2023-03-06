@@ -90,6 +90,13 @@ export default function Navigator(props: DrawerProps) {
                       <ListItemText>{childId}</ListItemText>
                     </ListItemButton>
                   </Link>
+                ) : childId === 'Summary' ? ( // Check for new link ID
+                  <Link to="/admin/summary" style={{ textDecoration: 'none' }}>
+                    <ListItemButton sx={item}>
+                      <ListItemIcon>{icon}</ListItemIcon>
+                      <ListItemText>{childId}</ListItemText>
+                    </ListItemButton>
+                  </Link>
                 ) : (
                   <ListItemButton selected={active} sx={item}>
                     <ListItemIcon>{icon}</ListItemIcon>

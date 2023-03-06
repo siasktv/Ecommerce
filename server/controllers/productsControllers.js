@@ -1,6 +1,5 @@
 const Product = require('../models/Product.js')
 const cloudinary = require('../utils/cloudinary')
-const { requireAdmin } = require('../middleware/auth')
 
 const getAllProducts = async (req, res) => {
   try {
@@ -30,28 +29,26 @@ const getProductById = async (req, res) => {
 const createProduct = async (req, res) => {
   const { name, brand, description, price, category, image } = req.body
   try {
-    await requireAdmin(req, res, async () => {
-      if (image) {
-        const uploadRes = await cloudinary.uploader.upload(image, {
-          upload_preset: 'onlineShop',
+    if (image) {
+      const uploadRes = await cloudinary.uploader.upload(image, {
+        upload_preset: 'onlineShop',
+      })
+
+      if (uploadRes) {
+        const product = new Product({
+          name,
+          brand,
+          description,
+          price,
+          category,
+          image: uploadRes,
         })
 
-        if (uploadRes) {
-          const product = new Product({
-            name,
-            brand,
-            description,
-            price,
-            category,
-            image: uploadRes,
-          })
+        const savedProduct = await product.save()
 
-          const savedProduct = await product.save()
-
-          res.status(200).send(savedProduct)
-        }
+        res.status(200).send(savedProduct)
       }
-    })
+    }
   } catch (err) {
     console.log(err)
     res.status(500).send(err)

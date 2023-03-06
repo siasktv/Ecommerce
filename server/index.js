@@ -25,6 +25,7 @@ const paths = {
   users: '/users',
   stripe: '/stripe',
   usersAuth: '/users/auth',
+  usersStats: '/users/stats',
 }
 
 server.use(paths.products, require('./routes/productsRoutes'))
@@ -32,7 +33,7 @@ server.use(paths.reviews, require('./routes/reviewsRoutes'))
 server.use(paths.users, require('./routes/usersRoutes'))
 server.use(paths.stripe, require('./routes/stripe'))
 server.use(paths.usersAuth, require('./routes/userAuthRoutes'))
-
+server.use(paths.usersStats, require('./routes/userStats'))
 connectDB()
 server.listen('3001', () => {
   console.log('server listening on port 3001')

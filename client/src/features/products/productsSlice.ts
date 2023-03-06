@@ -54,6 +54,16 @@ const initialState: Products = {
   createStatus: null,
 }
 
+export const setHeaders = () => {
+  const headers = {
+    headers: {
+      'x-auth-token': localStorage.getItem('token'),
+    },
+  }
+
+  return headers
+}
+
 //Create Thunk
 export const productsFetch = createAsyncThunk(
   'products/productsFetch',
@@ -74,6 +84,7 @@ export const productsCreate = createAsyncThunk(
       const response = await axios.post(
         'http://localhost:3001/products/createProduct',
         values
+        // setHeaders()
       )
       return response.data
     } catch (error: any) {
