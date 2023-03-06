@@ -13,6 +13,7 @@ import React from 'react'
 import CreateProduct from './ProductCreate'
 import { TransitionProps } from '@mui/material/transitions'
 import { Slide } from '@mui/material'
+import ProductsList from './ProductsList'
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -80,7 +81,7 @@ export default function Products() {
         </Toolbar>
       </AppBar>
       <Typography sx={{ my: 5, mx: 2 }} color="text.secondary" align="center">
-        No products for this proyect yet!
+        <ProductsList />
       </Typography>
     </Paper>
   )
