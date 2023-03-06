@@ -1,17 +1,19 @@
 import styled from 'styled-components'
+import { useAppSelector } from '../../../app/hooks'
 
 const AllTimeData = () => {
+  const products = useAppSelector((state) => state.products.allProducts)
   //fix this component
   return (
     <Main>
-      <h3>All Times</h3>
+      <h3>All Data</h3>
       <Info>
         <Title>Users</Title>
         <Data>200</Data>
       </Info>
       <Info>
         <Title>Products</Title>
-        <Data>70</Data>
+        <Data>{products.length}</Data>
       </Info>
       <Info>
         <Title>Orders</Title>
