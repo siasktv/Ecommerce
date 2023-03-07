@@ -18,6 +18,13 @@ const UserProfile = () => {
   const [loading, setLoading] = useState(false)
   const [updating, setUpdating] = useState(false)
 
+  const toggleAdmin = () => {
+    setUser((prevUser) => ({
+      ...prevUser,
+      isAdmin: !prevUser.isAdmin,
+    }))
+  }
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -72,6 +79,15 @@ const UserProfile = () => {
         ) : (
           <form onSubmit={handleSubmit}>
             <h3>User Profile</h3>
+            <div>
+              <label htmlFor="isAdmin">Admin:</label>
+              <input
+                type="checkbox"
+                id="isAdmin"
+                checked={user.isAdmin}
+                onChange={toggleAdmin}
+              />
+            </div>
             {user.isAdmin ? (
               <Admin>Admin</Admin>
             ) : (
