@@ -10,14 +10,11 @@ import ListItemText from '@mui/material/ListItemText'
 import HomeIcon from '@mui/icons-material/Home'
 import PeopleIcon from '@mui/icons-material/People'
 import DnsRoundedIcon from '@mui/icons-material/DnsRounded'
-import PermMediaOutlinedIcon from '@mui/icons-material/PhotoSizeSelectActual'
-import PublicIcon from '@mui/icons-material/Public'
-import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet'
-import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputComponent'
 import TimerIcon from '@mui/icons-material/Timer'
 import SettingsIcon from '@mui/icons-material/Settings'
 import PhonelinkSetupIcon from '@mui/icons-material/PhonelinkSetup'
 import SummarizeIcon from '@mui/icons-material/Summarize'
+import LocalShippingIcon from '@mui/icons-material/LocalShipping'
 import { Link } from 'react-router-dom'
 
 const categories = [
@@ -30,6 +27,7 @@ const categories = [
       },
       { id: 'Products', icon: <DnsRoundedIcon /> },
       { id: 'Summary', icon: <SummarizeIcon /> },
+      { id: 'Orders', icon: <LocalShippingIcon /> },
     ],
   },
   {
@@ -90,8 +88,15 @@ export default function Navigator(props: DrawerProps) {
                       <ListItemText>{childId}</ListItemText>
                     </ListItemButton>
                   </Link>
-                ) : childId === 'Summary' ? ( // Check for new link ID
+                ) : childId === 'Summary' ? (
                   <Link to="/admin/summary" style={{ textDecoration: 'none' }}>
+                    <ListItemButton sx={item}>
+                      <ListItemIcon>{icon}</ListItemIcon>
+                      <ListItemText>{childId}</ListItemText>
+                    </ListItemButton>
+                  </Link>
+                ) : childId === 'Orders' ? ( // Check for new link ID
+                  <Link to="/admin/orders" style={{ textDecoration: 'none' }}>
                     <ListItemButton sx={item}>
                       <ListItemIcon>{icon}</ListItemIcon>
                       <ListItemText>{childId}</ListItemText>

@@ -19,6 +19,7 @@ import Products from './components/Admin/Products'
 import Summary from './components/Admin/Summary'
 import Index from './Index'
 import Product from './components/Admin/details/ProductDetail'
+import Orders from './components/Admin/Orders'
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,7 @@ const router = createBrowserRouter([
     children: [
       { path: 'products', element: <Products /> },
       { path: 'summary', element: <Summary /> },
+      { path: 'orders', element: <Orders /> },
       { path: 'products/:id', element: <Product /> },
     ],
   },

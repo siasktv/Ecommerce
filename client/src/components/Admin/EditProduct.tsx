@@ -15,7 +15,7 @@ export default function EditProduct({ prodId, products }) {
   const [open, setOpen] = React.useState(false)
 
   const dispatch = useDispatch()
-  const { editStatus } = useSelector((state) => state.products)
+  const { editStatus } = useAppSelector((state) => state.products)
 
   const [previewImg, setPreviewImg] = useState('')
   const [currentProd, setCurrentProd] = useState({})
@@ -47,24 +47,6 @@ export default function EditProduct({ prodId, products }) {
     }
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-
-    dispatch(
-      productsEdit({
-        productImg,
-        product: {
-          ...currentProd,
-          name: name,
-          brand: brand,
-          category: category,
-          price: price,
-          description: description,
-        },
-      })
-    )
-  }
-
   const handleClickOpen = () => {
     setOpen(true)
 
@@ -88,6 +70,25 @@ export default function EditProduct({ prodId, products }) {
 
   const handleClose = () => {
     setOpen(false)
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    dispatch(
+      productsEdit({
+        productImg,
+        product: {
+          ...currentProd,
+          name: name,
+          brand: brand,
+          category: category,
+          price: price,
+          description: description,
+        },
+      })
+    )
+    handleClose()
   }
 
   return (
