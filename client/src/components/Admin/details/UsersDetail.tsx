@@ -54,7 +54,7 @@ export default function UsersList() {
         return (
           <Actions>
             <Delete onClick={() => handleDelete(params.row.id)}>Delete</Delete>
-            <View onClick={() => navigate(`/user/${params.row.id}`)}>View</View>
+            <View onClick={() => navigate(`${params.row.id}`)}>View</View>
           </Actions>
         )
       },
