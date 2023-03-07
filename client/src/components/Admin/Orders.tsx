@@ -1,7 +1,11 @@
-// import OrderList from "./lists/OrderList";
+import OrderList from './details/OrdersDetail'
 
 const Orders = () => {
-  return <>{/* <OrderList /> */}</>
+  return (
+    <>
+      <OrderList />
+    </>
+  )
 }
 
 export default Orders

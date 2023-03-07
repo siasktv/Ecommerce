@@ -3,13 +3,14 @@ import { DataGrid } from '@mui/x-data-grid'
 import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
-import { ordersEdit, ordersFetch } from '../../../slices/ordersSlice'
+import { ordersFetch } from '../../../features/orders/ordersSlice'
 import moment from 'moment'
+import { useAppSelector } from '../../../app/hooks'
 
 export default function OrderList() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { list } = useSelector((state) => state.orders)
+  const { list } = useAppSelector((state) => state.orders)
 
   useEffect(() => {
     dispatch(ordersFetch())
@@ -59,12 +60,8 @@ export default function OrderList() {
       renderCell: (params) => {
         return (
           <Actions>
-            <DispatchBtn onClick={() => handleOrderDispatch(params.row.id)}>
-              Dispatch
-            </DispatchBtn>
-            <DeliveryBtn onClick={() => handleDeliver(params.row.id)}>
-              Delivered
-            </DeliveryBtn>
+            <DispatchBtn>Dispatch</DispatchBtn>
+            <DeliveryBtn>Delivered</DeliveryBtn>
             <View onClick={() => navigate(`/order/${params.row.id}`)}>
               View
             </View>
@@ -74,23 +71,23 @@ export default function OrderList() {
     },
   ]
 
-  const handleOrderDispatch = (id) => {
-    dispatch(
-      ordersEdit({
-        id,
-        delivery_status: 'dispatched',
-      })
-    )
-  }
+  //   const handleOrderDispatch = (id) => {
+  //     dispatch(
+  //       ordersEdit({
+  //         id,
+  //         delivery_status: 'dispatched',
+  //       })
+  //     )
+  //   }
 
-  const handleDeliver = (id) => {
-    dispatch(
-      ordersEdit({
-        id,
-        delivery_status: 'delivered',
-      })
-    )
-  }
+  //   const handleDeliver = (id) => {
+  //     dispatch(
+  //       ordersEdit({
+  //         id,
+  //         delivery_status: 'delivered',
+  //       })
+  //     )
+  //   }
 
   return (
     <div style={{ height: 400, width: '100%', marginTop: '2rem' }}>
