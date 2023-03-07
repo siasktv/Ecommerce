@@ -34,6 +34,16 @@ router.get('/', async (req, res) => {
   }
 })
 
+router.get('/findOne/:id', async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id)
+    res.status(200).send(order)
+  } catch (error) {
+    console.log(error)
+    res.status(500).send(error)
+  }
+})
+
 //Orders Stats
 router.get('/stats', async (req, res) => {
   const previousMonth = moment()

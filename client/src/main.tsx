@@ -20,6 +20,7 @@ import Summary from './components/Admin/Summary'
 import Index from './Index'
 import Product from './components/Admin/details/ProductDetail'
 import Orders from './components/Admin/Orders'
+import Order from './components/Admin/details/OrderDetail'
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,7 @@ const router = createBrowserRouter([
       { path: 'products', element: <Products /> },
       { path: 'summary', element: <Summary /> },
       { path: 'orders', element: <Orders /> },
+      { path: 'orders/:id', element: <Order /> },
       { path: 'products/:id', element: <Product /> },
     ],
   },
