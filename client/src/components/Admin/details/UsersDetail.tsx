@@ -3,7 +3,7 @@ import { DataGrid } from '@mui/x-data-grid'
 import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
-import { usersFetch } from '../../../features/users/usersSlice'
+import { usersFetch, userDelete } from '../../../features/users/usersSlice'
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 
 export default function UsersList() {
@@ -53,7 +53,7 @@ export default function UsersList() {
       renderCell: (params) => {
         return (
           <Actions>
-            <Delete>Delete</Delete>
+            <Delete onClick={() => handleDelete(params.row.id)}>Delete</Delete>
             <View onClick={() => navigate(`/user/${params.row.id}`)}>View</View>
           </Actions>
         )
@@ -61,9 +61,9 @@ export default function UsersList() {
     },
   ]
 
-  //   const handleDelete = (id) => {
-  //     dispatch(userDelete(id))
-  //   }
+  const handleDelete = (id) => {
+    dispatch(userDelete(id))
+  }
 
   return (
     <div style={{ height: 400, width: '100%', marginTop: '2rem' }}>
@@ -74,6 +74,7 @@ export default function UsersList() {
         rowsPerPageOptions={[5]}
         checkboxSelection
         disableSelectionOnClick
+        style={{ backgroundColor: 'white' }}
       />
     </div>
   )

@@ -16,6 +16,18 @@ router.get('/allUsers', async (req, res) => {
   }
 })
 
+//DELETE
+
+router.delete('/:id', async (req, res) => {
+  try {
+    const deletedUser = await User.findByIdAndDelete(req.params.id)
+
+    res.status(200).send(deletedUser)
+  } catch (error) {
+    res.status(500).send(error)
+  }
+})
+
 router.get('/', async (req, res) => {
   const previousMonth = moment()
     .month(moment().month() - 1)
