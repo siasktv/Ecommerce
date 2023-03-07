@@ -4,6 +4,22 @@ const moment = require('moment')
 
 const router = require('express').Router()
 
+//UPDATE
+router.put('/:id', async (req, res) => {
+  try {
+    const updatedOrder = await Order.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: req.body,
+      },
+      { new: true }
+    )
+    res.status(200).send(updatedOrder)
+  } catch (err) {
+    res.status(500).send(err)
+  }
+})
+
 //Get Orders
 router.get('/', async (req, res) => {
   const query = req.query.new

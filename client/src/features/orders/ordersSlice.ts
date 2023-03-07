@@ -16,33 +16,32 @@ export const ordersFetch = createAsyncThunk('orders/ordersFetch', async () => {
   }
 })
 
-// export const ordersEdit = createAsyncThunk(
-//   "orders/ordersEdit",
-//   async (values, { getState }) => {
-//     const state = getState();
+export const ordersEdit = createAsyncThunk(
+  'orders/ordersEdit',
+  async (values, { getState }) => {
+    const state = getState()
 
-//     let currentOrder = state.orders.list.filter(
-//       (order) => order._id === values.id
-//     );
+    let currentOrder = state.orders.list.filter(
+      (order) => order._id === values.id
+    )
 
-//     const newOrder = {
-//       ...currentOrder[0],
-//       delivery_status: values.delivery_status,
-//     };
+    const newOrder = {
+      ...currentOrder[0],
+      delivery_status: values.delivery_status,
+    }
 
-//     try {
-//       const response = await axios.put(
-//         `${url}/orders/${values.id}`,
-//         newOrder,
-//         setHeaders()
-//       );
+    try {
+      const response = await axios.put(
+        `http://localhost:3001/orders/${values.id}`,
+        newOrder
+      )
 
-//       return response.data;
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   }
-// );
+      return response.data
+    } catch (error) {
+      console.log(error)
+    }
+  }
+)
 
 const ordersSlice = createSlice({
   name: 'orders',
@@ -59,33 +58,20 @@ const ordersSlice = createSlice({
     builder.addCase(ordersFetch.rejected, (state, action) => {
       state.status = 'rejected'
     })
+    builder.addCase(ordersEdit.pending, (state, action) => {
+      state.status = 'pending'
+    })
+    builder.addCase(ordersEdit.fulfilled, (state, action) => {
+      const updatedOrders = state.list.map((order) =>
+        order._id === action.payload._id ? action.payload : order
+      )
+      state.list = updatedOrders
+      state.status = 'success'
+    })
+    builder.addCase(ordersEdit.rejected, (state, action) => {
+      state.status = 'rejected'
+    })
   },
-
-  //   extraReducers: {
-  //     [ordersFetch.pending]: (state, action) => {
-  //       state.status = 'pending'
-  //     },
-  //     [ordersFetch.fulfilled]: (state, action) => {
-  //       state.list = action.payload
-  //       state.status = 'success'
-  //     },
-  //     [ordersFetch.rejected]: (state, action) => {
-  //       state.status = 'rejected'
-  //     },
-  //     [ordersEdit.pending]: (state, action) => {
-  //       state.status = 'pending'
-  //     },
-  //     [ordersEdit.fulfilled]: (state, action) => {
-  //       const updatedOrders = state.list.map((order) =>
-  //         order._id === action.payload._id ? action.payload : order
-  //       )
-  //       state.list = updatedOrders
-  //       state.status = 'success'
-  //     },
-  //     [ordersEdit.rejected]: (state, action) => {
-  //       state.status = 'rejected'
-  //     },
-  //   },
 })
 
 export default ordersSlice.reducer
