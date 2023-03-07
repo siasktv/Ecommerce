@@ -22,6 +22,7 @@ import Product from './components/Admin/details/ProductDetail'
 import Orders from './components/Admin/Orders'
 import Order from './components/Admin/details/OrderDetail'
 import Users from './components/Admin/Users'
+import UserProfile from './components/Admin/details/UserProfile'
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,7 @@ const router = createBrowserRouter([
       { path: 'orders', element: <Orders /> },
       { path: 'orders/:id', element: <Order /> },
       { path: 'products/:id', element: <Product /> },
+      { path: 'users/:id', element: <UserProfile /> },
     ],
   },
 ])
