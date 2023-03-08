@@ -7,6 +7,7 @@ type AuthUser = {
   name: string | null
   email: string | null
   _id: string
+  isAdmin: boolean | null
   registerStatus: string
   registerError: string | null
   userLoaded: boolean
@@ -18,6 +19,7 @@ interface DecodedUser {
   token: string | null
   name: string | null
   email: string | null
+  isAdmin: boolean
   _id: string
 }
 
@@ -30,6 +32,7 @@ const initialState: AuthUser = {
   token: decodedUser?.token ?? null,
   name: decodedUser?.name ?? null,
   email: decodedUser?.email ?? null,
+  isAdmin: decodedUser?.isAdmin ?? null,
   _id: decodedUser?._id ?? '',
   registerStatus: 'idle',
   registerError: null,
@@ -111,6 +114,7 @@ const authSlice = createSlice({
         token: null,
         name: '',
         email: '',
+        isAdmin: false,
         _id: '',
         registerStatus: 'idle',
         registerError: null,
@@ -168,13 +172,14 @@ const authSlice = createSlice({
     builder.addCase(
       loginUser.fulfilled,
       (state: AuthUser, action: PayloadAction<AuthUser>) => {
-        const { name, email, _id } = action.payload
+        const { name, email, _id, isAdmin } = action.payload
         return {
           ...state,
           token: localStorage.getItem('token') ?? null,
           name,
           email,
           _id,
+          isAdmin,
           registerStatus: 'success',
           registerError: null,
           userLoaded: true,

@@ -27,6 +27,8 @@ function Navbar() {
 
   const auth = useAppSelector((state) => state.auth)
 
+  console.log(auth)
+
   const [open, setOpen] = React.useState(false)
   const anchorRef = React.useRef<HTMLButtonElement>(null)
 
@@ -74,6 +76,9 @@ function Navbar() {
 
   const handleNavigate = () => {
     navigate('/login')
+  }
+  const handleNavigateAmin = () => {
+    navigate('/admin')
   }
 
   const handleLogoutUser = () => {
@@ -161,6 +166,11 @@ function Navbar() {
                             <Typography>{auth.email}</Typography>
                           </MenuItem>
                           <Divider />
+                          {auth.isAdmin && (
+                            <MenuItem onClick={handleNavigateAmin}>
+                              Dashboard
+                            </MenuItem>
+                          )}
                           <MenuItem onClick={handleClose}>My account</MenuItem>
                           <MenuItem onClick={handleLogoutUser}>Logout</MenuItem>
                         </MenuList>
