@@ -13,6 +13,7 @@ const Summary = () => {
   const [earning, setEarnings] = useState([])
   const [usersPerc, setUsersPerc] = useState(0)
   const [ordersPerc, setOrdersPerc] = useState(0)
+
   const [earningPerc, setEarningsPerc] = useState(0)
 
   function compare(a, b) {
@@ -46,12 +47,14 @@ const Summary = () => {
     async function fetchData() {
       try {
         const res = await axios.get('http://localhost:3001/orders/stats')
-
         res.data.sort(compare)
         setOrders(res.data)
-        setOrdersPerc(
-          ((res.data[0].total - res.data[1].total) / res.data[1].total) * 100
-        )
+
+        if (res.data && res.data[0] && res.data[1]) {
+          setOrdersPerc(
+            ((res.data[0].total - res.data[1].total) / res.data[1].total) * 100
+          )
+        }
       } catch (err) {
         console.log(err)
       }
@@ -66,9 +69,12 @@ const Summary = () => {
 
         res.data.sort(compare)
         setEarnings(res.data)
-        setEarningsPerc(
-          ((res.data[0].total - res.data[1].total) / res.data[1].total) * 100
-        )
+
+        if (res.data && res.data[0] && res.data[1]) {
+          setEarningsPerc(
+            ((res.data[0].total - res.data[1].total) / res.data[1].total) * 100
+          )
+        }
       } catch (err) {
         console.log(err)
       }
@@ -76,7 +82,17 @@ const Summary = () => {
     fetchData()
   }, [])
 
-  const data = [
+  interface StatsData {
+    icon: React.ReactNode
+    digits: number | string
+    isMoney: boolean
+    title: string
+    color: string
+    bgcolor: string
+    percentage: number
+  }
+
+  const data: StatsData[] = [
     {
       icon: <FaUsers />,
       digits: users[0]?.total,
