@@ -6,8 +6,18 @@ import axios from 'axios'
 import Chart from './summary-components/Chart'
 import Transactions from './summary-components/Transactions'
 import AllTimeData from './summary-components/AllTimeData'
+import { useAppSelector, useAppDispatch } from '../../app/hooks'
+import { usersFetch } from '../../features/users/usersSlice'
+import { ordersFetch } from '../../features/orders/ordersSlice'
+import { productsFetch } from '../../features/products/productsSlice'
 
 const Summary = () => {
+  const { products } = useAppSelector((state) => state.products)
+  const { list } = useAppSelector((state) => state.orders)
+  const allUsers = useAppSelector((state) => state.users.list)
+
+  const dispatch = useAppDispatch()
+
   const [users, setUsers] = useState([])
   const [orders, setOrders] = useState([])
   const [earning, setEarnings] = useState([])
@@ -25,6 +35,12 @@ const Summary = () => {
     }
     return 0
   }
+
+  useEffect(() => {
+    dispatch(usersFetch())
+    dispatch(ordersFetch())
+    dispatch(productsFetch())
+  }, [dispatch])
 
   useEffect(() => {
     async function fetchData() {
@@ -140,7 +156,7 @@ const Summary = () => {
       </MainStats>
       <SideStats>
         <Transactions />
-        <AllTimeData />
+        <AllTimeData allUsers={allUsers} orders={list} products={products} />
       </SideStats>
     </StyledSummary>
   )

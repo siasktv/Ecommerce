@@ -1,15 +1,16 @@
+import { useEffect } from 'react'
 import styled from 'styled-components'
-import { useAppSelector } from '../../../app/hooks'
+import { useAppSelector, useAppDispatch } from '../../../app/hooks'
 
-const AllTimeData = () => {
-  const products = useAppSelector((state) => state.products.allProducts)
+const AllTimeData = ({ allUsers, orders, products }) => {
+  console.log(orders)
   //fix this component
   return (
     <Main>
       <h3>All Data</h3>
       <Info>
         <Title>Users</Title>
-        <Data>200</Data>
+        <Data>{allUsers.length}</Data>
       </Info>
       <Info>
         <Title>Products</Title>
@@ -17,11 +18,7 @@ const AllTimeData = () => {
       </Info>
       <Info>
         <Title>Orders</Title>
-        <Data>300</Data>
-      </Info>
-      <Info>
-        <Title>Earnings</Title>
-        <Data>$200,000</Data>
+        <Data>{orders.length}</Data>
       </Info>
     </Main>
   )
