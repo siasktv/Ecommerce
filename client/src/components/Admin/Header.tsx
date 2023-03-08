@@ -14,11 +14,15 @@ import Tabs from '@mui/material/Tabs'
 import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
+import { useAppSelector } from '../../app/hooks'
 
 const lightColor = 'rgba(255, 255, 255, 0.7)'
 
 function Header(props: { onDrawerToggle: any }) {
   const { onDrawerToggle } = props
+  const auth = useAppSelector((state) => state.auth)
+
+  console.log(auth)
 
   return (
     <React.Fragment>
@@ -38,7 +42,7 @@ function Header(props: { onDrawerToggle: any }) {
             <Grid item xs />
             <Grid item>
               <Link
-                href="/"
+                href="/search"
                 variant="body2"
                 sx={{
                   textDecoration: 'none',
@@ -50,7 +54,7 @@ function Header(props: { onDrawerToggle: any }) {
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                Go to docs
+                Go to shop
               </Link>
             </Grid>
             <Grid item>
@@ -62,7 +66,9 @@ function Header(props: { onDrawerToggle: any }) {
             </Grid>
             <Grid item>
               <IconButton color="inherit" sx={{ p: 0.5 }}>
-                <Avatar src="/static/images/avatar/1.jpg" alt="My Avatar" />
+                <Avatar alt="My Avatar">
+                  {auth.name ? auth.name.slice(0, 1) : ''}
+                </Avatar>
               </IconButton>
             </Grid>
           </Grid>
@@ -81,23 +87,6 @@ function Header(props: { onDrawerToggle: any }) {
               <Typography color="inherit" variant="h5" component="h1">
                 Authentication
               </Typography>
-            </Grid>
-            <Grid item>
-              <Button
-                sx={{ borderColor: lightColor }}
-                variant="outlined"
-                color="inherit"
-                size="small"
-              >
-                Web setup
-              </Button>
-            </Grid>
-            <Grid item>
-              <Tooltip title="Help">
-                <IconButton color="inherit">
-                  <HelpIcon />
-                </IconButton>
-              </Tooltip>
             </Grid>
           </Grid>
         </Toolbar>
