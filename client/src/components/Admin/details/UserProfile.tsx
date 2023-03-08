@@ -114,7 +114,9 @@ const UserProfile = () => {
               id="password"
               onChange={(e) => setUser({ ...user, password: e.target.value })}
             />
-            <Button>{updating ? 'Updating' : 'Update Profile'}</Button>
+            <Button type="submit">
+              {updating ? 'Updating' : 'Update Profile'}
+            </Button>
           </form>
         )}
       </ProfileContainer>
