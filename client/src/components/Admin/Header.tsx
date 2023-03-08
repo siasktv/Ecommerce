@@ -30,8 +30,10 @@ import {
 
 const lightColor = 'rgba(255, 255, 255, 0.7)'
 
-function Header(props: { onDrawerToggle: any }) {
+function Header(props: { onDrawerToggle: any; label; selectedTab }) {
   const { onDrawerToggle } = props
+  const { label } = props
+  const { selectedTab } = props
   const auth = useAppSelector((state) => state.auth)
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
@@ -205,7 +207,7 @@ function Header(props: { onDrawerToggle: any }) {
           <Grid container alignItems="center" spacing={1}>
             <Grid item xs>
               <Typography color="inherit" variant="h5" component="h1">
-                Authentication
+                Metrics
               </Typography>
             </Grid>
           </Grid>
@@ -217,19 +219,14 @@ function Header(props: { onDrawerToggle: any }) {
         elevation={0}
         sx={{ zIndex: 0 }}
       >
-        <Tabs value={0} textColor="inherit">
-          <Tab label="Users" />
-          <Tab label="Sign-in method" />
-          <Tab label="Templates" />
-          <Tab label="Usage" />
+        <Tabs value={selectedTab} textColor="inherit" textColor="inherit">
+          {label.map(({ id }) => (
+            <Tab key={id} label={id} />
+          ))}
         </Tabs>
       </AppBar>
     </React.Fragment>
   )
-}
-
-Header.propTypes = {
-  onDrawerToggle: PropTypes.func.isRequired,
 }
 
 export default Header

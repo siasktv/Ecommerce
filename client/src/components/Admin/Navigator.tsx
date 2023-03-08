@@ -16,6 +16,11 @@ import PhonelinkSetupIcon from '@mui/icons-material/PhonelinkSetup'
 import SummarizeIcon from '@mui/icons-material/Summarize'
 import LocalShippingIcon from '@mui/icons-material/LocalShipping'
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
+
+interface NavigatorProps {
+  setSelectedTab: (tabIndex: number) => void
+}
 
 const categories = [
   {
@@ -55,10 +60,15 @@ const itemCategory = {
   px: 3,
 }
 
-export default function Navigator(props: DrawerProps) {
+export default function Navigator(props: DrawerProps & NavigatorProps) {
   const { ...other } = props
+  const { setSelectedTab } = props
 
-  const [active, setActive] = React.useState(false)
+  const handleClick = (index) => {
+    setSelectedTab(index)
+  }
+
+  const [active, setActive] = useState(false)
 
   return (
     <Drawer variant="permanent" {...other}>
@@ -83,28 +93,28 @@ export default function Navigator(props: DrawerProps) {
               <ListItem disablePadding key={childId}>
                 {childId === 'Products' ? (
                   <Link to="/admin/products" style={{ textDecoration: 'none' }}>
-                    <ListItemButton sx={item}>
+                    <ListItemButton sx={item} onClick={() => handleClick(1)}>
                       <ListItemIcon>{icon}</ListItemIcon>
                       <ListItemText>{childId}</ListItemText>
                     </ListItemButton>
                   </Link>
                 ) : childId === 'Summary' ? (
                   <Link to="/admin/summary" style={{ textDecoration: 'none' }}>
-                    <ListItemButton sx={item}>
+                    <ListItemButton sx={item} onClick={() => handleClick(2)}>
                       <ListItemIcon>{icon}</ListItemIcon>
                       <ListItemText>{childId}</ListItemText>
                     </ListItemButton>
                   </Link>
                 ) : childId === 'Orders' ? ( // Check for new link ID
                   <Link to="/admin/orders" style={{ textDecoration: 'none' }}>
-                    <ListItemButton sx={item}>
+                    <ListItemButton sx={item} onClick={() => handleClick(3)}>
                       <ListItemIcon>{icon}</ListItemIcon>
                       <ListItemText>{childId}</ListItemText>
                     </ListItemButton>
                   </Link>
                 ) : childId === 'Users' ? ( // Check for new link ID
                   <Link to="/admin/users" style={{ textDecoration: 'none' }}>
-                    <ListItemButton sx={item}>
+                    <ListItemButton sx={item} onClick={() => handleClick(0)}>
                       <ListItemIcon>{icon}</ListItemIcon>
                       <ListItemText>{childId}</ListItemText>
                     </ListItemButton>

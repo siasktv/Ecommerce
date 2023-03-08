@@ -10,6 +10,7 @@ import Navigator from './Navigator'
 import Content from './Content'
 import Header from './Header'
 import Products from './Products'
+import { useState } from 'react'
 
 function Copyright() {
   return (
@@ -172,6 +173,23 @@ export default function Dashboard() {
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'))
 
+  const [label, setLabel] = useState([
+    {
+      id: 'Users',
+    },
+    {
+      id: 'Products',
+    },
+    {
+      id: 'Summary',
+    },
+    {
+      id: 'Orders',
+    },
+  ])
+
+  const [selectedTab, setSelectedTab] = useState(0)
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen)
   }
@@ -190,15 +208,21 @@ export default function Dashboard() {
               variant="temporary"
               open={mobileOpen}
               onClose={handleDrawerToggle}
+              label={label}
             />
           )}
           <Navigator
             PaperProps={{ style: { width: drawerWidth } }}
             sx={{ display: { sm: 'block', xs: 'none' } }}
+            setSelectedTab={setSelectedTab}
           />
         </Box>
         <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-          <Header onDrawerToggle={handleDrawerToggle} />
+          <Header
+            onDrawerToggle={handleDrawerToggle}
+            label={label}
+            selectedTab={selectedTab}
+          />
           <Box
             component="main"
             sx={{ flex: 1, py: 6, px: 4, bgcolor: '#eaeff1' }}
