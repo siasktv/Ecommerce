@@ -27,8 +27,6 @@ function Navbar() {
 
   const auth = useAppSelector((state) => state.auth)
 
-  console.log(auth)
-
   const [open, setOpen] = React.useState(false)
   const anchorRef = React.useRef<HTMLButtonElement>(null)
 

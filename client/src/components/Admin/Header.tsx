@@ -14,15 +14,81 @@ import Tabs from '@mui/material/Tabs'
 import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
-import { useAppSelector } from '../../app/hooks'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import { logoutUser } from '../../features/users/authSlice'
+import {
+  ClickAwayListener,
+  Divider,
+  Grow,
+  MenuItem,
+  MenuList,
+  Paper,
+  Popper,
+} from '@mui/material'
 
 const lightColor = 'rgba(255, 255, 255, 0.7)'
 
 function Header(props: { onDrawerToggle: any }) {
   const { onDrawerToggle } = props
   const auth = useAppSelector((state) => state.auth)
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
 
-  console.log(auth)
+  const [open, setOpen] = React.useState(false)
+  const anchorRef = React.useRef<HTMLButtonElement>(null)
+
+  const handleToggle = () => {
+    setOpen((prevOpen) => !prevOpen)
+  }
+
+  const handleClose = (event: Event | React.SyntheticEvent) => {
+    if (
+      anchorRef.current &&
+      anchorRef.current.contains(event.target as HTMLElement)
+    ) {
+      return
+    }
+    setOpen(false)
+  }
+
+  function handleListKeyDown(event: React.KeyboardEvent) {
+    if (event.key === 'Tab') {
+      event.preventDefault()
+      setOpen(false)
+    } else if (event.key === 'Escape') {
+      setOpen(false)
+    }
+  }
+
+  const prevOpen = React.useRef(open)
+  React.useEffect(() => {
+    if (prevOpen.current === true && open === false) {
+      anchorRef.current!.focus()
+    }
+
+    prevOpen.current = open
+  }, [open])
+
+  const [openCart, setOpenCart] = useState(false)
+
+  const handleOpenCart = () => {
+    setOpenCart(true)
+  }
+
+  const handleCloseCart = () => {
+    setOpenCart(false)
+  }
+
+  const handleNavigate = () => {
+    navigate('/login')
+  }
+
+  const handleLogoutUser = () => {
+    dispatch(logoutUser())
+    console.log(auth)
+  }
 
   return (
     <React.Fragment>
@@ -65,10 +131,64 @@ function Header(props: { onDrawerToggle: any }) {
               </Tooltip>
             </Grid>
             <Grid item>
-              <IconButton color="inherit" sx={{ p: 0.5 }}>
+              <IconButton
+                color="inherit"
+                sx={{ p: 0.5 }}
+                ref={anchorRef}
+                id="composition-button"
+                aria-controls={open ? 'composition-menu' : undefined}
+                aria-expanded={open ? 'true' : undefined}
+                aria-haspopup="true"
+                onClick={handleToggle}
+              >
                 <Avatar alt="My Avatar">
                   {auth.name ? auth.name.slice(0, 1) : ''}
                 </Avatar>
+                <Popper
+                  open={open}
+                  anchorEl={anchorRef.current}
+                  role={undefined}
+                  placement="bottom-start"
+                  transition
+                  disablePortal
+                >
+                  {({ TransitionProps, placement }) => (
+                    <Grow
+                      {...TransitionProps}
+                      style={{
+                        transformOrigin:
+                          placement === 'bottom-start'
+                            ? 'left top'
+                            : 'left bottom',
+                      }}
+                    >
+                      <Paper>
+                        <ClickAwayListener onClickAway={handleClose}>
+                          <MenuList
+                            autoFocusItem={open}
+                            id="composition-menu"
+                            aria-labelledby="composition-button"
+                            onKeyDown={handleListKeyDown}
+                          >
+                            <MenuItem>
+                              <Typography>{auth.name}</Typography>
+                            </MenuItem>
+                            <MenuItem>
+                              <Typography>{auth.email}</Typography>
+                            </MenuItem>
+                            <Divider />
+                            <MenuItem onClick={handleClose}>
+                              My account
+                            </MenuItem>
+                            <MenuItem onClick={handleLogoutUser}>
+                              Logout
+                            </MenuItem>
+                          </MenuList>
+                        </ClickAwayListener>
+                      </Paper>
+                    </Grow>
+                  )}
+                </Popper>
               </IconButton>
             </Grid>
           </Grid>
