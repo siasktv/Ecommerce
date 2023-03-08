@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { useAppSelector, useAppDispatch } from '../../../app/hooks'
 
 const AllTimeData = ({ allUsers, orders, products }) => {
-  console.log(orders)
   //fix this component
   return (
     <Main>
