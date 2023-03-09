@@ -16,8 +16,6 @@ import {
 import ProductSort from '../../components/Filters/ProductSort'
 import ShopFilterSidebar from '../../components/Filters/ProductFilterSideBar'
 import Navbar from '../../components/Navbar/Navbar'
-import Subscribe from '../../components/Footer/Subscribe'
-import Footer from '../../components/Footer/Footer'
 import MainCarousel from '../../components/MainCarusel/MainCarusel'
 
 const Search: React.FC = () => {

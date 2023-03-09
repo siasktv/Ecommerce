@@ -187,37 +187,41 @@ const productsSlice = createSlice({
         }
         if (selectedBrands.length) {
           return (
+            product.category &&
             product.category.toLowerCase() === action.payload.toLowerCase() &&
             selectedBrands.includes(product.brand)
           )
         }
-        return product.category.toLowerCase() === action.payload.toLowerCase()
+        return (
+          product.category &&
+          product.category.toLowerCase() === action.payload.toLowerCase()
+        )
       })
     },
-    selectedRating(state, action: PayloadAction<number>) {
-      console.log(action.payload)
-      const rating = [...state.selectedRating, action.payload]
-      state.selectedRating = rating
-      state.products = state.allProducts.filter((products) =>
-        rating.includes(products.rating)
-      )
-      // state.products = state.allProducts
-      //   .slice()
-      //   .filter((p) => p.rating === parseInt(action.payload))
-    },
-    unselectedRating: (state, action: PayloadAction<number>) => {
-      const ratingsArray = state.selectedRating.filter(
-        (b) => b !== action.payload
-      )
-      if (!ratingsArray.length) {
-        state.products = state.allProducts
-        return
-      }
-      state.selectedRating = ratingsArray
-      state.products = Array.from(state.allProducts).filter((product) =>
-        ratingsArray.includes(product.rating)
-      )
-    },
+    // selectedRating(state, action: PayloadAction<number>) {
+    //   console.log(action.payload)
+    //   const rating = [...state.selectedRating, action.payload]
+    //   state.selectedRating = rating
+    //   state.products = state.allProducts.filter((products) =>
+    //     rating.includes(products.rating)
+    //   )
+    //   // state.products = state.allProducts
+    //   //   .slice()
+    //   //   .filter((p) => p.rating === parseInt(action.payload))
+    // },
+    // unselectedRating: (state, action: PayloadAction<number>) => {
+    //   const ratingsArray = state.selectedRating.filter(
+    //     (b) => b !== action.payload
+    //   )
+    //   if (!ratingsArray.length) {
+    //     state.products = state.allProducts
+    //     return
+    //   }
+    //   state.selectedRating = ratingsArray
+    //   state.products = Array.from(state.allProducts).filter((product) =>
+    //     ratingsArray.includes(product.rating)
+    //   )
+    // },
 
     clearFilter(state) {
       state.products = state.allProducts.slice()

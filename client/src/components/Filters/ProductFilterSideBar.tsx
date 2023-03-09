@@ -21,6 +21,7 @@ import {
   unselectBrand,
   selectedRating,
   unselectedRating,
+  clearFilter,
 } from '../../features/products/productsSlice'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 // components
@@ -90,6 +91,7 @@ export default function ShopFilterSidebar() {
   }
   const handleClearFilters = () => {
     window.location.reload()
+    // dispatch(clearFilter())
   }
 
   return (
@@ -146,7 +148,7 @@ export default function ShopFilterSidebar() {
                   value={item}
                   control={<Radio />}
                   label={item}
-                  onChange={() => toggleCategory(item)}
+                  onClick={() => toggleCategory(item)}
                 />
               ))}
             </RadioGroup>
