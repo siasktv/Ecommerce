@@ -19,6 +19,7 @@ import {
   selectBrand,
   unselectBrand,
   selectedRatings,
+  unselectedRatings,
   clearFilter,
   selectCategory,
 } from '../../features/products/productsSlice'
@@ -83,7 +84,11 @@ export default function ShopFilterSidebar() {
   }
 
   const toggleRating = (rating: number) => {
-    dispatch(selectedRatings(rating))
+    if (ratings.includes(rating)) {
+      dispatch(unselectedRatings(rating))
+    } else {
+      dispatch(selectedRatings(rating))
+    }
   }
 
   const handleClearFilters = () => {

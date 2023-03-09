@@ -223,7 +223,6 @@ const productsSlice = createSlice({
     },
 
     selectedRatings(state, action: PayloadAction<number>) {
-      console.log(action.payload)
       const rating = action.payload
       if (!state.selectedRating.includes(rating)) {
         const newArrayRating = [...state.selectedRating, rating]
@@ -233,31 +232,20 @@ const productsSlice = createSlice({
         )
       }
     },
-
-    // selectedRating(state, action: PayloadAction<number>) {
-    //   console.log(action.payload)
-    //   const rating = [...state.selectedRating, action.payload]
-    //   state.selectedRating = rating
-    //   state.products = state.allProducts.filter((products) =>
-    //     rating.includes(products.rating)
-    //   )
-    //   // state.products = state.allProducts
-    //   //   .slice()
-    //   //   .filter((p) => p.rating === parseInt(action.payload))
-    // },
-    // unselectedRating: (state, action: PayloadAction<number>) => {
-    //   const ratingsArray = state.selectedRating.filter(
-    //     (b) => b !== action.payload
-    //   )
-    //   if (!ratingsArray.length) {
-    //     state.products = state.allProducts
-    //     return
-    //   }
-    //   state.selectedRating = ratingsArray
-    //   state.products = Array.from(state.allProducts).filter((product) =>
-    //     ratingsArray.includes(product.rating)
-    //   )
-    // },
+    unselectedRatings(state, action: PayloadAction<number>) {
+      const newArrayRatings = state.selectedRating.filter(
+        (b) => b !== action.payload
+      )
+      if (!newArrayRatings.length) {
+        state.products = state.allProducts
+        state.selectedRating = []
+        return
+      }
+      state.selectedRating = newArrayRatings
+      state.products = Array.from(state.allProducts).filter((product) =>
+        newArrayRatings.includes(product.rating)
+      )
+    },
 
     clearFilter(state) {
       state.products = state.allProducts.slice()
@@ -352,6 +340,7 @@ export const {
   unselectBrand,
   selectCategory,
   selectedRatings,
+  unselectedRatings,
   clearFilter,
 } = productsSlice.actions
 export default productsSlice.reducer
