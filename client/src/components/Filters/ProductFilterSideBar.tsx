@@ -67,13 +67,12 @@ export default function ShopFilterSidebar() {
 
   const ratingArray = useAppSelector((state) => state.products.selectedRating)
 
-  const toggleBrand = (brand: string) => {
-    if (brands.includes(brand)) {
-      dispatch(unselectBrand(brand))
-      return
+  const handleBrandToggle = (brand: string) => {
+    const brandToToggle = brand.toLowerCase()
+    if (brands.includes(brandToToggle)) {
+      dispatch(unselectBrand(brandToToggle))
     } else {
-      dispatch(selectBrand(brand))
-      return
+      dispatch(selectBrand(brandToToggle))
     }
   }
 
@@ -131,7 +130,7 @@ export default function ShopFilterSidebar() {
                   key={item}
                   control={<Checkbox />}
                   label={item}
-                  onChange={() => toggleBrand(item)}
+                  onChange={() => handleBrandToggle(item)}
                 />
               ))}
             </FormGroup>

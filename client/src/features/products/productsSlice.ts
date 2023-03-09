@@ -153,6 +153,7 @@ const productsSlice = createSlice({
       )
       if (!newSelections.length) {
         state.products = state.allProducts
+        state.selectedBrands = []
         return
       }
       state.selectedBrands = newSelections
@@ -164,10 +165,7 @@ const productsSlice = createSlice({
     selectBrand(state, action: PayloadAction<string>) {
       const brand = action.payload.toLowerCase()
       if (!state.selectedBrands.includes(brand)) {
-        const newSelections = [
-          ...state.selectedBrands.map((b) => b.toLowerCase()),
-          brand,
-        ]
+        const newSelections = [...state.selectedBrands, brand]
         state.selectedBrands = newSelections
         state.products = Array.from(state.allProducts).filter((product) =>
           newSelections.includes(product.brand.toLowerCase())
