@@ -114,7 +114,7 @@ export default function CartMenu({
           },
         }}
       >
-        <IconButton sx={{ color: 'black' }}>
+        <IconButton sx={{ color: 'white' }}>
           <ShoppingCart />
         </IconButton>
       </Badge>
@@ -208,8 +208,6 @@ export default function CartMenu({
             ) : (
               <Button
                 sx={{
-                  backgroundColor: 'black',
-                  color: 'white',
                   borderRadius: 2,
                   minWidth: '100%',
                   padding: '20px 40px',

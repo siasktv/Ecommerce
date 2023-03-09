@@ -92,8 +92,8 @@ function Navbar() {
       alignItems="center"
       width="100%"
       height="85px"
-      sx={{ backgroundColor: 'white', borderBottom: '1px solid #E0E0E0' }}
-      color="black"
+      sx={{ backgroundColor: 'black' }}
+      color="white"
       position="fixed"
       top="0"
       left="0"
@@ -110,7 +110,7 @@ function Navbar() {
           onClick={() => navigate('/')}
           sx={{ '&:hover': { cursor: 'pointer' } }}
           // color={shades.secondary[500]}
-          color="black"
+          color="white"
         >
           <DiamondIcon />
         </Box>
@@ -123,7 +123,7 @@ function Navbar() {
           {auth._id ? (
             <>
               <IconButton
-                sx={{ color: 'black' }}
+                sx={{ color: 'white' }}
                 ref={anchorRef}
                 id="composition-button"
                 aria-controls={open ? 'composition-menu' : undefined}
