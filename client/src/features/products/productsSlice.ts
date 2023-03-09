@@ -186,12 +186,24 @@ const productsSlice = createSlice({
       // Update the selected category
       state.selectedCategories = category
 
+      // Check if a brand is selected
+      const brandSelected = state.selectedBrands.length > 0
+
       // Filter products based on selected category and brand
       if (category === 'all') {
-        // If "all" category is selected, include all products
-        state.products = Array.from(state.allProducts)
+        if (!brandSelected) {
+          // If no brands are selected, include all products
+          state.products = Array.from(state.allProducts)
+        } else {
+          // Include all products matching the selected brand
+          state.products = Array.from(state.allProducts).filter(
+            (product) =>
+              product.brand &&
+              state.selectedBrands.includes(product.brand.toLowerCase())
+          )
+        }
       } else {
-        if (state.selectedBrands.length === 0) {
+        if (!brandSelected) {
           // If no brands are selected, include all products in the selected category
           state.products = Array.from(state.allProducts).filter(
             (product) =>
