@@ -16,12 +16,11 @@ import {
   Card,
 } from '@mui/material'
 import {
-  filteredByCategory,
   selectBrand,
   unselectBrand,
-  selectedRating,
-  unselectedRating,
   clearFilter,
+  unselectCategory,
+  selectCategory,
 } from '../../features/products/productsSlice'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 // components
@@ -63,6 +62,10 @@ export default function ShopFilterSidebar() {
 
   const brands = useAppSelector((state) => state.products.selectedBrands)
 
+  const categories = useAppSelector(
+    (state) => state.products.selectedCategories
+  )
+
   console.log(brands)
 
   const ratingArray = useAppSelector((state) => state.products.selectedRating)
@@ -77,17 +80,22 @@ export default function ShopFilterSidebar() {
   }
 
   const toggleCategory = (category: string) => {
-    dispatch(filteredByCategory(category))
-  }
-
-  const toggleRating = (rating: number) => {
-    if (ratingArray.includes(rating)) {
-      dispatch(unselectedRating(rating))
-      return
+    const categoryToToggle = category.toLowerCase()
+    if (categories.includes(categoryToToggle)) {
+      dispatch(unselectCategory(categoryToToggle))
     } else {
-      dispatch(selectedRating(rating))
+      dispatch(selectCategory(categoryToToggle))
     }
   }
+
+  // const toggleRating = (rating: number) => {
+  //   if (ratingArray.includes(rating)) {
+  //     dispatch(unselectedRating(rating))
+  //     return
+  //   } else {
+  //     dispatch(selectedRating(rating))
+  //   }
+  // }
   const handleClearFilters = () => {
     window.location.reload()
     // dispatch(clearFilter())

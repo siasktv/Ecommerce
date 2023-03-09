@@ -18,6 +18,7 @@ interface Products {
   products: Product[]
   allProducts: Product[]
   selectedBrands: string[]
+  selectedCategories: string[]
   selectedRating: number[]
   createStatus: null | string
   deleteStatus: null | string
@@ -51,6 +52,7 @@ const initialState: Products = {
     },
   ],
   selectedBrands: [],
+  selectedCategories: [],
   selectedRating: [],
   createStatus: null,
   deleteStatus: null,
@@ -172,32 +174,32 @@ const productsSlice = createSlice({
         )
       }
     },
-
-    filteredByCategory(state, action: PayloadAction<string>) {
-      const selectedBrands = state.selectedBrands
-      state.products = state.allProducts.slice().filter((product) => {
-        if (action.payload.toLowerCase() === 'all') {
-          if (selectedBrands.length)
-            return (
-              state.products ===
-              state.allProducts.filter((product) =>
-                selectedBrands.includes(product.brand)
-              )
-            )
-          return (state.products = state.allProducts)
-        }
-        if (selectedBrands.length) {
-          return (
-            product.category &&
-            product.category.toLowerCase() === action.payload.toLowerCase() &&
-            selectedBrands.includes(product.brand)
-          )
-        }
-        return (
-          product.category &&
-          product.category.toLowerCase() === action.payload.toLowerCase()
+    selectCategory: (state, action: PayloadAction<string>) => {
+      const category = action.payload.toLowerCase()
+      if (!state.selectedCategories.includes(category)) {
+        const newSelections = [
+          ...state.selectedCategories.map((c) => c.toLowerCase()),
+          category,
+        ]
+        state.selectedCategories = newSelections
+        state.products = filterProducts(
+          state.selectedBrands,
+          newSelections,
+          state.allProducts
         )
-      })
+      }
+    },
+    unselectCategory: (state, action: PayloadAction<string>) => {
+      const categoryToUnselect = action.payload.toLowerCase()
+      const newSelections = state.selectedCategories.filter(
+        (c) => c !== categoryToUnselect
+      )
+      state.selectedCategories = newSelections
+      state.products = filterProducts(
+        state.selectedBrands,
+        newSelections,
+        state.allProducts
+      )
     },
     // selectedRating(state, action: PayloadAction<number>) {
     //   console.log(action.payload)
@@ -311,11 +313,34 @@ const productsSlice = createSlice({
   },
 })
 
+function filterProducts(
+  selectedBrands: string[],
+  selectedCategories: string[],
+  products: Product[]
+): Product[] {
+  let filteredProducts = products
+  if (selectedBrands.length > 0) {
+    filteredProducts = filteredProducts.filter(
+      (product) =>
+        product.brand && selectedBrands.includes(product.brand.toLowerCase())
+    )
+  }
+  if (selectedCategories.includes('all')) {
+    return filteredProducts
+  } else if (selectedCategories.length > 0) {
+    filteredProducts = filteredProducts.filter(
+      (product) =>
+        product.category &&
+        selectedCategories.includes(product.category.toLowerCase())
+    )
+  }
+  return filteredProducts
+}
+
 export const {
   sortedByPrice,
-  filteredByCategory,
-  selectedRating,
-  unselectedRating,
+  selectCategory,
+  unselectCategory,
   clearFilter,
   selectBrand,
   unselectBrand,
