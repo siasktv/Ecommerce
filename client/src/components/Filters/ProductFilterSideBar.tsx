@@ -19,7 +19,6 @@ import {
   selectBrand,
   unselectBrand,
   clearFilter,
-  unselectCategory,
   selectCategory,
 } from '../../features/products/productsSlice'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
@@ -68,6 +67,7 @@ export default function ShopFilterSidebar() {
 
   console.log(brands)
 
+  console.log(categories)
   const ratingArray = useAppSelector((state) => state.products.selectedRating)
 
   const handleBrandToggle = (brand: string) => {
@@ -81,11 +81,7 @@ export default function ShopFilterSidebar() {
 
   const toggleCategory = (category: string) => {
     const categoryToToggle = category.toLowerCase()
-    if (categories.includes(categoryToToggle)) {
-      dispatch(unselectCategory(categoryToToggle))
-    } else {
-      dispatch(selectCategory(categoryToToggle))
-    }
+    dispatch(selectCategory(categoryToToggle))
   }
 
   // const toggleRating = (rating: number) => {
