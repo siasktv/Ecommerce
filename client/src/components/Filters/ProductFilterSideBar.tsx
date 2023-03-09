@@ -61,14 +61,14 @@ const drawerWidth = 240
 export default function ShopFilterSidebar() {
   const dispatch = useAppDispatch()
 
-  const selectedBrands = useAppSelector(
-    (state) => state.products.selectedBrands
-  )
+  const brands = useAppSelector((state) => state.products.selectedBrands)
+
+  console.log(brands)
 
   const ratingArray = useAppSelector((state) => state.products.selectedRating)
 
   const toggleBrand = (brand: string) => {
-    if (selectedBrands.includes(brand)) {
+    if (brands.includes(brand)) {
       dispatch(unselectBrand(brand))
       return
     } else {

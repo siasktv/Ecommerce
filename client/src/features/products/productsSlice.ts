@@ -149,7 +149,7 @@ const productsSlice = createSlice({
 
     unselectBrand: (state, action: PayloadAction<string>) => {
       const newSelections = state.selectedBrands.filter(
-        (b) => b !== action.payload
+        (b) => b !== action.payload.toLowerCase()
       )
       if (!newSelections.length) {
         state.products = state.allProducts
@@ -157,19 +157,22 @@ const productsSlice = createSlice({
       }
       state.selectedBrands = newSelections
       state.products = Array.from(state.allProducts).filter((product) =>
-        newSelections.includes(product.brand)
+        newSelections.includes(product.brand.toLowerCase())
       )
     },
 
-    // filteredByBrand(state, action: PayloadAction<Products[]>) {
-    //   state.products = state.allProducts.filter(product => state.selectedBrands.includes(product.brand.toLowerCase()))
-    // },
     selectBrand(state, action: PayloadAction<string>) {
-      const newSelections = [...state.selectedBrands, action.payload]
-      state.selectedBrands = newSelections
-      state.products = Array.from(state.allProducts).filter((product) =>
-        newSelections.includes(product.brand)
-      )
+      const brand = action.payload.toLowerCase()
+      if (!state.selectedBrands.includes(brand)) {
+        const newSelections = [
+          ...state.selectedBrands.map((b) => b.toLowerCase()),
+          brand,
+        ]
+        state.selectedBrands = newSelections
+        state.products = Array.from(state.allProducts).filter((product) =>
+          newSelections.includes(product.brand.toLowerCase())
+        )
+      }
     },
 
     filteredByCategory(state, action: PayloadAction<string>) {
