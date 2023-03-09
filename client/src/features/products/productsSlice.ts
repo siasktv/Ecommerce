@@ -221,6 +221,19 @@ const productsSlice = createSlice({
         }
       }
     },
+
+    selectedRatings(state, action: PayloadAction<number>) {
+      console.log(action.payload)
+      const rating = action.payload
+      if (!state.selectedRating.includes(rating)) {
+        const newArrayRating = [...state.selectedRating, rating]
+        state.selectedRating = newArrayRating
+        state.products = Array.from(state.allProducts).filter((product) =>
+          newArrayRating.includes(product.rating)
+        )
+      }
+    },
+
     // selectedRating(state, action: PayloadAction<number>) {
     //   console.log(action.payload)
     //   const rating = [...state.selectedRating, action.payload]
@@ -338,7 +351,7 @@ export const {
   selectBrand,
   unselectBrand,
   selectCategory,
-
+  selectedRatings,
   clearFilter,
 } = productsSlice.actions
 export default productsSlice.reducer

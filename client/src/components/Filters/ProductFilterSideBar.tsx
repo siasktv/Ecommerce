@@ -18,6 +18,7 @@ import {
 import {
   selectBrand,
   unselectBrand,
+  selectedRatings,
   clearFilter,
   selectCategory,
 } from '../../features/products/productsSlice'
@@ -44,7 +45,7 @@ export const FILTER_CATEGORY_OPTIONS = [
   'Phone',
   'Camera',
 ]
-export const FILTER_RATING_OPTIONS = [1, 2, 3, 4, 5]
+export const FILTER_RATING_OPTIONS = [5, 4, 3, 2, 1]
 
 // ----------------------------------------------------------------------
 
@@ -65,10 +66,7 @@ export default function ShopFilterSidebar() {
     (state) => state.products.selectedCategories
   )
 
-  console.log(brands)
-
-  console.log(categories)
-  const ratingArray = useAppSelector((state) => state.products.selectedRating)
+  const ratings = useAppSelector((state) => state.products.selectedRating)
 
   const handleBrandToggle = (brand: string) => {
     const brandToToggle = brand.toLowerCase()
@@ -84,14 +82,10 @@ export default function ShopFilterSidebar() {
     dispatch(selectCategory(categoryToToggle))
   }
 
-  // const toggleRating = (rating: number) => {
-  //   if (ratingArray.includes(rating)) {
-  //     dispatch(unselectedRating(rating))
-  //     return
-  //   } else {
-  //     dispatch(selectedRating(rating))
-  //   }
-  // }
+  const toggleRating = (rating: number) => {
+    dispatch(selectedRatings(rating))
+  }
+
   const handleClearFilters = () => {
     window.location.reload()
     // dispatch(clearFilter())
@@ -189,4 +183,7 @@ export default function ShopFilterSidebar() {
       </Box>
     </>
   )
+}
+function selectedRating(rating: number): any {
+  throw new Error('Function not implemented.')
 }
