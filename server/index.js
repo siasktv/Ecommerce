@@ -4,7 +4,7 @@ const server = express()
 const connectDB = require('./db.js')
 const morgan = require('morgan')
 const cors = require('cors')
-const PORT = 3001
+let PORT = 3001
 
 server.use(cors())
 server.use((req, res, next) => {
