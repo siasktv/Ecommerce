@@ -88,8 +88,8 @@ router.post('/create-checkout-session', async (req, res) => {
     line_items,
     mode: 'payment',
     customer: customer.id,
-    success_url: `${process.env.CLIENT_URL}/search`,
-    cancel_url: `${process.env.CLIENT_URL}/search`,
+    success_url: `${process.env.CLIENT_URL}`,
+    cancel_url: `${process.env.CLIENT_URL}`,
   })
 
   // res.redirect(303, session.url);
