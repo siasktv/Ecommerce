@@ -110,7 +110,7 @@ function Header(props: { onDrawerToggle: any; label; selectedTab }) {
             <Grid item xs />
             <Grid item>
               <Link
-                href="/search"
+                href="/"
                 variant="body2"
                 sx={{
                   textDecoration: 'none',
