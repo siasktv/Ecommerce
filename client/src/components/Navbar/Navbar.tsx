@@ -78,7 +78,7 @@ function Navbar() {
     navigate('/login')
   }
   const handleNavigateAmin = () => {
-    navigate('/admin')
+    navigate('/admin/summary')
   }
 
   const handleLogoutUser = () => {
