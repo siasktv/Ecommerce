@@ -39,7 +39,7 @@ const MainCarousel = () => {
   const isNonMobile = useMediaQuery('(min-width:600px)')
 
   return (
-    <Box pt={0}>
+    <Box>
       <Carousel
         infiniteLoop={true}
         showThumbs={false}

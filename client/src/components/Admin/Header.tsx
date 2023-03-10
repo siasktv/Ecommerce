@@ -219,7 +219,7 @@ function Header(props: { onDrawerToggle: any; label; selectedTab }) {
         elevation={0}
         sx={{ zIndex: 0 }}
       >
-        <Tabs value={selectedTab} textColor="inherit" textColor="inherit">
+        <Tabs value={selectedTab} textColor="inherit">
           {label.map(({ id }) => (
             <Tab key={id} label={id} />
           ))}

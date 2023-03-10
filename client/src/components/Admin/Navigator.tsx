@@ -26,12 +26,13 @@ const categories = [
   {
     id: 'Build',
     children: [
+      { id: 'Summary', icon: <SummarizeIcon /> },
       {
         id: 'Users',
         icon: <PeopleIcon />,
       },
       { id: 'Products', icon: <DnsRoundedIcon /> },
-      { id: 'Summary', icon: <SummarizeIcon /> },
+
       { id: 'Orders', icon: <LocalShippingIcon /> },
     ],
   },
@@ -93,14 +94,14 @@ export default function Navigator(props: DrawerProps & NavigatorProps) {
               <ListItem disablePadding key={childId}>
                 {childId === 'Products' ? (
                   <Link to="/admin/products" style={{ textDecoration: 'none' }}>
-                    <ListItemButton sx={item} onClick={() => handleClick(1)}>
+                    <ListItemButton sx={item} onClick={() => handleClick(2)}>
                       <ListItemIcon>{icon}</ListItemIcon>
                       <ListItemText>{childId}</ListItemText>
                     </ListItemButton>
                   </Link>
                 ) : childId === 'Summary' ? (
                   <Link to="/admin/summary" style={{ textDecoration: 'none' }}>
-                    <ListItemButton sx={item} onClick={() => handleClick(2)}>
+                    <ListItemButton sx={item} onClick={() => handleClick(0)}>
                       <ListItemIcon>{icon}</ListItemIcon>
                       <ListItemText>{childId}</ListItemText>
                     </ListItemButton>
@@ -114,7 +115,7 @@ export default function Navigator(props: DrawerProps & NavigatorProps) {
                   </Link>
                 ) : childId === 'Users' ? ( // Check for new link ID
                   <Link to="/admin/users" style={{ textDecoration: 'none' }}>
-                    <ListItemButton sx={item} onClick={() => handleClick(0)}>
+                    <ListItemButton sx={item} onClick={() => handleClick(1)}>
                       <ListItemIcon>{icon}</ListItemIcon>
                       <ListItemText>{childId}</ListItemText>
                     </ListItemButton>

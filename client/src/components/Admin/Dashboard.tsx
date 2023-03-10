@@ -175,13 +175,13 @@ export default function Dashboard() {
 
   const [label, setLabel] = useState([
     {
+      id: 'Summary',
+    },
+    {
       id: 'Users',
     },
     {
       id: 'Products',
-    },
-    {
-      id: 'Summary',
     },
     {
       id: 'Orders',
