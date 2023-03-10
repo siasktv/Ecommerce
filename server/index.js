@@ -41,5 +41,5 @@ connectDB()
 
 if (process.env.NODE_ENV === 'production') PORT = process.env.PORT
 server.listen(PORT, () => {
-  console.log('server listening on port 3001')
+  console.log(`server listening on port ${PORT}`)
 })
