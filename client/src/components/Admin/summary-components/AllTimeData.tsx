@@ -1,9 +1,12 @@
-import { useEffect } from 'react'
 import styled from 'styled-components'
-import { useAppSelector, useAppDispatch } from '../../../app/hooks'
 
-const AllTimeData = ({ allUsers, orders, products }) => {
-  //fix this component
+interface AllTimeDataProps {
+  allUsers: any[] // replace "any" with the actual type of the allUsers prop
+  orders: any[]
+  products: any[]
+}
+
+const AllTimeData = ({ allUsers, orders, products }: AllTimeDataProps) => {
   return (
     <Main>
       <h3>All Data</h3>

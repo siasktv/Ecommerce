@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
-import { DataGrid } from '@mui/x-data-grid'
-import { useSelector, useDispatch } from 'react-redux'
+import { DataGrid, GridCellParams } from '@mui/x-data-grid'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 import { ordersEdit, ordersFetch } from '../../../features/orders/ordersSlice'
@@ -58,7 +57,7 @@ export default function OrderList() {
       field: 'delivery_status',
       headerName: 'Status',
       width: 100,
-      renderCell: (params) => {
+      renderCell: (params: GridCellParams) => {
         return (
           <div>
             {params.row.dStatus === 'pending' ? (
@@ -79,7 +78,7 @@ export default function OrderList() {
       field: 'actions',
       headerName: 'Actions',
       width: 220,
-      renderCell: (params) => {
+      renderCell: (params: GridCellParams) => {
         return (
           <Actions>
             <DispatchBtn onClick={() => handleOrderDispatch(params.row.id)}>
@@ -95,7 +94,7 @@ export default function OrderList() {
     },
   ]
 
-  const handleOrderDispatch = (id) => {
+  const handleOrderDispatch = (id: string) => {
     dispatch(
       ordersEdit({
         id,
@@ -104,7 +103,7 @@ export default function OrderList() {
     )
   }
 
-  const handleDeliver = (id) => {
+  const handleDeliver = (id: string) => {
     dispatch(
       ordersEdit({
         id,

@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, FormEvent } from 'react'
 import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { Button } from '@mui/material'
+import { AxiosError } from 'axios'
 
 const UserProfile = () => {
   const params = useParams()
@@ -44,7 +45,7 @@ const UserProfile = () => {
     fetchUser()
   }, [params.id])
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     try {
@@ -55,17 +56,17 @@ const UserProfile = () => {
           ...user,
         }
       )
-
+      console.log(res)
       setUser({ ...res.data, password: '' })
       toast.success('Profile updated...', {
         position: 'bottom-left',
       })
 
       setUpdating(false)
-    } catch (err) {
+    } catch (err: any) {
       console.log(err)
       setUpdating(false)
-      toast.error(err.response.data, {
+      toast.error(err?.response?.data, {
         position: 'bottom-left',
       })
     }

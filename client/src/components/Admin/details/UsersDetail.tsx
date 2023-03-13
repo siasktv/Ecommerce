@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
-import { DataGrid } from '@mui/x-data-grid'
-import { useSelector, useDispatch } from 'react-redux'
+import { DataGrid, GridCellParams } from '@mui/x-data-grid'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 import { usersFetch, userDelete } from '../../../features/users/usersSlice'
@@ -11,13 +10,21 @@ export default function UsersList() {
   const dispatch = useAppDispatch()
   const { list } = useAppSelector((state) => state.users)
 
+  interface User {
+    _id: string
+    name: string
+    email: string
+    isAdmin: boolean
+    // add any other properties here as needed
+  }
+
   useEffect(() => {
     dispatch(usersFetch())
   }, [dispatch])
 
   const rows =
     list &&
-    list.map((user) => {
+    list.map((user: User) => {
       return {
         id: user._id,
         uName: user.name,
@@ -34,7 +41,7 @@ export default function UsersList() {
       field: 'isAdmin',
       headerName: 'Role',
       width: 100,
-      renderCell: (params) => {
+      renderCell: (params: GridCellParams) => {
         return (
           <div>
             {params.row.isAdmin ? (
@@ -50,7 +57,7 @@ export default function UsersList() {
       field: 'actions',
       headerName: 'Actions',
       width: 120,
-      renderCell: (params) => {
+      renderCell: (params: GridCellParams) => {
         return (
           <Actions>
             <Delete onClick={() => handleDelete(params.row.id)}>Delete</Delete>
@@ -61,7 +68,7 @@ export default function UsersList() {
     },
   ]
 
-  const handleDelete = (id) => {
+  const handleDelete = (id: string) => {
     dispatch(userDelete(id))
   }
 
