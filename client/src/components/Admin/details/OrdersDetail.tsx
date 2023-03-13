@@ -5,12 +5,34 @@ import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 import { ordersEdit, ordersFetch } from '../../../features/orders/ordersSlice'
 import moment from 'moment'
-import { useAppSelector } from '../../../app/hooks'
+import { useAppSelector, useAppDispatch } from '../../../app/hooks'
 
 export default function OrderList() {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const { list } = useAppSelector((state) => state.orders)
+
+  interface Order {
+    _id: string
+    createdAt: string
+    customerId: string
+    delivery_status: string
+    paymentIntentId: string
+    payment_status: string
+    products: any[] // Replace "any" with the type of your product object
+    shipping: {
+      address: any // Replace "any" with the type of your address object
+      email: string
+      name: string
+      phone: string
+      tax_exempt: string
+    }
+    subtotal: number
+    total: number
+    updatedAt: string
+    userId: string
+    __v: number
+  }
 
   useEffect(() => {
     dispatch(ordersFetch())
@@ -18,7 +40,7 @@ export default function OrderList() {
 
   const rows =
     list &&
-    list.map((order) => {
+    list.map((order: Order) => {
       return {
         id: order._id,
         cName: order.shipping.name,

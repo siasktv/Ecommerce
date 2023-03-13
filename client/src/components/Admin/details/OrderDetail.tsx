@@ -6,7 +6,61 @@ import axios from 'axios'
 const Order = () => {
   const params = useParams()
 
-  const [order, setOrder] = useState({})
+  interface Shipping {
+    address: {
+      city: string
+      country: string
+      line1: string
+      line2: string | null
+      postal_code: string
+      state: string
+    }
+    email: string
+    name: string
+    phone: string
+    tax_exempt: string
+    tax_ids: string[]
+  }
+
+  interface Order {
+    _id: string
+    userId: string
+    customerId: string
+    paymentIntentId: string
+    products: any[]
+    delivery_status: string
+    createdAt: string
+    total: number
+    shipping: Shipping
+    // ... other properties of your order object
+  }
+
+  const [order, setOrder] = useState<Order>({
+    _id: '',
+    userId: '',
+    customerId: '',
+    paymentIntentId: '',
+    products: [],
+    delivery_status: '',
+    createdAt: '',
+    total: 0,
+    shipping: {
+      address: {
+        city: '',
+        country: '',
+        line1: '',
+        line2: null,
+        postal_code: '',
+        state: '',
+      },
+      email: '',
+      name: '',
+      phone: '',
+      tax_exempt: '',
+      tax_ids: [],
+    },
+  })
+
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -26,6 +80,8 @@ const Order = () => {
 
     fetchOrder()
   }, [params.id])
+
+  console.log(order)
 
   return (
     <StyledOrder>

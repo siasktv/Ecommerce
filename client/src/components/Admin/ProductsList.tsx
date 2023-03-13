@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { DataGrid } from '@mui/x-data-grid'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import styled from 'styled-components'
@@ -19,13 +18,27 @@ export default function ProductsList() {
     dispatch(productsFetch())
   }, [])
 
-  const handleDelete = (id) => {
+  const handleDelete = (id: string) => {
     dispatch(productsDelete(id))
+    //why does it says expected 0 arguments but got 1
+  }
+
+  interface ProductImage {
+    url: string
+    // other properties of the image object
+  }
+
+  interface Product {
+    _id: string
+    name: string
+    description: string
+    price: number
+    image: ProductImage | string
   }
 
   const rows =
     products &&
-    products.map((item) => {
+    products.map((item: Product) => {
       return {
         id: item._id,
         imageUrl: typeof item.image === 'object' ? item.image.url : item.image,
@@ -41,7 +54,7 @@ export default function ProductsList() {
       field: 'imageUrl',
       headerName: 'Image',
       width: 100,
-      renderCell: (params) => {
+      renderCell: (params: { row: { id: string; imageUrl: string } }) => {
         return (
           <ImageContainer>
             <img src={params.row.imageUrl} />
@@ -60,7 +73,7 @@ export default function ProductsList() {
       field: 'actions',
       headerName: 'Actions',
       width: 170,
-      renderCell: (params) => {
+      renderCell: (params: { row: { id: string; imageUrl: string } }) => {
         return (
           <Actions>
             <Delete onClick={() => handleDelete(params.row.id)}>Delete</Delete>

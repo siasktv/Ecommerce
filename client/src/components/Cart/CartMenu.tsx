@@ -10,7 +10,6 @@ import {
   Typography,
 } from '@mui/material'
 import { ShoppingCart } from '@mui/icons-material'
-import { useSelector, useDispatch } from 'react-redux'
 import CloseIcon from '@mui/icons-material/Close'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
@@ -49,7 +48,7 @@ export default function CartMenu({
   onCloseCart,
 }: CartMenuProps) {
   const navigate = useNavigate()
-  const cartItems = useAppSelector((state) => state.cart.cartItems)
+  const { cartItems } = useAppSelector((state) => state.cart)
 
   const cartTotalAmount = useAppSelector((state) => state.cart.cartTotalAmount)
 
@@ -64,7 +63,7 @@ export default function CartMenu({
     name: string
     price: number
     description: string
-    image: string
+    image: string | object
     cartQuantity: number
   }) => {
     dispatch(removeFromCart(item))
@@ -76,7 +75,7 @@ export default function CartMenu({
     name: string
     price: number
     description: string
-    image: string
+    image: string | object
     cartQuantity: number
   }) => {
     dispatch(decreaseCart(item))
@@ -88,7 +87,7 @@ export default function CartMenu({
     name: string
     price: number
     description: string
-    image: string
+    image: string | object
     cartQuantity: number
   }) => {
     dispatch(addToCart(item))
@@ -101,7 +100,7 @@ export default function CartMenu({
     <>
       <Badge
         showZero
-        badgeContent={cartTotalQuantity}
+        badgeContent={cartItems.length}
         color="error"
         max={5}
         onClick={onOpenCart}
@@ -143,7 +142,7 @@ export default function CartMenu({
                       alt={item?.name}
                       width="123px"
                       height="164px"
-                      src={item.image}
+                      src={item.image.toString()}
                     />
                   </Box>
                   <Box flex="1 1 60%">
@@ -187,27 +186,14 @@ export default function CartMenu({
               <Typography fontWeight="bold">SUBTOTAL</Typography>
               <Typography fontWeight="bold">${cartTotalAmount}</Typography>
             </FlexBox>
-            {/* <Button
-              sx={{
-                backgroundColor: 'black',
-                color: 'white',
-                borderRadius: 2,
-                minWidth: '100%',
-                padding: '20px 40px',
-                m: '20px 0',
-                '&:hover': {
-                  backgroundColor: 'white',
-                  color: 'black',
-                  border: '2px solid black',
-                },
-              }}
-            > */}
 
             {auth._id ? (
               <PayButton cartItems={cartItems} />
             ) : (
               <Button
                 sx={{
+                  backgroundColor: 'white',
+                  color: 'white',
                   borderRadius: 2,
                   minWidth: '100%',
                   padding: '20px 40px',

@@ -7,6 +7,7 @@ require('dotenv').config()
 const stripe = Stripe(process.env.STRIPE_KEY)
 
 router.post('/create-checkout-session', async (req, res) => {
+  console.log(JSON.stringify(req.body.cartItems))
   const customer = await stripe.customers.create({
     metadata: {
       userId: req.body.userId,

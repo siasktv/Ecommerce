@@ -10,10 +10,28 @@ const Product = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const [product, setProduct] = useState({})
-  const [loading, setLoading] = useState(false)
+  interface Product {
+    _id: string
+    name: string
+    description: string
+    brand: string
+    price: number
+    image:
+      | {
+          url: string
+        }
+      | string
+  }
 
-  console.log(product)
+  const [product, setProduct] = useState<Product>({
+    _id: '',
+    name: '',
+    description: '',
+    brand: '',
+    price: 0,
+    image: '',
+  })
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -43,7 +61,7 @@ const Product = () => {
             <ImageContainer>
               <img
                 src={
-                  typeof product.image === 'object'
+                  product.image && typeof product.image === 'object'
                     ? product.image.url
                     : product.image
                 }

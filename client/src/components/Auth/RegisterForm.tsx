@@ -43,7 +43,7 @@ export default function RegisterForm() {
   const handleSubmit = (e: any) => {
     e.preventDefault()
     dispatch(registerUser(user))
-    navigate('/search')
+    navigate('/')
   }
 
   console.log('user', user)

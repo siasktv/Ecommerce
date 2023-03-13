@@ -44,7 +44,7 @@ export default function LoginForm() {
     e.preventDefault()
     debugger
     dispatch(loginUser(user))
-    navigate('/search')
+    navigate('/')
   }
 
   console.log('user', user)

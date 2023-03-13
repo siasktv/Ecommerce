@@ -19,7 +19,8 @@ import { Link } from 'react-router-dom'
 import { useState } from 'react'
 
 interface NavigatorProps {
-  setSelectedTab: (tabIndex: number) => void
+  setSelectedTab?: (tabIndex: number) => void
+  label?: { id: string }[]
 }
 
 const categories = [

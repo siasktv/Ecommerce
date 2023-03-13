@@ -18,15 +18,19 @@ const Summary = () => {
 
   const dispatch = useAppDispatch()
 
-  const [users, setUsers] = useState([])
-  const [orders, setOrders] = useState([])
-  const [earning, setEarnings] = useState([])
+  interface Data {
+    _id: number
+    total: number
+  }
+
+  const [users, setUsers] = useState<Data[]>([])
+  const [orders, setOrders] = useState<Data[]>([])
+  const [earning, setEarnings] = useState<Data[]>([])
   const [usersPerc, setUsersPerc] = useState(0)
   const [ordersPerc, setOrdersPerc] = useState(0)
-
   const [earningPerc, setEarningsPerc] = useState(0)
 
-  function compare(a, b) {
+  function compare(a: Data, b: Data) {
     if (a._id < b._id) {
       return 1
     }
@@ -138,6 +142,7 @@ const Summary = () => {
     },
   ]
 
+  console.log(data)
   return (
     <StyledSummary>
       <MainStats>

@@ -120,6 +120,7 @@ export const productsDelete = createAsyncThunk(
 export const productsEdit = createAsyncThunk(
   'products/productsEdit',
   async (values) => {
+    console.log(values)
     try {
       const response = await axios.put(
         `http://localhost:3001/products/${values.product._id}`,

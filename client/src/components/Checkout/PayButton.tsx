@@ -1,14 +1,13 @@
 import axios from 'axios'
 import { Button } from '@mui/material'
-import { useSelector } from 'react-redux'
-import { useAppSelector } from '../../app/hooks'
+import { useAppSelector, useAppDispatch } from '../../app/hooks'
 
 interface CartItem {
   _id: string
   name: string
   price: number
   description: string
-  image: string
+  image: string | object
   cartQuantity: number
 }
 
@@ -18,6 +17,7 @@ type PayButtonProps = {
 
 const PayButton = ({ cartItems }: PayButtonProps) => {
   const user = useAppSelector((state) => state.auth)
+  const dispatch = useAppDispatch()
 
   const handleCheckout = () => {
     axios
@@ -26,7 +26,7 @@ const PayButton = ({ cartItems }: PayButtonProps) => {
         userId: user._id,
       })
       .then((res) => {
-        console.log('respuesta', res)
+        console.log(res)
         if (res.data.url) {
           window.location.href = res.data.url
         }
