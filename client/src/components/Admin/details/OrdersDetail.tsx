@@ -117,10 +117,16 @@ export default function OrderList() {
       <DataGrid
         rows={rows}
         columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 5,
+            },
+          },
+        }}
+        pageSizeOptions={[5]}
         checkboxSelection
-        disableSelectionOnClick
+        disableRowSelectionOnClick
         style={{ backgroundColor: 'white' }}
       />
     </div>
