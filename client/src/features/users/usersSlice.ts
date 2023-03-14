@@ -3,7 +3,24 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import { url } from '../api'
 
-const initialState = {
+interface UserDelete {
+  id: string
+}
+
+interface User {
+  _id: string
+  name: string
+  email: string
+  isAdmin: boolean
+}
+
+interface UsersState {
+  list: User[]
+  status: string
+  deleteStatus: string
+}
+
+const initialState: UsersState = {
   list: [],
   status: '',
   deleteStatus: '',
@@ -19,18 +36,21 @@ export const usersFetch = createAsyncThunk('users/usersFetch', async () => {
   }
 })
 
-export const userDelete = createAsyncThunk('users/userDelete', async (id) => {
-  try {
-    const response = await axios.delete(`${url}/users/stats/${id}`)
+export const userDelete = createAsyncThunk(
+  'users/userDelete',
+  async (id: UserDelete) => {
+    try {
+      const response = await axios.delete(`${url}/users/stats/${id}`)
 
-    return response.data
-  } catch (error: any) {
-    console.log(error.response.data)
-    toast.error(error.response?.data, {
-      position: 'bottom-left',
-    })
+      return response.data
+    } catch (error: any) {
+      console.log(error.response.data)
+      toast.error(error.response?.data, {
+        position: 'bottom-left',
+      })
+    }
   }
-})
+)
 
 const usersSlice = createSlice({
   name: 'users',

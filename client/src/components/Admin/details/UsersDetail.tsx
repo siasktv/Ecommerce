@@ -68,7 +68,7 @@ export default function UsersList() {
     },
   ]
 
-  const handleDelete = (id: string) => {
+  const handleDelete = (id: any) => {
     dispatch(userDelete(id))
   }
 
@@ -77,10 +77,16 @@ export default function UsersList() {
       <DataGrid
         rows={rows}
         columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 5,
+            },
+          },
+        }}
+        pageSizeOptions={[5]}
         checkboxSelection
-        disableSelectionOnClick
+        disableRowSelectionOnClick
         style={{ backgroundColor: 'white' }}
       />
     </div>

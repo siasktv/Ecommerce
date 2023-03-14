@@ -22,11 +22,10 @@ const MuiThemeProvider: React.FC<Props> = ({ children }) => {
       body1: typography.body1,
       body2: typography.body2,
       caption: typography.caption,
-      overline: typography.overline,
-      button: typography.button,
+      // overline: typography.overline,
+      // button: typography.button,
       // add more styles as needed
     },
-    shadows: shadows(),
   })
 
   return (

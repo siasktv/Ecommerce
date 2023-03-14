@@ -17,7 +17,7 @@ interface Product {
   brand: string
   category: string
   rating: number
-  price: string
+  price: number
 }
 
 interface EditProductProps {
@@ -38,7 +38,7 @@ export default function EditProduct({ prodId, products }: EditProductProps) {
   const [productImg, setProductImg] = useState('')
   const [brand, setBrand] = useState('')
   const [name, setName] = useState('')
-  const [price, setPrice] = useState('')
+  const [price, setPrice] = useState(0)
   const [description, setDescription] = useState('')
   const [category, setCategory] = useState('')
 
@@ -160,7 +160,7 @@ export default function EditProduct({ prodId, products }: EditProductProps) {
                 type="number"
                 placeholder="Price"
                 value={price}
-                onChange={(e) => setPrice(e.target.value)}
+                onChange={(e) => setPrice(Number(e.target.value))}
                 required
               />
               <input

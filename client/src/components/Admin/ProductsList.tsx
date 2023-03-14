@@ -80,10 +80,16 @@ export default function ProductsList() {
       <DataGrid
         rows={rows}
         columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 5,
+            },
+          },
+        }}
+        pageSizeOptions={[5]}
         checkboxSelection
-        disableSelectionOnClick
+        disableRowSelectionOnClick
       />
     </div>
   )

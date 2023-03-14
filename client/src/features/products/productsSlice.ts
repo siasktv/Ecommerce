@@ -3,6 +3,17 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import { url } from '../api'
 
+interface ProductsCreate {
+  _id?: string
+  name: string
+  description: string
+  image: string | { url: string }
+  brand: string
+  category: string
+  rating?: number
+  price: string
+}
+
 interface ProductEditPayload {
   product: {
     _id?: string
@@ -102,7 +113,7 @@ export const productsFetch = createAsyncThunk(
 
 export const productsCreate = createAsyncThunk(
   'products/productsCreate',
-  async (values: Product) => {
+  async (values: ProductsCreate) => {
     try {
       const response = await axios.post(
         `${url}/products/createProduct`,

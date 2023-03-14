@@ -1,4 +1,10 @@
 import styled from 'styled-components'
+import { HTMLAttributes } from 'react'
+
+interface IconProps extends HTMLAttributes<HTMLDivElement> {
+  color: string
+  bgcolor: string
+}
 
 interface WidgetData {
   bgcolor: string
@@ -12,6 +18,10 @@ interface WidgetData {
 
 type WidgetProps = {
   data: WidgetData
+}
+
+interface PercentageProps extends HTMLAttributes<HTMLDivElement> {
+  isPositive: boolean
 }
 
 const Widget = ({ data }: WidgetProps) => {
@@ -54,7 +64,7 @@ const StyledWidget = styled.div`
   align-items: center;
 `
 
-const Icon = styled.div`
+const Icon = styled.div<IconProps>`
   margin-right: 0.5rem;
   padding: 0.5rem;
   color: ${({ color }) => color};
@@ -72,7 +82,7 @@ const Text = styled.div`
     color: rgba(234, 234, 255, 0.68);
   }
 `
-const Percentage = styled.div`
+const Percentage = styled.div<PercentageProps>`
   margin-left: 0.5rem;
   font-size: 14px;
   color: ${({ isPositive }) =>
