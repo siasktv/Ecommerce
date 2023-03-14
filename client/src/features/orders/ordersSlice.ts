@@ -1,15 +1,45 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { RootState } from '../../app/store'
+import { url } from '../api'
+
+interface OrderEditPayload {
+  id: string
+  delivery_status: 'dispatched' | 'delivered'
+}
+
+interface Order {
+  _id: string
+  createdAt: string
+  customerId: string
+  delivery_status: string
+  paymentIntentId: string
+  payment_status: string
+  products: any[] // Replace "any" with the type of your product object
+  shipping: {
+    address: any // Replace "any" with the type of your address object
+    email: string
+    name: string
+    phone: string
+    tax_exempt: string
+  }
+  subtotal: number
+  total: number
+  updatedAt: string
+  userId: string
+  __v: number
+  // add other properties of an order here
+}
 
 const initialState = {
-  list: [],
+  list: [] as Order[],
   status: '',
 }
 
 export const ordersFetch = createAsyncThunk('orders/ordersFetch', async () => {
   try {
-    const response = await axios.get('http://localhost:3001/orders')
-
+    const response = await axios.get(`${url}/orders`)
+    console.log(response)
     return response.data
   } catch (error) {
     console.log(error)
@@ -18,10 +48,11 @@ export const ordersFetch = createAsyncThunk('orders/ordersFetch', async () => {
 
 export const ordersEdit = createAsyncThunk(
   'orders/ordersEdit',
-  async (values, { getState }) => {
-    const state = getState()
+  async (values: OrderEditPayload, { getState }) => {
+    //getState from react-redux
+    const state = getState() as RootState
 
-    let currentOrder = state.orders.list.filter(
+    let currentOrder: Order[] = state.orders.list.filter(
       (order) => order._id === values.id
     )
 
@@ -31,10 +62,7 @@ export const ordersEdit = createAsyncThunk(
     }
 
     try {
-      const response = await axios.put(
-        `http://localhost:3001/orders/${values.id}`,
-        newOrder
-      )
+      const response = await axios.put(`${url}/orders/${values.id}`, newOrder)
 
       return response.data
     } catch (error) {

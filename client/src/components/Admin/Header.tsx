@@ -1,10 +1,10 @@
 import * as React from 'react'
-import PropTypes from 'prop-types'
+
 import AppBar from '@mui/material/AppBar'
 import Avatar from '@mui/material/Avatar'
-import Button from '@mui/material/Button'
+
 import Grid from '@mui/material/Grid'
-import HelpIcon from '@mui/icons-material/Help'
+
 import IconButton from '@mui/material/IconButton'
 import Link from '@mui/material/Link'
 import MenuIcon from '@mui/icons-material/Menu'
@@ -16,7 +16,7 @@ import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+
 import { logoutUser } from '../../features/users/authSlice'
 import {
   ClickAwayListener,
@@ -30,7 +30,17 @@ import {
 
 const lightColor = 'rgba(255, 255, 255, 0.7)'
 
-function Header(props: { onDrawerToggle: any; label; selectedTab }) {
+interface HeaderProps {
+  map(arg0: ({ id }: { id: any }) => JSX.Element): React.ReactNode
+  setSelectedTab?: (tabIndex: number) => void
+  label?: { id: string }[]
+}
+
+function Header(props: {
+  onDrawerToggle: any
+  label: HeaderProps
+  selectedTab: number
+}) {
   const { onDrawerToggle } = props
   const { label } = props
   const { selectedTab } = props
@@ -72,16 +82,6 @@ function Header(props: { onDrawerToggle: any; label; selectedTab }) {
 
     prevOpen.current = open
   }, [open])
-
-  const [openCart, setOpenCart] = useState(false)
-
-  const handleOpenCart = () => {
-    setOpenCart(true)
-  }
-
-  const handleCloseCart = () => {
-    setOpenCart(false)
-  }
 
   const handleNavigate = () => {
     navigate('/login')

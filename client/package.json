@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "start": "serve -s build"
+    "start": "TSX_COMPILE_ON_ERROR=true ESLINT_NO_DEV_ERRORS=true react-scripts start"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",

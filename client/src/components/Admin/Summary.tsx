@@ -10,6 +10,7 @@ import { useAppSelector, useAppDispatch } from '../../app/hooks'
 import { usersFetch } from '../../features/users/usersSlice'
 import { ordersFetch } from '../../features/orders/ordersSlice'
 import { productsFetch } from '../../features/products/productsSlice'
+import { url } from '../../features/api'
 
 const Summary = () => {
   const { products } = useAppSelector((state) => state.products)
@@ -49,7 +50,7 @@ const Summary = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await axios.get('http://localhost:3001/users/stats')
+        const res = await axios.get(`${url}/users/stats`)
 
         res.data.sort(compare)
         setUsers(res.data)
@@ -66,7 +67,7 @@ const Summary = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await axios.get('http://localhost:3001/orders/stats')
+        const res = await axios.get(`${url}/orders/stats`)
         res.data.sort(compare)
         setOrders(res.data)
 
@@ -85,7 +86,7 @@ const Summary = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await axios.get('http://localhost:3001/orders/income')
+        const res = await axios.get(`${url}/orders/income`)
 
         res.data.sort(compare)
         setEarnings(res.data)
@@ -104,7 +105,7 @@ const Summary = () => {
 
   interface StatsData {
     icon: React.ReactNode
-    digits: number | string
+    digits: number
     isMoney: boolean
     title: string
     color: string
@@ -133,7 +134,7 @@ const Summary = () => {
     },
     {
       icon: <FaChartBar />,
-      digits: earning[0]?.total ? earning[0]?.total / 100 : '',
+      digits: earning[0]?.total ? Number(earning[0]?.total) / 100 : 0,
       isMoney: true,
       title: 'Earnings',
       color: 'rgb(253, 181, 40)',
@@ -142,7 +143,6 @@ const Summary = () => {
     },
   ]
 
-  console.log(data)
   return (
     <StyledSummary>
       <MainStats>

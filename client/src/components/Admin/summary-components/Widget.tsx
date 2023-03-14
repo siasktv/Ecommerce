@@ -1,6 +1,20 @@
 import styled from 'styled-components'
 
-const Widget = ({ data }) => {
+interface WidgetData {
+  bgcolor: string
+  color: string
+  digits: number
+  icon: React.ReactNode
+  isMoney: boolean
+  percentage: number
+  title: string
+}
+
+type WidgetProps = {
+  data: WidgetData
+}
+
+const Widget = ({ data }: WidgetProps) => {
   return (
     <>
       <StyledWidget>
@@ -44,7 +58,7 @@ const Icon = styled.div`
   margin-right: 0.5rem;
   padding: 0.5rem;
   color: ${({ color }) => color};
-  background: ${({ bgcolor }) => bgcolor};
+  background-color: ${({ bgcolor }) => bgcolor};
   border-radius: 3px;
   font-size: 20px;
 `

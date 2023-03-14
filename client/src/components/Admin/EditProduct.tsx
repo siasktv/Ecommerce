@@ -4,21 +4,36 @@ import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
-
 import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { useAppSelector, useAppDispatch } from '../../app/hooks'
 import { productsEdit } from '../../features/products/productsSlice'
 
-export default function EditProduct({ prodId, products }) {
+interface Product {
+  _id: string
+  name: string
+  description: string
+  image: string | { url: string }
+  brand: string
+  category: string
+  rating: number
+  price: string
+}
+
+interface EditProductProps {
+  prodId: string
+  products: Product[]
+}
+
+export default function EditProduct({ prodId, products }: EditProductProps) {
+  console.log('Edit Product props', prodId, products)
   const [open, setOpen] = React.useState(false)
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const { editStatus } = useAppSelector((state) => state.products)
 
   const [previewImg, setPreviewImg] = useState('')
-  const [currentProd, setCurrentProd] = useState({})
+  const [currentProd, setCurrentProd] = useState<Product | undefined>()
 
   const [productImg, setProductImg] = useState('')
   const [brand, setBrand] = useState('')
@@ -27,20 +42,21 @@ export default function EditProduct({ prodId, products }) {
   const [description, setDescription] = useState('')
   const [category, setCategory] = useState('')
 
-  const handleProductImageUpload = (e) => {
-    const file = e.target.files[0]
-
-    TransformFileData(file)
+  const handleProductImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file: File | null = e.target.files ? e.target.files[0] : null
+    if (file) {
+      TransformFileData(file)
+    }
   }
 
-  const TransformFileData = (file) => {
+  const TransformFileData = (file: File) => {
     const reader = new FileReader()
 
     if (file) {
       reader.readAsDataURL(file)
       reader.onloadend = () => {
-        setProductImg(reader.result)
-        setPreviewImg(reader.result)
+        setProductImg(reader.result as string)
+        setPreviewImg(reader.result as string)
       }
     } else {
       setProductImg('')
@@ -50,29 +66,29 @@ export default function EditProduct({ prodId, products }) {
   const handleClickOpen = () => {
     setOpen(true)
 
-    let selectedProd = products.filter((item) => item._id === prodId)
+    let selectedProd = products.find((item) => item._id === prodId)
 
     console.log(selectedProd)
-    selectedProd = selectedProd[0]
-
     setCurrentProd(selectedProd)
-    setPreviewImg(
-      typeof selectedProd.image === 'object'
-        ? selectedProd.image.url
-        : selectedProd.image
-    )
-    setProductImg('')
-    setBrand(selectedProd.brand)
-    setName(selectedProd.name)
-    setPrice(selectedProd.price)
-    setDescription(selectedProd.description)
-  }
 
+    if (selectedProd) {
+      setPreviewImg(
+        typeof selectedProd.image === 'object'
+          ? selectedProd.image.url
+          : selectedProd.image
+      )
+      setProductImg('')
+      setBrand(selectedProd.brand)
+      setName(selectedProd.name)
+      setPrice(selectedProd.price)
+      setDescription(selectedProd.description)
+    }
+  }
   const handleClose = () => {
     setOpen(false)
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     dispatch(

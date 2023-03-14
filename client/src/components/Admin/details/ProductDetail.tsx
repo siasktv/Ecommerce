@@ -2,13 +2,10 @@ import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { url } from '../../../features/api'
 
 const Product = () => {
   const params = useParams()
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
 
   interface Product {
     _id: string
@@ -38,9 +35,7 @@ const Product = () => {
       try {
         setLoading(true)
         if (!params.id) return // add check for undefined id
-        const res = await axios.get(
-          `http://localhost:3001/products/${params.id}`
-        )
+        const res = await axios.get(`${url}/products/${params.id}`)
 
         setProduct(res.data)
         setLoading(false)

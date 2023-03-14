@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { Button } from '@mui/material'
-import { AxiosError } from 'axios'
+import { url } from '../../../features/api'
 
 const UserProfile = () => {
   const params = useParams()
@@ -30,9 +30,7 @@ const UserProfile = () => {
     const fetchUser = async () => {
       try {
         setLoading(true)
-        const res = await axios.get(
-          `http://localhost:3001/users/stats/find/${params.id}`
-        )
+        const res = await axios.get(`${url}/users/stats/find/${params.id}`)
 
         setUser({ ...res.data, password: '' })
         setLoading(false)
@@ -50,12 +48,9 @@ const UserProfile = () => {
 
     try {
       setUpdating(true)
-      const res = await axios.put(
-        `http://localhost:3001/users/stats/${params.id}`,
-        {
-          ...user,
-        }
-      )
+      const res = await axios.put(`${url}/users/stats/${params.id}`, {
+        ...user,
+      })
       console.log(res)
       setUser({ ...res.data, password: '' })
       toast.success('Profile updated...', {

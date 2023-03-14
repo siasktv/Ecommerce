@@ -10,7 +10,11 @@ import { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { productsCreate } from '../../features/products/productsSlice'
 
-export default function CreateProduct({ open, onClose, TransitionComponent }) {
+export default function CreateProduct({
+  open,
+  onClose,
+  TransitionComponent,
+}: any) {
   const dispatch = useAppDispatch()
   const { createStatus } = useAppSelector((state) => state.products)
 
@@ -21,26 +25,27 @@ export default function CreateProduct({ open, onClose, TransitionComponent }) {
   const [description, setDescription] = useState('')
   const [category, setCategory] = useState('')
 
-  const handleProductImageUpload = (e) => {
-    const file = e.target.files[0]
-
-    TransformFileData(file)
+  const handleProductImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file: File | null = e.target.files ? e.target.files[0] : null
+    if (file) {
+      TransformFileData(file)
+    }
   }
 
-  const TransformFileData = (file) => {
+  const TransformFileData = (file: File) => {
     const reader = new FileReader()
 
     if (file) {
       reader.readAsDataURL(file)
       reader.onloadend = () => {
-        setProductImg(reader.result)
+        setProductImg(reader.result as string)
       }
     } else {
       setProductImg('')
     }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault()
     dispatch(
       productsCreate({

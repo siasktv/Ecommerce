@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 import jwtDecode from 'jwt-decode'
-
+import { url } from '../api'
 type AuthUser = {
   token: string | null
   name: string | null
@@ -51,14 +51,11 @@ export const registerUser = createAsyncThunk<AuthUser, RegisterUserRequest>(
   'auth/registerUser',
   async (values, { rejectWithValue }) => {
     try {
-      const token = await axios.post(
-        'http://localhost:3001/users/auth/register',
-        {
-          name: values.name,
-          email: values.email,
-          password: values.password,
-        }
-      )
+      const token = await axios.post(`${url}/users/auth/register`, {
+        name: values.name,
+        email: values.email,
+        password: values.password,
+      })
       const decodedToken =
         token.data && (jwtDecode(token.data) as AuthUser | null)
       if (decodedToken) {
@@ -80,7 +77,7 @@ export const loginUser = createAsyncThunk<AuthUser, RegisterUserRequest>(
   'auth/loginUser',
   async (values, { rejectWithValue }) => {
     try {
-      const token = await axios.post('http://localhost:3001/users/auth/login', {
+      const token = await axios.post(`${url}/users/auth/login`, {
         email: values.email,
         password: values.password,
       })

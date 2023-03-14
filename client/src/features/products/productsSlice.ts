@@ -1,13 +1,30 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { toast } from 'react-toastify'
-// import { createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
+import { url } from '../api'
+
+interface ProductEditPayload {
+  product: {
+    _id?: string
+    name: string
+    description: string
+    image?:
+      | string
+      | {
+          url: string
+        }
+    brand: string
+    category: string
+    price: number | string
+  }
+  productImg: string
+}
 
 interface Product {
   _id: string
   name: string
   description: string
-  image: string
+  image: string | { url: string }
   brand: string
   category: string
   rating: number
@@ -74,7 +91,7 @@ export const productsFetch = createAsyncThunk(
   'products/productsFetch',
   async () => {
     try {
-      const response = await axios.get('http://localhost:3001/products')
+      const response = await axios.get(`${url}/products`)
 
       return response.data
     } catch (error) {
@@ -85,10 +102,10 @@ export const productsFetch = createAsyncThunk(
 
 export const productsCreate = createAsyncThunk(
   'products/productsCreate',
-  async (values) => {
+  async (values: Product) => {
     try {
       const response = await axios.post(
-        'http://localhost:3001/products/createProduct',
+        `${url}/products/createProduct`,
         values
         // setHeaders()
       )
@@ -102,10 +119,10 @@ export const productsCreate = createAsyncThunk(
 
 export const productsDelete = createAsyncThunk(
   'products/productsDelete',
-  async (id) => {
+  async (id: string) => {
     try {
       const response = await axios.delete(
-        `http://localhost:3001/products/${id}`
+        `${url}/products/${id}`
 
         // setHeaders()
       )
@@ -119,11 +136,10 @@ export const productsDelete = createAsyncThunk(
 
 export const productsEdit = createAsyncThunk(
   'products/productsEdit',
-  async (values) => {
-    console.log(values)
+  async (values: ProductEditPayload) => {
     try {
       const response = await axios.put(
-        `http://localhost:3001/products/${values.product._id}`,
+        `${url}/products/${values.product._id}`,
         values
         // setHeaders()
       )

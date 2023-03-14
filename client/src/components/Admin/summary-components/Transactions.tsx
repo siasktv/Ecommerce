@@ -1,18 +1,49 @@
 import styled from 'styled-components'
 import { useEffect, useState } from 'react'
-
 import axios from 'axios'
 import moment from 'moment'
+import { url } from '../../../features/api'
+
+interface Shipping {
+  address: {
+    city: string
+    country: string
+    line1: string
+    line2: string | null
+    postal_code: string
+    state: string
+  }
+  email: string
+  name: string
+  phone: string
+  tax_exempt: string
+  tax_ids: string[]
+}
+
+interface Order {
+  _id: string
+  userId: string
+  customerId: string
+  paymentIntentId: string
+  products: any[]
+  delivery_status: string
+  createdAt: string
+  total: number
+  shipping: Shipping
+  // ... other properties of your order object
+}
 
 const Transactions = () => {
-  const [orders, setOrders] = useState([])
+  const [orders, setOrders] = useState<Order[]>([])
   const [isLoading, setIsLoading] = useState(false)
+
+  console.log(orders)
 
   useEffect(() => {
     async function fetchData() {
       setIsLoading(true)
       try {
-        const res = await axios.get('http://localhost:3001/orders/?new=true')
+        const res = await axios.get(`${url}/orders/?new=true`)
 
         setOrders(res.data)
       } catch (err) {

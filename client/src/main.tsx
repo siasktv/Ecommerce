@@ -8,7 +8,6 @@ import { store } from './app/store'
 
 import Search from './pages/Search/Search'
 
-import { CheckoutSuccess } from './pages/Checkout/CheckoutSuccess'
 //index es como el app
 import MuiThemeProvider from './theme'
 import { ToastContainer } from 'react-toastify'
@@ -30,7 +29,6 @@ const router = createBrowserRouter([
     element: <Index />,
     children: [
       { path: '/', element: <Search /> },
-      { path: '/checkout-success', element: <CheckoutSuccess /> },
       { path: '/login', element: <LoginPage /> },
       { path: '/register', element: <Register /> },
     ],

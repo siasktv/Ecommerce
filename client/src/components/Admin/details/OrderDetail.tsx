@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
+import { url } from '../../../features/api'
 
 const Order = () => {
   const params = useParams()
@@ -67,9 +68,7 @@ const Order = () => {
     const fetchOrder = async () => {
       try {
         setLoading(true)
-        const res = await axios.get(
-          `http://localhost:3001/orders/findOne/${params.id}`
-        )
+        const res = await axios.get(`${url}/orders/findOne/${params.id}`)
 
         setOrder(res.data)
         setLoading(false)

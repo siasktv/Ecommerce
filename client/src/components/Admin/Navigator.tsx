@@ -66,7 +66,7 @@ export default function Navigator(props: DrawerProps & NavigatorProps) {
   const { ...other } = props
   const { setSelectedTab } = props
 
-  const handleClick = (index) => {
+  const handleClick = (index: number) => {
     setSelectedTab(index)
   }
 

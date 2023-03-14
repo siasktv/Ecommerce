@@ -12,7 +12,9 @@ import EditProduct from './EditProduct'
 export default function ProductsList() {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const products = useAppSelector((state) => state.products.products)
+  const { products } = useAppSelector((state) => state.products)
+
+  console.log('Este es products', products)
 
   useEffect(() => {
     dispatch(productsFetch())
@@ -20,25 +22,11 @@ export default function ProductsList() {
 
   const handleDelete = (id: string) => {
     dispatch(productsDelete(id))
-    //why does it says expected 0 arguments but got 1
-  }
-
-  interface ProductImage {
-    url: string
-    // other properties of the image object
-  }
-
-  interface Product {
-    _id: string
-    name: string
-    description: string
-    price: number
-    image: ProductImage | string
   }
 
   const rows =
     products &&
-    products.map((item: Product) => {
+    products.map((item) => {
       return {
         id: item._id,
         imageUrl: typeof item.image === 'object' ? item.image.url : item.image,

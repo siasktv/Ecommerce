@@ -1,18 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { useDispatch, useSelector } from 'react-redux'
+
 import { productsFetch } from '../../features/products/productsSlice'
 import { getTotals } from '../../features/cart/cartSlice'
 import ProductCard from '../../components/Productcard/Productcard'
-import {
-  Container,
-  Stack,
-  Typography,
-  Grid,
-  Box,
-  Pagination,
-  Divider,
-} from '@mui/material'
+import { Container, Stack, Grid, Box } from '@mui/material'
 import ProductSort from '../../components/Filters/ProductSort'
 import ShopFilterSidebar from '../../components/Filters/ProductFilterSideBar'
 import Navbar from '../../components/Navbar/Navbar'

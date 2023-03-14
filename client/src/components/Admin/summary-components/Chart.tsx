@@ -11,12 +11,18 @@ import {
 } from 'recharts'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import { url } from '../../../features/api'
 
 const Chart = () => {
   const [sales, setSales] = useState([])
   const [isLoading, setIsLoading] = useState(false)
 
-  function compare(a, b) {
+  interface Data {
+    _id: number
+    total: number
+  }
+
+  function compare(a: Data, b: Data) {
     if (a._id < b._id) {
       return -1
     }
@@ -30,14 +36,12 @@ const Chart = () => {
     async function fetchData() {
       setIsLoading(true)
       try {
-        const res = await axios.get('http://localhost:3001/orders/week-sales')
-
+        const res = await axios.get(`${url}/orders/week-sales`)
         res.data.sort(compare)
-        const newData = res.data.map((item) => {
+        const newData = res.data.map((item: Data) => {
           const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun']
           return { day: DAYS[item._id - 1], amount: item.total / 100 }
         })
-        console.log('days', newData)
 
         setSales(newData)
       } catch (err) {

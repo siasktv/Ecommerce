@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import { url } from '../api'
 
 const initialState = {
   list: [],
@@ -10,9 +11,7 @@ const initialState = {
 
 export const usersFetch = createAsyncThunk('users/usersFetch', async () => {
   try {
-    const response = await axios.get(
-      'http://localhost:3001/users/stats/allUsers'
-    )
+    const response = await axios.get(`${url}/users/stats/allUsers`)
 
     return response.data
   } catch (error) {
@@ -22,12 +21,10 @@ export const usersFetch = createAsyncThunk('users/usersFetch', async () => {
 
 export const userDelete = createAsyncThunk('users/userDelete', async (id) => {
   try {
-    const response = await axios.delete(
-      `http://localhost:3001/users/stats/${id}`
-    )
+    const response = await axios.delete(`${url}/users/stats/${id}`)
 
     return response.data
-  } catch (error) {
+  } catch (error: any) {
     console.log(error.response.data)
     toast.error(error.response?.data, {
       position: 'bottom-left',
