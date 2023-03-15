@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { Button } from '@mui/material'
 import { useAppSelector, useAppDispatch } from '../../app/hooks'
+import { url } from '../../features/api'
 
 interface CartItem {
   _id: string
@@ -21,7 +22,7 @@ const PayButton = ({ cartItems }: PayButtonProps) => {
 
   const handleCheckout = () => {
     axios
-      .post('http://localhost:3001/stripe/create-checkout-session', {
+      .post(`${url}/stripe/create-checkout-session`, {
         cartItems,
         userId: user._id,
       })
