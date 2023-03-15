@@ -1,1 +1,1 @@
-export const url = 'http://localhost:3001'
+export const url = 'https://ecommerce-production-d098.up.railway.app'
