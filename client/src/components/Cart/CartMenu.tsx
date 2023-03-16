@@ -192,7 +192,7 @@ export default function CartMenu({
             ) : (
               <Button
                 sx={{
-                  backgroundColor: 'white',
+                  backgroundColor: 'black',
                   color: 'white',
                   borderRadius: 2,
                   minWidth: '100%',
@@ -206,7 +206,7 @@ export default function CartMenu({
                 }}
                 onClick={() => navigate('/login')}
               >
-                Login to checkout
+                Check out
               </Button>
             )}
 
