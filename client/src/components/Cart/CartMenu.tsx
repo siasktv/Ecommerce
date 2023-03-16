@@ -206,7 +206,7 @@ export default function CartMenu({
                 }}
                 onClick={() => navigate('/login')}
               >
-                Check out
+                Login to checkout
               </Button>
             )}
 
